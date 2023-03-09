@@ -6,29 +6,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@RestController("/api")
 public class TopicController {
 
     @GetMapping("/books/{book_id}/topic")
-    public List<Topic> getTopicsForBook(@PathVariable("book_id") long id){
+    public List<Topic> getTopicsForBook(@PathVariable("book_id") long bookId){
         return new ArrayList<>();
     }
 
     @PostMapping("/books/{book_id}/topic")
-    public boolean createTopic(@PathVariable("book_id") long id, @RequestBody Topic topic){
+    public boolean createTopic(@PathVariable("book_id") long bookId, @RequestBody Topic topic){
         return false;
     }
 
     @PutMapping("/books/{book_id}/topic")
-    public boolean updateTopic(@PathVariable("book_id") long id, @RequestBody Topic updatedTopic) {
+    public boolean updateTopic(@PathVariable("book_id") long bookId, @RequestBody Topic updatedTopic) {
         return false;
     }
 
     @DeleteMapping("/books/{book_id}/topic")
-    public boolean deleteTopic(@PathVariable("book_id") long id, @RequestBody Topic topic){
+    public boolean deleteTopic(@PathVariable("book_id") long bookId, @RequestBody Topic topic){
         return false;
     }
-
-
-
 }
