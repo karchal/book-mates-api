@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface EventService {
 
-    List<EventDto> findAllEvents();
-
-    Event saveEvent (Event event);
-
-    EventDto findEventById(long id);
+//    List<EventDto> findAllEvents();
+//
+//    Event saveEvent (Event event);
+//
+//    EventDto findEventById(long id);
 }

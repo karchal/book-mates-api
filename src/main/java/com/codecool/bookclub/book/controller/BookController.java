@@ -2,7 +2,8 @@ package com.codecool.bookclub.book.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/api")
+@RestController
+@RequestMapping("/api")
 public class BookController {
 
     @GetMapping("/books")
@@ -17,7 +18,7 @@ public class BookController {
         return "The book details";
     }
 
-    @PostMapping("books/{id}/rate")
+    @PostMapping("/books/{id}/rate")
     public String rate(@PathVariable("id") String id, @RequestBody int rating) {
         return "Rate a book";
     }

@@ -9,7 +9,8 @@ import org.w3c.dom.events.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController()
+@RestController
+@RequestMapping("/api")
 public class EventController {
 
 
