@@ -1,6 +1,7 @@
 package com.codecool.bookclub.user.controller;
 
 import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.user.model.User;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("users/{user_id}/events")
-    public List<String> getUserEvents(@PathVariable("user_id") int userId){
+    public List<Event> getUserEvents(@PathVariable("user_id") int userId){
         return new ArrayList<>();
     }
 
