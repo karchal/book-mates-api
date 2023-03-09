@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController("/api")
-public class PostController {
+public class CommentController {
 
 
     @GetMapping("/books/{book_id}/topics/{topic_id}")
