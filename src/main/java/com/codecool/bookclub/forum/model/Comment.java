@@ -1,4 +1,4 @@
 package com.codecool.bookclub.forum.model;
 
-public class Post {
+public class Comment {
 }
