@@ -1,4 +1,4 @@
-package com.codecool.bookclub.book;
+package com.codecool.bookclub.book.controller;
 
 import org.springframework.web.bind.annotation.*;
 
