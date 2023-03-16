@@ -2,9 +2,7 @@ package com.codecool.bookclub.event.model;
 
 
 import com.codecool.bookclub.user.model.User;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@Entity
+//@Table(name = "event")
 public class Event {
-//    @Id
+
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private long id;
 //    @CreationTimestamp
     private LocalDateTime creationDateAndTime;
