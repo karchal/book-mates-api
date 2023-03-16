@@ -1,8 +1,6 @@
 package com.codecool.bookclub.event.controller;
 
 import com.codecool.bookclub.event.service.EventService;
-import com.codecool.bookclub.forum.model.Topic;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.events.Event;
 
