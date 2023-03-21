@@ -1,9 +1,11 @@
 package com.codecool.bookclub.user.model;
 
-import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.book.model.Shelf;
+import com.codecool.bookclub.book.model.UserBook;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Topic;
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.Shelf;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -11,8 +13,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "readers")
+@Table(name = "reader")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +26,8 @@ public class User {
     private String username;
     private String password;
     private LocalDateTime creationDate;
-//    @JoinTable
-//    @OneToMany
-//    private Map<Shelf, List<Book>> books;
-//    @JoinTable
-//    @OneToMany
-//    private List<Topic> topics;
-    @JoinTable
-    @OneToMany
-    private List<Event> events;
-//    @JoinTable
-//    @OneToMany
-//    private Map<Book, BigDecimal> booksRatings;
+    //private List<UserBook> books;
+    //private List<Topic> topics;
+    //private List<Event> events;
 
 }
