@@ -4,9 +4,9 @@ import com.codecool.bookclub.book.model.UserBook;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.book.model.Shelf;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
