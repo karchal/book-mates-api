@@ -1,6 +1,7 @@
 package com.codecool.bookclub.forum.controller;
 
 import com.codecool.bookclub.forum.model.Topic;
+import com.codecool.bookclub.forum.service.TopicService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,8 +11,16 @@ import java.util.List;
 @RestController
 public class TopicController {
 
+    private final TopicService topicService;
+
+    public TopicController(TopicService topicService) {
+        this.topicService = topicService;
+    }
+
+
     @GetMapping("/books/{book_id}/topic")
     public List<Topic> getTopicsForBook(@PathVariable("book_id") long bookId){
+        topicService.getTopicsForBook(bookId);
         return new ArrayList<>();
     }
 
