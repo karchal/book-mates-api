@@ -1,9 +1,5 @@
 package com.codecool.bookclub.book.model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +15,7 @@ import java.util.Date;
 //@Entity
 //@Table(name = "book")
 public class Book {
-    @Id
+//    @Id
     private String id;
     private String title;
     private String author;
