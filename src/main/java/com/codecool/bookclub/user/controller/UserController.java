@@ -1,59 +1,74 @@
 package com.codecool.bookclub.user.controller;
 
 import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.UserBook;
 import com.codecool.bookclub.event.model.Event;
+import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.user.model.User;
+import com.codecool.bookclub.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
+    private final UserService userService;
 
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
     @GetMapping("/users/{user_id}/books")
-    public List<Book> getUserBooks(@PathVariable("user_id") int userId){
+    public List<UserBook> getUserBooks(@PathVariable("user_id") long userId){
         return new ArrayList<>();
     }
 
     @GetMapping("/users/{user_id}/events")
-    public List<Event> getUserEvents(@PathVariable("user_id") int userId){
-        return new ArrayList<>();
+    public List<Event> getUserEvents(@PathVariable("user_id") long userId){
+        return userService.getUserEvents(userId);
     }
 
     @GetMapping("/users/{user_id}/topics")
-    public List<Topic> getUserTopics(@PathVariable("user_id") int userId){
+    public List<Topic> getUserTopics(@PathVariable("user_id") long userId){
+        return userService.getUserTopics(userId);
+    }
+
+    @GetMapping("/users/{user_id}/comments")
+    public List<Comment> getUserComments(@PathVariable("user_id") long userId){
+        return userService.getUserComments(userId);
+    }
+
+    @GetMapping("/users/{user_id}/shelves/{shelf_id}")
+    public List<Book> getUserShelf(@PathVariable("user_id") long userId, @PathVariable("shelf_id") long shelfId){
         return new ArrayList<>();
     }
 
     @PutMapping("/users/{user_id}/shelves")
-    public boolean updateShelfType(@PathVariable("user_id") int userId, @RequestBody Book book){
+    public boolean updateShelfType(@PathVariable("user_id") long userId, @RequestBody Book book){
         return false;
     }
 
-    @GetMapping("/users/{user_id}/shelves/{shelf_id}")
-    public List<Book> getUserShelf(@PathVariable("user_id") int userId, @PathVariable("shelf_id") int shelfId){
-        return new ArrayList<>();
-    }
-
     @DeleteMapping("/users/{user_id}/books")
-    public boolean deleteBook(@PathVariable("user_id") int userId, @RequestBody Book book){
+    public boolean deleteBookFromShelf(@PathVariable("user_id") long userId, @RequestBody Book book){
         return false;
     }
 
     @GetMapping("/user/{user_id}")
-    public User getUserById(@PathVariable("user_id") int userId){
-        return new User();
+    public Optional<User> getUserById(@PathVariable("user_id") long userId){
+        return userService.getUserById(userId);
     }
 
 
-//    @PostMapping("/register")
-//    public void registerUser(@RequestBody User user){
-//
-//    }
+    @PostMapping("/register")
+    public void registerUser(@RequestBody User user){
+        userService.addUser(user.getUsername(), user.getPassword());
+    }
 //
 //    @PostMapping("/login")
 //    public void login(@RequestBody User user){
@@ -66,7 +81,7 @@ public class UserController {
 //    }
 
     @DeleteMapping("/user/{user_id}")
-    public boolean deleteUserAccount(@PathVariable("user_id") int userId){
-        return false;
+    public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
+        return userService.deleteUserById(userId);
     }
 }

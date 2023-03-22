@@ -1,8 +1,17 @@
 package com.codecool.bookclub.user.model;
 
-public class Role {
+import jakarta.persistence.*;
+import lombok.*;
 
-    private long id;
-    private String name;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long roleId;
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
 }
