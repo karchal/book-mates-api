@@ -32,7 +32,10 @@ public class TopicService {
 
 
     public void createTopic(long bookId, Topic topic) {
-        topic.setId(bookId);
-        topicRepository.save(topic);
+        Optional<Book> optionalBook = bookRepositoryJpa.findById(bookId);
+        if (optionalBook.isPresent()) {
+            topic.setBook(optionalBook.get());
+            topicRepository.save(topic);
+        }
     }
 }
