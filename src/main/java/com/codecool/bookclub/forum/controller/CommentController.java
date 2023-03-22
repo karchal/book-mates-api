@@ -25,8 +25,8 @@ public class CommentController {
 
 
     @PostMapping("/books/{book_id}/topics/{topic_id}")
-    public boolean createComment(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId, @RequestBody Comment comment){
-        return false;
+    public void createComment(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId, @RequestBody Comment comment){
+        commentService.createComment(topicId, comment);
     }
 
 
