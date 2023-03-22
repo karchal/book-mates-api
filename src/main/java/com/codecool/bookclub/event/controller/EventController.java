@@ -48,13 +48,13 @@ public class EventController {
 //        return false;
 //    }
 
-    @PutMapping("events/update-event/{event_id}")
+    @PutMapping("events/{event_id}")
     public void updateEventById (@PathVariable("event_id") long eventId, @RequestBody Event event) {
-        eventService.updateEventById(event.getId(),event.getTitle(), event.getDescription(), event.getEventDate(), event.getMaxParticipants(), event.getUrl());
+        eventService.updateEventById(eventId,event);
     }
 
-    @DeleteMapping("events/delete-event/{event_id}")
-    public boolean deleteEvent (@PathVariable("event_id") long eventId){
+    @DeleteMapping("events/{event_id}")
+    public boolean deleteEventById (@PathVariable("event_id") long eventId){
         return eventService.deleteEventById(eventId);
     }
 
