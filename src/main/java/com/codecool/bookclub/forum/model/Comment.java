@@ -27,5 +27,7 @@ public class Comment {
     private LocalDateTime creationTime;
     @ManyToOne
     private User author;
+    @ManyToOne
+    private Topic topic;
 
 }

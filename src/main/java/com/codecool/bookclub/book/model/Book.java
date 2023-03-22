@@ -25,5 +25,4 @@ public class Book {
     private String pictureUrl;
     private int pages;
     private BigDecimal rating;
-//    private String genre;
 }

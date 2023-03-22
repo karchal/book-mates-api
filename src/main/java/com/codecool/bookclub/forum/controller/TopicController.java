@@ -18,23 +18,22 @@ public class TopicController {
     }
 
 
-    @GetMapping("/books/{book_id}/topic")
+    @GetMapping(value = "/books/{book_id}/topics", produces = "application/json")
     public List<Topic> getTopicsForBook(@PathVariable("book_id") long bookId){
-        topicService.getTopicsForBook(bookId);
-        return new ArrayList<>();
+        return topicService.getTopicsForBook(bookId);
     }
 
-    @PostMapping("/books/{book_id}/topic")
-    public boolean createTopic(@PathVariable("book_id") long bookId, @RequestBody Topic topic){
-        return false;
+    @PostMapping("/books/{book_id}/topics")
+    public void createTopic(@PathVariable("book_id") long bookId, @RequestBody Topic topic){
+        topicService.createTopic(bookId, topic);
     }
 
-    @PutMapping("/books/{book_id}/topic")
+    @PutMapping("/books/{book_id}/topics")
     public boolean updateTopic(@PathVariable("book_id") long bookId, @RequestBody Topic updatedTopic) {
         return false;
     }
 
-    @DeleteMapping("/books/{book_id}/topic")
+    @DeleteMapping("/books/{book_id}/topics")
     public boolean deleteTopic(@PathVariable("book_id") long bookId, @RequestBody Topic topic){
         return false;
     }

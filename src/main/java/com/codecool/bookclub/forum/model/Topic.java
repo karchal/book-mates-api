@@ -31,8 +31,8 @@ public class Topic {
     private LocalDateTime creationTime;
     @ManyToOne
     private Book book;
-    @OneToMany
-    private List<Comment> comments = new ArrayList<>();
+//    @OneToMany
+//    private List<Comment> comments;
     @ManyToOne
     private User author;
 }

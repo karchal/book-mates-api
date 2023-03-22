@@ -26,7 +26,13 @@ public class TopicService {
         if (optionalBook.isPresent()) {
             return topicRepository.findByBook(optionalBook.get());
         } else {
-            return new ArrayList<>();
+            return null;
         }
+    }
+
+
+    public void createTopic(long bookId, Topic topic) {
+        topic.setId(bookId);
+        topicRepository.save(topic);
     }
 }
