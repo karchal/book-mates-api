@@ -39,46 +39,15 @@ public class EventService {
         }).orElse(false);
     }
 
-    public void updateEventById(long eventId,String title, String description, LocalDateTime eventDate, int maxParticipants, String url){
+    public void updateEventById(long eventId,Event event){
         if (getEventById(eventId).isPresent()){
             Event updatedEvent = getEventById(eventId).get();
-            updatedEvent.setTitle(title);
-            updatedEvent.setDescription(description);
-            updatedEvent.setEventDate(eventDate);
-            updatedEvent.setMaxParticipants(maxParticipants);
-            updatedEvent.setUrl(url);
+            updatedEvent.setTitle(event.getTitle());
+            updatedEvent.setDescription(event.getDescription());
+            updatedEvent.setEventDate(event.getEventDate());
+            updatedEvent.setMaxParticipants(event.getMaxParticipants());
+            updatedEvent.setUrl(event.getUrl());
             eventRepository.save(updatedEvent);
         }
     }
-
-
-
-//    public EventServiceImplementation(EventRepository eventRepository){this.eventRepository = eventRepository;}
-//
-//
-//    @Override
-//    public List<EventDto> findAllEvents() {
-//        List<Event> events = eventRepository.findAll();
-//        return events.stream().map((event) -> mapToEventDto(event)).collect(Collectors.toList());
-//    }
-//
-//    @Override
-//    public Event saveEvent(Event event) {
-//        return eventRepository.save(event);
-//    }
-//
-//    @Override
-//    public EventDto findEventById(long id) {
-//       Event event = eventRepository.findById(id).get();
-//       return mapToEventDto(event);
-//    }
-
-//    private EventDto mapToEventDto(Event event){
-//        EventDto eventDto = EventDto.builder()
-//                .id(event.getId())
-//                .creationDateAndTime(event.getCreationDateAndTime())
-//                .title(event.getTitle())
-//                .build();
-//        return eventDto;
-//    }
 }
