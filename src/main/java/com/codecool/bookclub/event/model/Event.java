@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "events")
+@Table(name = "event")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +24,15 @@ public class Event {
     private String title;
     private String description;
     private LocalDateTime eventDate;
-    @JoinTable
-    @OneToOne
+
+    @OneToOne //@OneToMany
     private User organizer;
     private Integer maxParticipants;
-    @JoinTable
-    @OneToMany
+
+    @OneToMany //@ManyToMany
     private List<User> participants;
-    @JoinTable
-    @OneToMany
+
+    @OneToMany //@ManyToMany
     private List<User> waitingList;
     private String url;
 
