@@ -25,14 +25,14 @@ public class Event {
     private String description;
     private LocalDateTime eventDate;
 
-    @OneToOne //@OneToMany
+    @ManyToOne
     private User organizer;
     private Integer maxParticipants;
 
-    @OneToMany //@ManyToMany
+    @ManyToMany
     private List<User> participants;
 
-    @OneToMany //@ManyToMany
+    @ManyToMany
     private List<User> waitingList;
     private String url;
 

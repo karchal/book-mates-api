@@ -28,11 +28,11 @@ public class User {
     private LocalDateTime creationDate;
 //    @ManyToMany
 //    private List<UserBook> books;
-    @OneToMany //@ManyToMany
+    @ManyToMany
     private List<Topic> topics;
-    @OneToMany //@ManyToMany
+    @ManyToMany
     private List<Event> events;
-    @OneToMany //@ManyToMany
+    @ManyToMany
     private List<Comment> comments;
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
