@@ -2,6 +2,7 @@ package com.codecool.bookclub.forum.controller;
 
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
+import com.codecool.bookclub.forum.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,10 +12,15 @@ import java.util.List;
 @RestController
 public class CommentController {
 
+    private final CommentService commentService;
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @GetMapping("/books/{book_id}/topics/{topic_id}")
-    public List<Topic> getCommentsToTopic(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId){
-        return new ArrayList<>();
+    public List<Topic> getCommentsOnTopic(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId){
+        return commentService.getCommentsOnTopic(topicId);
     }
 
 
