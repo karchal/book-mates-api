@@ -1,10 +1,22 @@
 package com.codecool.bookclub.book.controller;
 
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.repository.BookRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RequestMapping("/api")
 @RestController
 public class BookController {
+
+    private BookRepository bookRepository;
+
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @GetMapping("/books")
     public String getAll(@RequestParam(value = "author", required = false) String author,
@@ -14,8 +26,15 @@ public class BookController {
     }
 
     @GetMapping("/books/{id}")
-    public String getBookById(@PathVariable("id") String id) {
-        return "The book details";
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") long id) {
+        Book book = bookRepository.findBookById(id);
+
+        if (book == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(book, HttpStatus.OK);
+        }
     }
 
     @PostMapping("/books/{id}/rate")
