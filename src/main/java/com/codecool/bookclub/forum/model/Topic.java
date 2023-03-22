@@ -25,15 +25,14 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String message;
     @CreationTimestamp
     private LocalDateTime creationTime;
     @ManyToOne
     private Book book;
-    @OneToMany
-    private List<Comment> comments = new ArrayList<>();
+//    @OneToMany
+//    private List<Comment> comments;
     @ManyToOne
     private User author;
 }
