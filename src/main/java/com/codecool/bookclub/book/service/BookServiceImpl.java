@@ -16,6 +16,10 @@ class BookServiceImpl implements BookService {
         this.bookRepository = bookRepository;
     }
 
+    @Override
+    public Book getById(Long id) {
+        return bookRepository.findBookById(id);
+    }
 
     /*TODO: add parameter page */
     @Override
@@ -35,8 +39,4 @@ class BookServiceImpl implements BookService {
         return bookRepository.findByTitle(title);
     }
 
-    @Override
-    public List<Book> getBooksByGenre(String genre) {
-        return bookRepository.findByGenre(genre);
-    }
 }
