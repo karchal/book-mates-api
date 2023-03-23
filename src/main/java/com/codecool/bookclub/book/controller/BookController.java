@@ -10,6 +10,7 @@ import java.util.List;
 
 @RequestMapping("/api")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
     private final BookService bookService;
@@ -36,7 +37,6 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Book>> getAll(@RequestParam(value = "author", required = false) String author,
                                              @RequestParam(value = "title", required = false) String title,
                                              @RequestParam(value = "genre", required = false) String genre,
