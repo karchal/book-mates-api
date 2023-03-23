@@ -1,5 +1,6 @@
 package com.codecool.bookclub.event.model;
 
+import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Data
@@ -21,6 +23,9 @@ public class Event {
     private long id;
     @CreationTimestamp
     private LocalDateTime creationDateAndTime;
+
+    @ManyToOne
+    private Book book;
     private String title;
     private String description;
     private LocalDateTime eventDate;

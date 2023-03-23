@@ -2,13 +2,15 @@ package com.codecool.bookclub.event.service;
 
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.repository.EventRepository;
+import com.codecool.bookclub.user.model.Role;
+import com.codecool.bookclub.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class EventService {
@@ -24,24 +26,24 @@ public class EventService {
         return eventRepository.findAll(Sort.by(Sort.Direction.DESC, "creationDateAndTime"));
     }
 
-    public Optional<Event> getEventById(long eventId){
-        return eventRepository.findById(eventId);
+    public Event getEventById(long eventId){
+        return eventRepository.findEventById(eventId);
     }
 
     public void addEvent(String title, String description, LocalDateTime eventDate, int maxParticipants, String url){
         eventRepository.save(new Event(title,description,eventDate,maxParticipants,url));
     }
 
-    public boolean deleteEventById(long eventId){
-        return getEventById(eventId).map(event -> {
+
+    public void deleteEventById(long eventId){
+        if (getEventById(eventId) != null) {
             eventRepository.deleteById(eventId);
-            return true;
-        }).orElse(false);
+        }
     }
 
     public void updateEventById(long eventId,Event event){
-        if (getEventById(eventId).isPresent()){
-            Event updatedEvent = getEventById(eventId).get();
+        if (getEventById(eventId) != null){
+            Event updatedEvent = getEventById(eventId);
             updatedEvent.setTitle(event.getTitle());
             updatedEvent.setDescription(event.getDescription());
             updatedEvent.setEventDate(event.getEventDate());
