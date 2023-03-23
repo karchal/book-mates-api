@@ -1,14 +1,11 @@
 package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.book.repository.BookRepository;
-import org.springframework.data.domain.PageRequest;
 import com.codecool.bookclub.book.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -44,8 +41,7 @@ public class BookController {
                                              @RequestParam(value = "title", required = false) String title,
                                              @RequestParam(value = "genre", required = false) String genre,
                                              @RequestParam(value="amount", required = false) int amount) {
-        List<Book> books = bookRepository.findAll();
-        books = books.subList(0, 4);
+        List<Book> books = bookService.findFourBooks();
         if (books == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
