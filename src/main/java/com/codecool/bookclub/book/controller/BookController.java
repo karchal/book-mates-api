@@ -2,11 +2,13 @@ package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RequestMapping("/api")
 @RestController
@@ -19,10 +21,18 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public String getAll(@RequestParam(value = "author", required = false) String author,
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Book>> getAll(@RequestParam(value = "author", required = false) String author,
                          @RequestParam(value = "title", required = false) String title,
-                         @RequestParam(value = "genre", required = false) String genre) {
-        return "Here you'll see all books";
+                         @RequestParam(value = "genre", required = false) String genre,
+                         @RequestParam(value="amount", required = false) int amount) {
+        List<Book> books = bookRepository.findAll();
+        books = books.subList(0, 4);
+        if (books == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/books/{id}")

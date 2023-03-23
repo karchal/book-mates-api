@@ -26,6 +26,7 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(length = 1000)
     private String message;
     @CreationTimestamp
     private LocalDateTime creationTime;

@@ -21,6 +21,7 @@ public class Book {
     private String title;
     private String author;
     private int year;
+    @Column(length = 4000)//columnDefinition = "text")
     private String description;
     private String pictureUrl;
     private int pages;
