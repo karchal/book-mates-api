@@ -30,7 +30,7 @@ public class UserService {
 
     public List<Event> getUserEvents(long userId){
         return getUserById(userId).map(User::getEvents).orElse(null);
-    }
+    }//pusta lista
 
     public List<Topic> getUserTopics(long userId){
         return getUserById(userId).map(User::getTopics).orElse(null);

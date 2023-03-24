@@ -20,15 +20,14 @@ public class BookController {
     }
 
     @GetMapping("/books/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Book> getBookById(@PathVariable("id") long id) {
         Book book = bookService.getById(id);
-
         if (book == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(book, HttpStatus.OK);
         }
+        //return bookService.getById(id).ifPresent(new ResponseEntity<>(book, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/books/{id}/rate")
@@ -41,12 +40,12 @@ public class BookController {
                                              @RequestParam(value = "title", required = false) String title,
                                              @RequestParam(value = "genre", required = false) String genre,
                                              @RequestParam(value="amount", required = false) int amount) {
-        List<Book> books = bookService.findFourBooks();
-        if (books == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
+        List<Book> books = bookService.findTopFourBooks();
+//        if (books == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
             return new ResponseEntity<>(books, HttpStatus.OK);
-        }
+//        }
     }
 
 }

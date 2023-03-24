@@ -16,4 +16,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByTitle(String title);
 
     List<Book> findAll();
+
+    List<Book> findFirst4ByOrderByRatingDesc();
 }

@@ -29,8 +29,6 @@ class BookServiceImpl implements BookService {
         return books;
     }
 
-
-
     @Override
     public List<Book> getBooksByAuthor(String author) {
         return bookRepository.findByAuthor(author);
@@ -42,9 +40,9 @@ class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findFourBooks() {
-        List<Book> books = bookRepository.findAll();
-        books = books.subList(0, 4);
+    public List<Book> findTopFourBooks() {
+        List<Book> books = bookRepository.findFirst4ByOrderByRatingDesc();
+        //books = books.subList(0, 4);
 
         return books;
     }

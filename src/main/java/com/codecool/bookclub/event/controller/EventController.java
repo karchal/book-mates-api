@@ -28,18 +28,18 @@ public class EventController {
 //        return new ArrayList<>();
 //    }
 
-    @GetMapping("/event/{id}")
+    @GetMapping("/event/{id}") //todo  wrócić do  @GetMapping("/books/{book_id}/events")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Event> getEventById(@PathVariable("id") long id) {
         Event event = eventService.getEventById(id);
-
-
+        //todo wykorzystać optional
         if (event == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(event, HttpStatus.OK);
         }
     }
+
     @GetMapping("/events")
     public List<Event> getALlEvents(){
         return eventService.getAllEvents();
@@ -60,7 +60,7 @@ public class EventController {
 
     @PutMapping("events/{event_id}")
     public void updateEventById (@PathVariable("event_id") long eventId, @RequestBody Event event) {
-        eventService.updateEventById(eventId,event);
+        eventService.updateEventById(eventId, event);
     }
 
     @DeleteMapping("events/{event_id}")
