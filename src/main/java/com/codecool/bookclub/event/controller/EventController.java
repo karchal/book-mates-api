@@ -42,14 +42,13 @@ public class EventController {
 
 
     @GetMapping("/events")
-    public List<Event> getALlEvents(@RequestParam(value="amount", required = true) int amount){
-        List<Event> events = new ArrayList<>();
+    public List<Event> getALlEvents(@RequestParam(value="amount", required = false) int amount){
+        List<Event> events;
         if (amount==4){
             events = eventService.findTopFourEvents();
         } else {
             events = eventService.getAllEvents();
         }
-
         return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 
