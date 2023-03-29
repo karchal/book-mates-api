@@ -51,7 +51,6 @@ public class EventService{
     }
 
     public List<Event> findTopFourEvents() {
-        List<Event> events = eventRepository.findFirst4ByOrderByCreationDateAndTimeDesc();
-        return events;
+        return eventRepository.findFirst4ByOrderByCreationDateAndTimeDesc();
     }
 }
