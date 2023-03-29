@@ -6,7 +6,6 @@ import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.repository.TopicRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +36,13 @@ public class TopicService {
             topic.setBook(optionalBook.get());
             topicRepository.save(topic);
         }
+    }
+
+    public List<Topic> getAllTopics(){
+        return topicRepository.findAll();
+    }
+
+    public List<Topic> getTopFourTopics(){
+        return topicRepository.findFirst4ByOrderByCreationTimeDesc();
     }
 }

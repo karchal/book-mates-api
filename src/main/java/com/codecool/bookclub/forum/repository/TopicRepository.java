@@ -10,6 +10,10 @@ import java.util.List;
 
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
-//    @Query("Select t from Topic t left join fetch t.comments where t.book = ?1")
+    //    @Query("Select t from Topic t left join fetch t.comments where t.book = ?1")
     List<Topic> findByBook(Book book);
+
+    List<Topic> findFirst4ByOrderByCreationTimeDesc();
+
 }
+
