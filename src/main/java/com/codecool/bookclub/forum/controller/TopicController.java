@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -41,14 +40,14 @@ public class TopicController {
         return false;
     }
 
+    @GetMapping("/topics/top_4")
+    public List<Topic> getTop4Topics(){
+        List<Topic> topics= topicService.getTopFourTopics();
+        return new ResponseEntity<>(topics, HttpStatus.OK).getBody();
+    }
     @GetMapping("/topics")
-    public List<Topic> getAllTopics(@RequestParam(value="amount", required = false) int amount){
-        List<Topic> topics;
-        if (amount==4){
-            topics = topicService.getTopFourTopics();
-        } else {
-            topics = topicService.getAllTopics();
-        }
+    public List<Topic> getAllTopics(){
+        List<Topic> topics = topicService.getAllTopics();
         return new ResponseEntity<>(topics, HttpStatus.OK).getBody();
     }
 }
