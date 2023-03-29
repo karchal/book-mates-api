@@ -2,18 +2,15 @@ package com.codecool.bookclub.event.service;
 
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.repository.EventRepository;
-import com.codecool.bookclub.user.model.Role;
-import com.codecool.bookclub.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Stream;
 
 @Service
-public class EventService {
+public class EventService{
 
     private final EventRepository eventRepository;
 
@@ -51,5 +48,10 @@ public class EventService {
             updatedEvent.setUrl(event.getUrl());
             eventRepository.save(updatedEvent);
         }
+    }
+
+    public List<Event> findTopFourEvents() {
+        List<Event> events = eventRepository.findFirst4ByOrderByCreationDateAndTimeDesc();
+        return events;
     }
 }

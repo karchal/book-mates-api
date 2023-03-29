@@ -1,6 +1,5 @@
 package com.codecool.bookclub.event.controller;
 
-import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EventController {
 
 
@@ -29,7 +30,6 @@ public class EventController {
 //    }
 
     @GetMapping("/event/{id}") //todo  wrócić do  @GetMapping("/books/{book_id}/events")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Event> getEventById(@PathVariable("id") long id) {
         Event event = eventService.getEventById(id);
         //todo wykorzystać optional
@@ -40,9 +40,17 @@ public class EventController {
         }
     }
 
+
     @GetMapping("/events")
-    public List<Event> getALlEvents(){
-        return eventService.getAllEvents();
+    public List<Event> getALlEvents(@RequestParam(value="amount", required = true) int amount){
+        List<Event> events = new ArrayList<>();
+        if (amount==4){
+            events = eventService.findTopFourEvents();
+        } else {
+            events = eventService.getAllEvents();
+        }
+
+        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 
 
