@@ -7,8 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @Data
@@ -28,7 +28,7 @@ public class Event {
     private Book book;
     private String title;
     private String description;
-    private LocalDateTime eventDate;
+    private ZonedDateTime eventDate;
 
     @ManyToOne
     private User organizer;
@@ -41,11 +41,4 @@ public class Event {
     private List<User> waitingList;
     private String url;
 
-    public Event(String title, String description, LocalDateTime eventDate, Integer maxParticipants, String url) {
-        this.title = title;
-        this.description = description;
-        this.eventDate = eventDate;
-        this.maxParticipants = maxParticipants;
-        this.url = url;
-    }
 }
