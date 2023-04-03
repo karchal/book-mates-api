@@ -1,22 +1,25 @@
 package com.codecool.bookclub.event.service;
 
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 public class EventService{
 
     private final EventRepository eventRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, BookRepository bookRepository) {
         this.eventRepository = eventRepository;
+        this.bookRepository = bookRepository;
     }
 
     public List<Event> getAllEvents(){
@@ -27,8 +30,10 @@ public class EventService{
         return eventRepository.findEventById(eventId);
     }
 
-    public void addEvent(String title, String description, LocalDateTime eventDate, int maxParticipants, String url){
-        eventRepository.save(new Event(title,description,eventDate,maxParticipants,url));
+    public void addEvent(long bookId, Event event){
+        Book book = bookRepository.findBookById(bookId);
+        event.setBook(book);
+        eventRepository.save(event);
     }
 
 

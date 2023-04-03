@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,17 +51,9 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 
-
-
-    @PostMapping("/events")
-    public void addEvent(@RequestBody Event event){
-        eventService.addEvent(event.getTitle(), event.getDescription(), event.getEventDate(), event.getMaxParticipants(), event.getUrl());
-    }
-
-
-    @PostMapping("/books/{book_id}/new-event")
-    public boolean createEvent(@PathVariable("book_id") long bookId, @RequestBody Event event){
-        return false;
+    @PostMapping("/books/{book_id}/event")
+    public void createEvent(@PathVariable("book_id") long bookId, @RequestBody Event event){
+        eventService.addEvent(bookId,event);
     }
 
     @PutMapping("events/{event_id}")
