@@ -57,7 +57,11 @@ public class UserService {
     }
 
 
-    public List<BookDetails> getUserBooks(long userId) {
-        return bookDetailsRepository.findAllByUserId(userId);
+    public List<BookDetailsDto> getUserBooks(long userId) {
+        return bookDetailsRepository.findAllByUserId(userId)
+                .stream()
+                .map(b -> new BookDetailsDto(b))
+                .collect(Collectors.toList());
+
     }
 }
