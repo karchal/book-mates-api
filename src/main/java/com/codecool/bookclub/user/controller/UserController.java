@@ -1,5 +1,6 @@
 package com.codecool.bookclub.user.controller;
 
+import com.codecool.bookclub.book.dto.BookDetailsDto;
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.event.model.Event;
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}/books")
-    public ResponseEntity<List<BookDetails>> getUserBooks(@PathVariable("user_id") long userId){
+    public ResponseEntity<List<BookDetailsDto>> getUserBooks(@PathVariable("user_id") long userId){
         return new ResponseEntity<>(userService.getUserBooks(userId), HttpStatus.OK);
     }
 

@@ -1,5 +1,6 @@
 package com.codecool.bookclub.user.service;
 
+import com.codecool.bookclub.book.dto.BookDetailsDto;
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.book.repository.BookDetailsRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
