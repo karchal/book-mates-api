@@ -1,5 +1,7 @@
 package com.codecool.bookclub.event.controller;
 
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -16,10 +19,13 @@ public class EventController {
 
 
     private final EventService eventService;
+    private final BookService bookService;
+
 
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, BookService bookService) {
         this.eventService = eventService;
+        this.bookService = bookService;
     }
 
 //    @GetMapping("/books/{book_id}/events")
@@ -28,16 +34,22 @@ public class EventController {
 //        return new ArrayList<>();
 //    }
 
-    @GetMapping("/event/{id}") //todo  wrócić do  @GetMapping("/books/{book_id}/events")
-    public ResponseEntity<Event> getEventById(@PathVariable("id") long id) {
-        Event event = eventService.getEventById(id);
-        //todo wykorzystać optional
-        if (event == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(event, HttpStatus.OK);
-        }
+    @GetMapping("/books/{book_id}/events/{event_id}")
+    public void getEventById(@PathVariable("book_id") long bookId, @PathVariable("event_id") long eventId) {
+//        Optional<Event> event = eventService.getEventById(eventId);
+//        if (event.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<>(event.get(), HttpStatus.OK);
+//        }
     }
+
+    @GetMapping("/events/{event_id}")
+    public ResponseEntity<Event> getEventById( @PathVariable("event_id") long eventId) {
+        Event event = eventService.getEventById(eventId);
+        return new ResponseEntity<>(event, HttpStatus.OK);
+    }
+
 
 
     @GetMapping("/events")
