@@ -1,6 +1,6 @@
 package com.codecool.bookclub.user.model;
 
-import com.codecool.bookclub.book.model.UserBook;
+import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
@@ -26,8 +26,8 @@ public class User {
     private String username;
     private String password;
     private LocalDateTime creationDate;
-//    @ManyToMany
-//    private List<UserBook> books;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<BookDetails> booksDetails;
     @ManyToMany
     private List<Topic> topics;
     @ManyToMany

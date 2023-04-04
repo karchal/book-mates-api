@@ -1,6 +1,8 @@
 package com.codecool.bookclub.user.service;
 
-import com.codecool.bookclub.book.model.UserBook;
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.BookDetails;
+import com.codecool.bookclub.book.repository.BookDetailsRepository;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
@@ -15,9 +17,12 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-@Autowired
-    public UserService(UserRepository userRepository) {
+    private final BookDetailsRepository bookDetailsRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository, BookDetailsRepository bookDetailsRepository) {
         this.userRepository = userRepository;
+        this.bookDetailsRepository = bookDetailsRepository;
     }
 
 //    public List<UserBook> getUserBooks(long userId){
@@ -52,4 +57,7 @@ public class UserService {
     }
 
 
+    public List<BookDetails> getUserBooks(long userId) {
+        return bookDetailsRepository.findAllByUserId(userId);
+    }
 }

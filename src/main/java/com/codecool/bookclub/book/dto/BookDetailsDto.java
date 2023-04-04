@@ -1,4 +1,6 @@
 package com.codecool.bookclub.book.dto;
 
-public class BookPageDto {
+public class BookDetailsDto {
+
+
 }

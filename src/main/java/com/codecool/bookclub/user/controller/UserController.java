@@ -1,13 +1,15 @@
 package com.codecool.bookclub.user.controller;
 
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.book.model.UserBook;
+import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,10 +26,12 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/users/{user_id}/books")
-    public List<UserBook> getUserBooks(@PathVariable("user_id") long userId){
-        return new ArrayList<>();
+    public ResponseEntity<List<BookDetails>> getUserBooks(@PathVariable("user_id") long userId){
+        return new ResponseEntity<>(userService.getUserBooks(userId), HttpStatus.OK);
     }
+
 
     @GetMapping("/users/{user_id}/events")
     public List<Event> getUserEvents(@PathVariable("user_id") long userId){
@@ -43,6 +47,7 @@ public class UserController {
     public List<Comment> getUserComments(@PathVariable("user_id") long userId){
         return userService.getUserComments(userId);
     }
+
 
     @GetMapping("/users/{user_id}/shelves/{shelf_id}")
     public List<Book> getUserShelf(@PathVariable("user_id") long userId, @PathVariable("shelf_id") long shelfId){
@@ -60,8 +65,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{user_id}")
-    public Optional<User> getUserById(@PathVariable("user_id") long userId){
-        return userService.getUserById(userId);
+    public User getUserById(@PathVariable("user_id") long userId){
+        return userService.getUserById(userId).get();
     }
 
 
