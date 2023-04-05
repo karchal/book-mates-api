@@ -3,8 +3,11 @@ package com.codecool.bookclub.event.service;
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.event.model.Event;
+import com.codecool.bookclub.event.repository.EventPaginationRepository;
 import com.codecool.bookclub.event.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +18,21 @@ public class EventService{
 
     private final EventRepository eventRepository;
     private final BookRepository bookRepository;
+    private final EventPaginationRepository paginationRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository, BookRepository bookRepository) {
+    public EventService(EventRepository eventRepository, BookRepository bookRepository, EventPaginationRepository paginationRepository) {
         this.eventRepository = eventRepository;
         this.bookRepository = bookRepository;
+        this.paginationRepository = paginationRepository;
     }
 
     public List<Event> getAllEvents(){
         return eventRepository.findAll(Sort.by(Sort.Direction.DESC, "creationDateAndTime"));
+    }
+
+    public Page<Event> findAllEvents(Pageable paging){
+        return paginationRepository.findAll(paging);
     }
 
     public Event getEventById(long eventId){

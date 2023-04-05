@@ -3,9 +3,13 @@ package com.codecool.bookclub.event.controller;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -13,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EventController {
-
 
     private final EventService eventService;
 
@@ -41,9 +44,11 @@ public class EventController {
 
 
     @GetMapping("/events")
-    public List<Event> getALlEvents(){
-        List<Event> events = eventService.getAllEvents();
-        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
+    public Page<Event> getALlEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
+        Pageable paging = PageRequest.of(page,size, Sort.by("creationDateAndTime").descending());
+//        List<Event> events = eventService.getAllEvents();
+//        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
+        return eventService.findAllEvents(paging);
     }
     @GetMapping("/events/top_4")
     public List<Event> getFourEvents(){
