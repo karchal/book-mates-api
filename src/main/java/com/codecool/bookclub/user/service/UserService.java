@@ -1,6 +1,9 @@
 package com.codecool.bookclub.user.service;
 
-import com.codecool.bookclub.book.model.UserBook;
+import com.codecool.bookclub.book.dto.BookDetailsDto;
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.BookDetails;
+import com.codecool.bookclub.book.repository.BookDetailsRepository;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
@@ -9,28 +12,29 @@ import com.codecool.bookclub.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-@Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final BookDetailsRepository bookDetailsRepository;
 
-//    public List<UserBook> getUserBooks(long userId){
-//        return userRepository.findById(userId).map(user -> user.getBooks()).orElse(null);
-//    }
+    @Autowired
+    public UserService(UserRepository userRepository, BookDetailsRepository bookDetailsRepository) {
+        this.userRepository = userRepository;
+        this.bookDetailsRepository = bookDetailsRepository;
+    }
 
     public Optional<User> getUserById(long userId){
         return userRepository.findById(userId);
     }
 
     public List<Event> getUserEvents(long userId){
-        return getUserById(userId).map(User::getEvents).orElse(null);
-    }//pusta lista
+        return getUserById(userId).map(User::getEvents).orElse(new ArrayList<>());
+    }
 
     public List<Topic> getUserTopics(long userId){
         return getUserById(userId).map(User::getTopics).orElse(null);
@@ -52,4 +56,11 @@ public class UserService {
     }
 
 
+    public List<BookDetailsDto> getUserBooks(long userId) {
+        return bookDetailsRepository.findAllByUserId(userId)
+                .stream()
+                .map(b -> new BookDetailsDto(b))
+                .collect(Collectors.toList());
+
+    }
 }

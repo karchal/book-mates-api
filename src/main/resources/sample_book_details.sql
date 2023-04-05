@@ -1,0 +1,16 @@
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 1, 1);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 9, 2, 1);
+insert into book_details (shelf, book_id, user_id) values (2, 3, 1);
+insert into book_details (shelf, user_rating, book_id, user_id) values (3, 9, 5, 1);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 7, 1, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 2, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (4, 7, 3, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (4, 8, 4, 2);
+insert into reader_books_details(user_id, books_details_id) VALUES (1,1);
+insert into reader_books_details(user_id, books_details_id) VALUES (1,2);
+insert into reader_books_details(user_id, books_details_id) VALUES (1,3);
+insert into reader_books_details(user_id, books_details_id) VALUES (1,4);
+insert into reader_books_details(user_id, books_details_id) VALUES (2,5);
+insert into reader_books_details(user_id, books_details_id) VALUES (2,6);
+insert into reader_books_details(user_id, books_details_id) VALUES (2,7);
+insert into reader_books_details(user_id, books_details_id) VALUES (2,8);
