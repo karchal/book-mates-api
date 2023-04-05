@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -32,7 +33,6 @@ public class UserController {
     public ResponseEntity<List<BookDetailsDto>> getUserBooks(@PathVariable("user_id") long userId){
         return new ResponseEntity<>(userService.getUserBooks(userId), HttpStatus.OK);
     }
-
 
     @GetMapping("/users/{user_id}/events")
     public List<Event> getUserEvents(@PathVariable("user_id") long userId){

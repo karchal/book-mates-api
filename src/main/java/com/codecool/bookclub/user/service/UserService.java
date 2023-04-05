@@ -12,6 +12,7 @@ import com.codecool.bookclub.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,17 +28,13 @@ public class UserService {
         this.bookDetailsRepository = bookDetailsRepository;
     }
 
-//    public List<UserBook> getUserBooks(long userId){
-//        return userRepository.findById(userId).map(user -> user.getBooks()).orElse(null);
-//    }
-
     public Optional<User> getUserById(long userId){
         return userRepository.findById(userId);
     }
 
     public List<Event> getUserEvents(long userId){
-        return getUserById(userId).map(User::getEvents).orElse(null);
-    }//pusta lista
+        return getUserById(userId).map(User::getEvents).orElse(new ArrayList<>());
+    }
 
     public List<Topic> getUserTopics(long userId){
         return getUserById(userId).map(User::getTopics).orElse(null);
