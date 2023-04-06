@@ -48,4 +48,9 @@ public class BookController {
 //        }
     }
 
+    @GetMapping("/books/{query}")
+    public List<Book> searchBooks(@PathVariable String query) {
+        return bookService.searchBooks(query);
+    }
+
 }

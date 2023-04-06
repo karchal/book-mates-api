@@ -1,16 +1,25 @@
 package com.codecool.bookclub.book.service;
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.googleapi.ReturnResults;
+import com.codecool.bookclub.googleapi.VolumeInfo;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
 
 import java.util.List;
 
 @Service
 class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+
+    @Value("${google.books.api.key}")
+    private String apiKey;
 
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -46,5 +55,30 @@ class BookServiceImpl implements BookService {
 
         return books;
     }
+
+    @Override
+    public List<Book> searchBooks(String query) {
+        return null;
+    }
+
+    private ReturnResults callApi(String query) {
+        String apiUrl = "https://www.googleapis.com/books/v1/volumes?q="+ query + "&key=" + apiKey + "&maxResults=20";
+        WebClient.Builder builder = WebClient.builder();
+        ReturnResults results = builder.build()
+                .get()
+                .uri(apiUrl)
+                .retrieve()
+                .bodyToMono(ReturnResults.class)
+                .block();
+
+               return results;
+    }
+
+    private VolumeInfo retreiveVolumeInfo(ReturnResults results) {
+        return null;
+    }
+
+
+//    TODO: methods to serve searching in GoogleApi - one book and books by search param
 
 }

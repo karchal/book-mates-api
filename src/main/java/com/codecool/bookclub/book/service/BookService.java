@@ -12,4 +12,6 @@ public interface BookService {
     List<Book> getBooksByTitle(String title);
 
     List<Book> findTopFourBooks();
+
+    List<Book> searchBooks(String query);
 }
