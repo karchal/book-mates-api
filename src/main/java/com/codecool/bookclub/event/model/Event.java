@@ -30,6 +30,8 @@ public class Event {
     private String description;
     private ZonedDateTime eventDate;
 
+    private EventType eventType;
+
     @ManyToOne
     private User organizer;
     private Integer maxParticipants;
