@@ -25,5 +25,4 @@ public class BookDetailsDto {
         this.shelf =  bookDetails.getShelf();
         this.userRating = bookDetails.getUserRating();
     }
-
 }
