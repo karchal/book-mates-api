@@ -75,16 +75,6 @@ public class UserController {
     public void registerUser(@RequestBody User user){
         userService.addUser(user.getUsername(), user.getPassword());
     }
-//
-//    @PostMapping("/login")
-//    public void login(@RequestBody User user){
-//
-//    }
-//
-//    @PostMapping("/logout")
-//    public void logout(@RequestBody User user){
-//
-//    }
 
     @DeleteMapping("/user/{user_id}")
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
