@@ -3,7 +3,9 @@ package com.codecool.bookclub.event.controller;
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.event.model.Event;
+import com.codecool.bookclub.event.model.EventType;
 import com.codecool.bookclub.event.service.EventService;
+import org.hibernate.type.EnumType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +48,13 @@ public class EventController {
 //            return new ResponseEntity<>(event.get(), HttpStatus.OK);
 //        }
     }
+
+    @GetMapping("/event-type/{enum-index}")
+    public ResponseEntity<EventType> getEnum(@PathVariable("enum-index")int enumIndex) {
+        EventType enumValue = EventType.values()[enumIndex];
+        return ResponseEntity.ok(enumValue);
+    }
+
 
     @GetMapping("/events/{event_id}")
     public ResponseEntity<Event> getEventById( @PathVariable("event_id") long eventId) {
