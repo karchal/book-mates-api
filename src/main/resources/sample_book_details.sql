@@ -15,6 +15,8 @@ insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 5,
 insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 6, 3);
 insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 7, 3);
 insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 8, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 7, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 8, 3);
 insert into reader_books_details(user_id, books_details_id) VALUES (1,1);
 insert into reader_books_details(user_id, books_details_id) VALUES (1,2);
 insert into reader_books_details(user_id, books_details_id) VALUES (1,3);
@@ -32,3 +34,5 @@ insert into reader_books_details(user_id, books_details_id) VALUES (3,14);
 insert into reader_books_details(user_id, books_details_id) VALUES (3,15);
 insert into reader_books_details(user_id, books_details_id) VALUES (3,16);
 insert into reader_books_details(user_id, books_details_id) VALUES (3,17);
+insert into reader_books_details(user_id, books_details_id) VALUES (3,18);
+insert into reader_books_details(user_id, books_details_id) VALUES (3,19);
