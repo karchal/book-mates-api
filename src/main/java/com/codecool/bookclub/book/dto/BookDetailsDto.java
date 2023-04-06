@@ -5,7 +5,8 @@ import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.book.model.Shelf;
 import lombok.*;
 
-
+@Getter
+@Setter
 public class BookDetailsDto {
     private Long id;
     private Long bookId;
