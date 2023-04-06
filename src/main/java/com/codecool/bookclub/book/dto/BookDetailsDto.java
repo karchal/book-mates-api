@@ -9,7 +9,6 @@ import lombok.*;
 @Setter
 public class BookDetailsDto {
     private Long id;
-    //private Book book;
     private Long bookId;
     private String title;
     private String author;
@@ -26,5 +25,4 @@ public class BookDetailsDto {
         this.shelf =  bookDetails.getShelf();
         this.userRating = bookDetails.getUserRating();
     }
-
 }
