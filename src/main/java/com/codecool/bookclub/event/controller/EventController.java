@@ -53,6 +53,12 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    @GetMapping("/events/all")
+    public List<Event> getEvents(){
+        List<Event> events = eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
+    }
+
 
 
     @GetMapping("/events")
@@ -70,6 +76,7 @@ public class EventController {
 
     @PostMapping("/books/{book_id}/event")
     public void createEvent(@PathVariable("book_id") long bookId, @RequestBody Event event){
+//        Event eventUrl = new Event();
         eventService.addEvent(bookId,event);
     }
 
