@@ -1,6 +1,7 @@
 package com.codecool.bookclub.book.model;
 
 import com.codecool.bookclub.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,15 +15,16 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "user_book")
-public class UserBook {
+@Table
+public class BookDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Book book;
-    @ManyToOne
+    @JsonIgnoreProperties
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private Shelf shelf;
-    private BigDecimal userRating;
+    private Integer userRating;
 }

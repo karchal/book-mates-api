@@ -10,4 +10,10 @@ insert into book (title, author, description, pages, picture_url, rating, year)
 values ('451 stopni Fahrenheita', 'Ray Bradbury', 'Przerażająco prorocza powieść o przyszłości w świecie bez książek', 152, 'https://s.lubimyczytac.pl/upload/books/251000/251265/371262-352x500.jpg', 7.6, 2018);
 insert into book (title, author, description, pages, picture_url, rating, year)
 values ('Wiedźmin. Ostatnie życzenie', 'Andrzej Sapkowski', 'Pierwsza książka z cyklu o Wiedźminie wprowadza nas w świat stworzony przez Sapkowskiego.', 330, 'https://s.lubimyczytac.pl/upload/books/240000/240310/490965-352x500.jpg', 8.4, 2014);
+insert into book (title, author, description, pages, picture_url, rating, year)
+values ('Zanim wystygnie kawa', 'Toshikazu Kawaguchi', 'Mała kawiarnia w Tokio pozwala swoim gościom na podróż w czasie. Pod warunkiem, że wrócą, zanim wystygnie kawa.', 219, 'https://s.lubimyczytac.pl/upload/books/5017000/5017747/984776-352x500.jpg', 7.0, 2022);
+insert into book (title, author, description, pages, picture_url, rating, year)
+values ('Fakty muszą zatańczyć', 'Mariusz Szczygieł', 'Nowa książka Mariusza Szczygła jest esejem napisanym z miłości do reportażu. To lektura dla wszystkich, którzy kochają ten gatunek oraz dla tych, którzy mają wątpliwości, czy jest wiarygodny, a także poradnik dla tych, którzy sami chcą pisać.', 400, 'https://s.lubimyczytac.pl/upload/books/5013000/5013390/978467-352x500.jpg', 7.2, 2022);
+insert into book (title, author, description, pages, picture_url, rating, year)
+values ('Secretum', 'Katarzyna Grzegrzółka', 'Mroczny, niepokojący kryminał, który sprawi, że zwątpicie w dobre intencje któregokolwiek z bohaterów. Czy każdy jest tym, za kogo się podaje? Jakie relacje faktycznie łączą poszczególne osoby? Czy można zaufać komukolwiek?', 316, 'https://s.lubimyczytac.pl/upload/books/4993000/4993296/943986-352x500.jpg', 7.7, 2021);
 
