@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -48,9 +49,10 @@ public class BookController {
 //        }
     }
 
-    @GetMapping("/books/{query}")
+    @GetMapping("/books/search/{query}")
     public List<Book> searchBooks(@PathVariable String query) {
-        return bookService.searchBooks(query);
+        return List.of(new Book(54L, "Blabla", "AA", 1989, "cos tam", "http://books.google.com/books/content?id=KFjSDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", 345, BigDecimal.valueOf(5.6)));
+//        return bookService.searchBooks(query);
     }
 
 }

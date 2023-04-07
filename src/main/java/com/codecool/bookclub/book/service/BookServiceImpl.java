@@ -1,16 +1,15 @@
 package com.codecool.bookclub.book.service;
+
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.googleapi.ReturnResults;
 import com.codecool.bookclub.googleapi.VolumeInfo;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
 
 import java.util.List;
 
@@ -58,6 +57,9 @@ class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> searchBooks(String query) {
+       ReturnResults results = callApi(query);
+       VolumeInfo volumeInfo = retreiveVolumeInfo(results);
+
         return null;
     }
 
