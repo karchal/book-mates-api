@@ -52,7 +52,7 @@ public class TopicService {
                 .collect(Collectors.toList());
     }
 
-    private TopicDto convertToDto(Topic topic) {
+    private TopicDto convertToDto(Topic topic) { //toDtoMapper fromDtoMapper
         return TopicDto.builder()
                 .id(topic.getId())
                 .bookId(topic.getBook().getId())

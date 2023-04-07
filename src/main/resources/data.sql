@@ -1,5 +1,18 @@
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (39, '2023-03-28 12:00:00.000000', 'Wspólne czytanie', '2023-04-05 18:00:00.000000', 15, 'Wspólne czytanie', 'https://s.lubimyczytac.pl/upload/books/240000/240310/490965-352x500.jpg', 1, null, null);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (40, '2023-03-28 12:00:00.000000', 'Wspólne czytanie', '2023-04-05 18:00:00.000000', 15, 'Wspólne czytanie', 'https://s.lubimyczytac.pl/upload/books/148000/148887/352x500.jpg', 1, null, null);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('Gdzie śpiewają raki', 'Delia Owens', 'Światowa sensacja, bijący wszelkie rekordy fenomen, który przykuł uwagę ponad 13 milionów czytelników.
+Pogłoski o Dziewczynie z Bagien latami krążyły po Barkley Cove, sennym miasteczku u wybrzeży Karoliny Północnej. Dlatego pod koniec 1969 roku, gdy na mokradłach znaleziono ciało przystojnego Chase’a Andrewsa, miejscowi zwrócili się przeciwko Kyi Clark, zwanej Dziewczyną z Bagien.
+Lecz Kya nie jest taka, jak o niej szepczą. Wrażliwa i inteligentna, zdołała sama przetrwać wiele lat na bagnach, które nazywa domem, choć jej ciało tęskniło za dotykiem i miłością. Przyjaźni szukała u mew, a wiedzę czerpała z natury. Kiedy dzikie piękno dziewczyny intryguje dwóch młodych mężczyzn z miasteczka, Kya otwiera się na nowe doznania — i dzieją się rzeczy niewyobrażalne.', 416, 'https://s.lubimyczytac.pl/upload/books/5019000/5019183/1045632-352x500.jpg', 7.9, 2023);
+insert into book (title, author, description,  pages, picture_url, rating, year) values ('Opowieści o pilocie Pirxie', 'Stanisław Lem', 'Jedna z najbardziej znanych i lubianych książek Lema', 515, 'https://s.lubimyczytac.pl/upload/books/148000/148887/352x500.jpg', 7.9, 2012);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('Wyspa Robinsona', 'Arkady Fiedler', 'Piękna powieść przygodowa dla młodzieży', 246, 'https://static2.tezeusz.pl/recommended_big/images/7d/cf/2d//72c1d83faaff7a6feb368baa89f17e2bdbf8ea61.jpeg', 6.5, 1973);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('451 stopni Fahrenheita', 'Ray Bradbury', 'Przerażająco prorocza powieść o przyszłości w świecie bez książek', 152, 'https://s.lubimyczytac.pl/upload/books/251000/251265/371262-352x500.jpg', 7.6, 2018);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('Wiedźmin. Ostatnie życzenie', 'Andrzej Sapkowski', 'Pierwsza książka z cyklu o Wiedźminie wprowadza nas w świat stworzony przez Sapkowskiego.', 330, 'https://s.lubimyczytac.pl/upload/books/240000/240310/490965-352x500.jpg', 8.4, 2014);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('Zanim wystygnie kawa', 'Toshikazu Kawaguchi', 'Mała kawiarnia w Tokio pozwala swoim gościom na podróż w czasie. Pod warunkiem, że wrócą, zanim wystygnie kawa.', 219, 'https://s.lubimyczytac.pl/upload/books/5017000/5017747/984776-352x500.jpg', 7.0, 2022);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('Fakty muszą zatańczyć', 'Mariusz Szczygieł', 'Nowa książka Mariusza Szczygła jest esejem napisanym z miłości do reportażu. To lektura dla wszystkich, którzy kochają ten gatunek oraz dla tych, którzy mają wątpliwości, czy jest wiarygodny, a także poradnik dla tych, którzy sami chcą pisać.', 400, 'https://s.lubimyczytac.pl/upload/books/5013000/5013390/978467-352x500.jpg', 7.2, 2022);
+insert into book (title, author, description, pages, picture_url, rating, year) values ('Secretum', 'Katarzyna Grzegrzółka', 'Mroczny, niepokojący kryminał, który sprawi, że zwątpicie w dobre intencje któregokolwiek z bohaterów. Czy każdy jest tym, za kogo się podaje? Jakie relacje faktycznie łączą poszczególne osoby? Czy można zaufać komukolwiek?', 316, 'https://s.lubimyczytac.pl/upload/books/4993000/4993296/943986-352x500.jpg', 7.7, 2021);
+
+insert into reader (creation_date, password, username) values ('2018-03-28T12:00', 'admin', 'admin');
+insert into reader (creation_date, password, username) values ('2018-03-28T13:00', 'admin1', 'admin1');
+insert into reader (creation_date, password, username) values ('2018-03-28T13:00', 'admin2', 'admin2');
+
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (55, '2023-04-03 16:02:06.010885', '', '2023-04-03 14:02:03.336000', null, '', '', 1, null, null);
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (56, '2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, 'dsadfa', 'sadfasdf', 5, null, null);
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (57, '2023-04-03 16:07:36.519647', '', '2023-04-03 14:07:32.032000', null, '', null, 1, null, null);
@@ -48,3 +61,29 @@ INSERT INTO public.event (id, creation_date_and_time, description, event_date, m
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (100, '2023-04-05 11:41:19.541736', 'sadasd', '2023-04-05 11:41:14.518000', 12, 'asdasd', null, 2, null, 1);
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (101, '2023-04-05 11:50:38.419115', 'teraz dodałam', '2023-04-05 11:50:23.892000', 12, 'teraz dodałam', null, 2, null, 3);
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (102, '2023-04-06 14:04:34.640760', 'dfgfdg', '2023-04-06 14:04:24.775000', 2, 'dg', null, 1, null, 1);
+
+
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 1, 1);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 9, 2, 1);
+insert into book_details (shelf, book_id, user_id) values (2, 3, 1);
+insert into book_details (shelf, user_rating, book_id, user_id) values (3, 9, 5, 1);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 7, 1, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 2, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (4, 7, 3, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (4, 8, 4, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (4, 8, 5, 2);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 1, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 2, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 3, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 4, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 5, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 6, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 7, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 8, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 7, 3);
+insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 8, 3);
+
+insert into topic (creation_time, message, title, author_id ,book_id)
+values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,1);
+insert into topic (creation_time, message, title, author_id ,book_id)
+values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,2);
