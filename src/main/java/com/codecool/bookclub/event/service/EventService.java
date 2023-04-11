@@ -2,16 +2,20 @@ package com.codecool.bookclub.event.service;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.repository.EventPaginationRepository;
 import com.codecool.bookclub.event.repository.EventRepository;
+import com.codecool.bookclub.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService{
@@ -27,16 +31,16 @@ public class EventService{
         this.paginationRepository = paginationRepository;
     }
 
-    public List<Event> getAllEvents(){
-        return eventRepository.findAll(Sort.by(Sort.Direction.DESC, "creationDateAndTime"));
+    public List<EventDto> getAllEvents(){
+        return eventRepository.findAll(Sort.by(Sort.Direction.DESC, "creationDateAndTime")).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Page<Event> findAllEvents(Pageable paging){
-        return paginationRepository.findAll(paging);
+    public Page<EventDto> findAllEvents(Pageable paging){
+        return paginationRepository.findAll(paging).map(this::convertToDto);
     }
 
-    public Event getEventById(long eventId){
-        return eventRepository.findEventById(eventId);
+    public EventDto getEventById(long eventId){
+        return  convertToDto(eventRepository.findEventById(eventId)) ;
     }
 
     public void addEvent(long bookId, Event event){
@@ -54,7 +58,7 @@ public class EventService{
 
     public void updateEventById(long eventId,Event event){
         if (getEventById(eventId) != null){
-            Event updatedEvent = getEventById(eventId);
+            Event updatedEvent = eventRepository.findById(eventId).orElse(new Event());  // ?
             updatedEvent.setTitle(event.getTitle());
             updatedEvent.setDescription(event.getDescription());
             updatedEvent.setEventDate(event.getEventDate());
@@ -64,7 +68,29 @@ public class EventService{
         }
     }
 
-    public List<Event> findTopFourEvents() {
-        return eventRepository.findFirst4ByOrderByCreationDateAndTimeDesc();
+    public List<EventDto> findTopFourEvents() {
+        return eventRepository.findFirst4ByOrderByCreationDateAndTimeDesc()
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public EventDto convertToDto(Event event){
+        return EventDto.builder()
+                .id(event.getId())
+                .eventType(event.getEventType())
+                .eventDate(event.getEventDate())
+                .title(event.getTitle())
+                .pictureUrl(event.getBook().getPictureUrl())
+                .creationDateAndTime(event.getCreationDateAndTime())
+                .url(event.getUrl())
+                .description(event.getDescription())
+                .maxParticipants(event.getMaxParticipants())
+                .organizerId(event.getOrganizer().getId())
+                .participantId(event.getParticipants().stream().map(User::getId).collect(Collectors.toList()))
+                .bookId(event.getBook().getId())
+                .bookTitle(event.getBook().getTitle())
+                .bookAuthor(event.getBook().getAuthor())
+                .build();
     }
 }
