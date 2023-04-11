@@ -52,7 +52,7 @@ public class TopicService {
                 .collect(Collectors.toList());
     }
 
-    private TopicDto convertToDto(Topic topic) { //toDtoMapper fromDtoMapper
+    public TopicDto convertToDto(Topic topic) { //toDtoMapper fromDtoMapper
         return TopicDto.builder()
                 .id(topic.getId())
                 .bookId(topic.getBook().getId())
@@ -62,6 +62,8 @@ public class TopicService {
                 .title(topic.getTitle())
                 .authorName(topic.getAuthor().getUsername())
                 .creationTime(topic.getCreationTime())
+                .authorId(topic.getAuthor().getId())
+                .numberOfComments(topic.getComments().size())
                 .build();
     }
 }
