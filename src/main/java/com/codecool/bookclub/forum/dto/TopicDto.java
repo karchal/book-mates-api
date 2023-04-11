@@ -16,7 +16,10 @@ public class TopicDto {
     private String bookTitle;
     private String bookAuthor;
     private String title;
+    private long authorId;
     private String authorName;
     private LocalDateTime creationTime;
+
+    private int numberOfComments;
 
 }
