@@ -2,6 +2,7 @@ package com.codecool.bookclub.book.service;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.googleapi.GoogleApiBook;
 import com.codecool.bookclub.googleapi.ReturnResults;
 import com.codecool.bookclub.googleapi.VolumeInfo;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 class BookServiceImpl implements BookService {
@@ -58,9 +61,7 @@ class BookServiceImpl implements BookService {
     @Override
     public List<Book> searchBooks(String query) {
        ReturnResults results = callApi(query);
-       VolumeInfo volumeInfo = retreiveVolumeInfo(results);
-
-        return null;
+       return results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
     }
 
     public ReturnResults callApi(String query) {
@@ -72,13 +73,22 @@ class BookServiceImpl implements BookService {
                 .retrieve()
                 .bodyToMono(ReturnResults.class)
                 .block();
-        System.out.println(results);
         return results;
     }
 
-    private VolumeInfo retreiveVolumeInfo(ReturnResults results) {
 
-        return null;
+    public Book convertToBook(GoogleApiBook googleApiBook) {
+        return Book.builder()
+                .externalId(googleApiBook.getId())
+                .title(googleApiBook.getVolumeInfo().getTitle())
+                .author(googleApiBook.getVolumeInfo().getAuthors() != null && googleApiBook.getVolumeInfo().getAuthors().size() > 0 ?
+                        googleApiBook.getVolumeInfo().getAuthors().get(0) : null)
+                .year(Integer.parseInt(googleApiBook.getVolumeInfo().getPublishedDate().substring(0, 3)))
+                .description(googleApiBook.getVolumeInfo().getDescription())
+                .pictureUrl(googleApiBook.getVolumeInfo().getImageLinks() != null ? googleApiBook.getVolumeInfo().getImageLinks().getSmallThumbnail() : null)
+                .pages(googleApiBook.getVolumeInfo().getPageCount())
+                .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() * 2 : 0))
+                .build();
     }
 
 

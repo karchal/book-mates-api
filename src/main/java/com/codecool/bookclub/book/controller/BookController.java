@@ -51,10 +51,8 @@ public class BookController {
     }
 
     @GetMapping("/books/search/{query}")
-    public ReturnResults searchBooks(@PathVariable String query) {
-//        return List.of(new Book(54L, "Blabla", "AA", 1989, "cos tam", "http://books.google.com/books/content?id=KFjSDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", 345, BigDecimal.valueOf(5.6)));
-//        return bookService.searchBooks(query);
-        return bookService.callApi(query);
+    public List<Book> searchBooks(@PathVariable String query) {
+        return bookService.searchBooks(query);
     }
 
 }
