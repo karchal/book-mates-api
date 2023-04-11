@@ -28,9 +28,9 @@ public class User {
     private LocalDateTime creationDate;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<BookDetails> booksDetails;
-    @ManyToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author")
     private List<Topic> topics;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "participants")
     private List<Event> events;
     @ManyToMany
     private List<Comment> comments;
