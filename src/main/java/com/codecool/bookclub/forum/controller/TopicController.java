@@ -1,5 +1,6 @@
 package com.codecool.bookclub.forum.controller;
 
+import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.service.TopicService;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,9 @@ public class TopicController {
     }
 
     @GetMapping("/topics/top_4")
-    public List<Topic> getTop4Topics(){
-        List<Topic> topics= topicService.getTopFourTopics();
-        return new ResponseEntity<>(topics, HttpStatus.OK).getBody();
+    public ResponseEntity<List<TopicDto>> getTop4Topics(){
+        List<TopicDto> topics= topicService.getTopFourTopics();
+        return new ResponseEntity<>(topics, HttpStatus.OK);
     }
     @GetMapping("/topics")
     public List<Topic> getAllTopics(){

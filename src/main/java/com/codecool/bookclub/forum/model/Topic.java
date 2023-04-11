@@ -34,6 +34,6 @@ public class Topic {
     private Book book;
     @OneToMany(fetch = FetchType.LAZY) //mappedBy = "topic",
     private List<Comment> comments;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 }

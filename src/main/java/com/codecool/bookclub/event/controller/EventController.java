@@ -1,11 +1,10 @@
 package com.codecool.bookclub.event.controller;
 
-import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.service.BookService;
+import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.model.EventType;
 import com.codecool.bookclub.event.service.EventService;
-import org.hibernate.type.EnumType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,29 +56,29 @@ public class EventController {
 
 
     @GetMapping("/events/{event_id}")
-    public ResponseEntity<Event> getEventById( @PathVariable("event_id") long eventId) {
-        Event event = eventService.getEventById(eventId);
+    public ResponseEntity<EventDto> getEventById( @PathVariable("event_id") long eventId) {
+        EventDto event = eventService.getEventById(eventId);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
     @GetMapping("/events/all")
-    public List<Event> getEvents(){
-        List<Event> events = eventService.getAllEvents();
-        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
+    public ResponseEntity<List<EventDto>> getEvents(){
+        List<EventDto> events = eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
 
 
     @GetMapping("/events")
-    public Page<Event> getALlEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
+    public Page<EventDto> getALlEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
         Pageable paging = PageRequest.of(page,size, Sort.by("creationDateAndTime").descending());
 //        List<Event> events = eventService.getAllEvents();
 //        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
         return eventService.findAllEvents(paging);
     }
     @GetMapping("/events/top_4")
-    public List<Event> getFourEvents(){
-        List<Event> events = eventService.findTopFourEvents();
+    public List<EventDto> getFourEvents(){
+        List<EventDto> events = eventService.findTopFourEvents();
         return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 

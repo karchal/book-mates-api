@@ -2,6 +2,7 @@ package com.codecool.bookclub.event.model;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,6 +28,7 @@ public class Event {
     @ManyToOne
     private Book book;
     private String title;
+    @Column(length = 4000)
     private String description;
     private ZonedDateTime eventDate;
 
@@ -36,7 +38,8 @@ public class Event {
     private User organizer;
     private Integer maxParticipants;
 
-    @ManyToMany
+    @JsonIgnoreProperties
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<User> participants;
 
     @ManyToMany
