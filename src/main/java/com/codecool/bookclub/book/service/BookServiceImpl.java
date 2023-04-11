@@ -63,7 +63,7 @@ class BookServiceImpl implements BookService {
         return null;
     }
 
-    private ReturnResults callApi(String query) {
+    public ReturnResults callApi(String query) {
         String apiUrl = "https://www.googleapis.com/books/v1/volumes?q="+ query + "&key=" + apiKey + "&maxResults=20";
         WebClient.Builder builder = WebClient.builder();
         ReturnResults results = builder.build()
@@ -72,11 +72,12 @@ class BookServiceImpl implements BookService {
                 .retrieve()
                 .bodyToMono(ReturnResults.class)
                 .block();
-
-               return results;
+        System.out.println(results);
+        return results;
     }
 
     private VolumeInfo retreiveVolumeInfo(ReturnResults results) {
+
         return null;
     }
 

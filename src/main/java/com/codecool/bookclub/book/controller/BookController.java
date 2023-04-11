@@ -2,6 +2,7 @@ package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.service.BookService;
+import com.codecool.bookclub.googleapi.ReturnResults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,9 +51,10 @@ public class BookController {
     }
 
     @GetMapping("/books/search/{query}")
-    public List<Book> searchBooks(@PathVariable String query) {
-        return List.of(new Book(54L, "Blabla", "AA", 1989, "cos tam", "http://books.google.com/books/content?id=KFjSDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", 345, BigDecimal.valueOf(5.6)));
+    public ReturnResults searchBooks(@PathVariable String query) {
+//        return List.of(new Book(54L, "Blabla", "AA", 1989, "cos tam", "http://books.google.com/books/content?id=KFjSDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", 345, BigDecimal.valueOf(5.6)));
 //        return bookService.searchBooks(query);
+        return bookService.callApi(query);
     }
 
 }
