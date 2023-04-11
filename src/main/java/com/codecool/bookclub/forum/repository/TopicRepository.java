@@ -15,5 +15,7 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
 
     List<Topic> findFirst4ByOrderByCreationTimeDesc();
 
+    List<Topic> findAllByAuthorId(long authorId);
+
 }
 
