@@ -1,6 +1,7 @@
 package com.codecool.bookclub.book.service;
 
 import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.googleapi.GoogleApiBook;
 import com.codecool.bookclub.googleapi.ReturnResults;
@@ -14,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -93,5 +95,9 @@ class BookServiceImpl implements BookService {
 
 
 //    TODO: methods to serve searching in GoogleApi - one book and books by search param
+    public Book saveBookToShelf(Book book, Shelf shelf) {
+        Optional<Book> bookInDb = bookRepository.findByExternalId(book.getExternalId());
+        return bookInDb.orElseGet(() -> bookRepository.save(book));
+    }
 
 }

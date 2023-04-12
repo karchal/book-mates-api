@@ -1,6 +1,7 @@
 package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.googleapi.ReturnResults;
 import org.springframework.http.HttpStatus;
@@ -54,5 +55,11 @@ public class BookController {
     public List<Book> searchBooks(@PathVariable String query) {
         return bookService.searchBooks(query);
     }
+
+    @PostMapping("/book/{shelf}")
+    public void addToShelf(Book book, @PathVariable Shelf shelf) {
+        bookService.saveBookToShelf(book, shelf);
+    }
+
 
 }
