@@ -1,6 +1,6 @@
-package com.codecool.bookclub.config;
+package com.codecool.bookclub.jwt;
 
-import com.codecool.bookclub.security.JwtService;
+import com.codecool.bookclub.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

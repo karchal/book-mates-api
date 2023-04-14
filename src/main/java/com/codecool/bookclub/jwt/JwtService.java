@@ -1,4 +1,4 @@
-package com.codecool.bookclub.security;
+package com.codecool.bookclub.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
