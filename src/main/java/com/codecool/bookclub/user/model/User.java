@@ -36,8 +36,7 @@ public class User implements UserDetails {
     private List<Event> events;
     @ManyToMany
     private List<Comment> comments;
-    @ManyToMany
-    private Set<Role> roles;
+    private Role role;
 
     public User(String username, String password) {
         this.username = username;
@@ -46,11 +45,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role: roles){
-            authorities.add(new SimpleGrantedAuthority(role.getRoleType().name()));
-        }
-        return authorities;
+        return List.<GrantedAuthority>of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
