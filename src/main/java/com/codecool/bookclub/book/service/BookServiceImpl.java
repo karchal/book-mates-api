@@ -87,7 +87,7 @@ class BookServiceImpl implements BookService {
                         googleApiBook.getVolumeInfo().getAuthors().get(0) : null)
                 .year(Integer.parseInt(googleApiBook.getVolumeInfo().getPublishedDate().substring(0, 4)))
                 .description(googleApiBook.getVolumeInfo().getDescription())
-                .pictureUrl(googleApiBook.getVolumeInfo().getImageLinks() != null ? googleApiBook.getVolumeInfo().getImageLinks().getSmallThumbnail() : null)
+                .pictureUrl(googleApiBook.getVolumeInfo().getImageLinks() != null ? googleApiBook.getVolumeInfo().getImageLinks().getThumbnail() : null)
                 .pages(googleApiBook.getVolumeInfo().getPageCount())
                 .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() * 2 : 0))
                 .build();

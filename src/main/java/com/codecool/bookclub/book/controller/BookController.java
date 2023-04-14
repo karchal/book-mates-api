@@ -51,6 +51,7 @@ public class BookController {
 //        }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/books/search/{query}")
     public List<Book> searchBooks(@PathVariable String query) {
         return bookService.searchBooks(query);
