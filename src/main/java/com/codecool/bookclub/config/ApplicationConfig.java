@@ -12,13 +12,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UserRepository userRepository;
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        //implementing UserDetailsService it is necessary and sufficient to implement loadUserByUsername, that's why we use lambda expression
-        return username -> userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+//    private final UserRepository userRepository;
+//
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        //implementing UserDetailsService it is necessary and sufficient to implement loadUserByUsername, that's why we use lambda expression
+//        return username -> userRepository
+//                .findByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//    }
 }
