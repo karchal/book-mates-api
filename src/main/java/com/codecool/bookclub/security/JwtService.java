@@ -38,13 +38,13 @@ public class JwtService {
             UserDetails userDetails
     ) {
         return Jwts
-                .builder()
+                .builder() // Returns a new JwtBuilder instance that can be configured and then used to create JWT compact serialized strings.
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 3600)) // 1h
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // Signs the constructed JWT with the specified key using the specified algorithm, producing a JWS (but return type is JwtBuilder)
+                .compact(); // Actually builds the JWS and serializes it to a compact, URL-safe string according to the JWT Compact Serialization  rules.
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -63,13 +63,13 @@ public class JwtService {
     private Claims extractAllClaims(String token){
         return Jwts
                 .parserBuilder()
-                .setSigningKey(getSignInKey())
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Key getSignInKey() {
+    private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
