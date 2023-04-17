@@ -29,7 +29,12 @@ public class SecurityConfiguration {
                 .disable()
                 // white list - requests that don't need to be authenticated
                 .authorizeHttpRequests()
-                .requestMatchers("/api/authentication/**", "/api/books/**")
+                .requestMatchers(
+                        "/api/authentication/**",
+                        "/api/books/**",
+                        "/api/events/**",
+                        "/api/topics/**"
+                )
                 .permitAll()
                 // any other request should be authenticated
                 .anyRequest()
