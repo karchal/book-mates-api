@@ -11,7 +11,7 @@ insert into book (title, author, description, pages, picture_url, rating, year) 
 
 insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T12:00', 'admin@bm.pl', '$2a$10$vG4nnG2eKe.FRAAOwxjZN.v/7iu9Yz4Y7.Agetvy4fdf0xh9d4s.C', 'admin', 'ADMIN');
 insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'moderator@bm.pl', '$2a$10$C./EkLRzRhvgQkeuZRaK9eKMvRS5NexIwuXXKIcoT1hu2PEXjDqTe', 'moderator', 'MODERATOR');
-insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'user@bm.pl', '$2a$10$47f2yfX21Xn/KGdj.QIDweVr9P6kpYOg4ROlfpA768Qqi0nfDElmm', 'user', 'USER');
+insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'user@bm.pl', '$2a$10$47f2yfX21Xn/KGdj.QIDweVr9P6kpYOg4ROlfpA768Qqi0nfDElmm', 'user', 'READER');
 
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (55, '2023-04-03 16:02:06.010885', '', '2023-04-03 14:02:03.336000', null, '', '', 1, 2, null);
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (56, '2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, 'dsadfa', 'sadfasdf', 5, 2, null);
