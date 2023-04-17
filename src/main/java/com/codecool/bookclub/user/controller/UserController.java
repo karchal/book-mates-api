@@ -2,12 +2,9 @@ package com.codecool.bookclub.user.controller;
 
 import com.codecool.bookclub.book.dto.BookDetailsDto;
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.event.dto.EventDto;
-import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Comment;
-import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -37,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}/events")
-    public ResponseEntity<List<EventDto>>  getUserEvents(@PathVariable("user_id") long userId){
+    public ResponseEntity<List<EventDto>> getUserEvents(@PathVariable("user_id") long userId){
         return new ResponseEntity<>(userService.getUserEvents(userId), HttpStatus.OK);
     }
 
@@ -50,7 +46,6 @@ public class UserController {
     public List<Comment> getUserComments(@PathVariable("user_id") long userId){
         return userService.getUserComments(userId);
     }
-
 
     @GetMapping("/users/{user_id}/shelves/{shelf_id}")
     public List<Book> getUserShelf(@PathVariable("user_id") long userId, @PathVariable("shelf_id") long shelfId){
@@ -71,9 +66,6 @@ public class UserController {
     public User getUserById(@PathVariable("user_id") long userId){
         return userService.getUserById(userId).get();
     }
-
-
-
 
     @DeleteMapping("/user/{user_id}")
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
