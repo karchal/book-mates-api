@@ -35,16 +35,16 @@ public class SecurityConfiguration {
                         "/api/events/**",
                         "/api/topics/**"
                 )
-                .permitAll()
+                    .permitAll()
                 // any other request should be authenticated
                 .anyRequest()
-                .authenticated()
+                    .authenticated()
                 // we don't want to store the authentication/session state, the session should be stateless
                 // we want authenticate any subsequent request that require authentication
                 // we need to configure the session management
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Spring Security will never create an HttpSession and it will never use it to obtain the SecurityContext
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Spring Security will never create an HttpSession and it will never use it to obtain the SecurityContext
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
