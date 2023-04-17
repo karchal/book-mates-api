@@ -61,6 +61,7 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/events/all")
     public ResponseEntity<List<EventDto>> getEvents(){
         List<EventDto> events = eventService.getAllEvents();
