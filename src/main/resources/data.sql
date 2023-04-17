@@ -9,9 +9,9 @@ insert into book (title, author, description, pages, picture_url, rating, year) 
 insert into book (title, author, description, pages, picture_url, rating, year) values ('Fakty muszą zatańczyć', 'Mariusz Szczygieł', 'Nowa książka Mariusza Szczygła jest esejem napisanym z miłości do reportażu. To lektura dla wszystkich, którzy kochają ten gatunek oraz dla tych, którzy mają wątpliwości, czy jest wiarygodny, a także poradnik dla tych, którzy sami chcą pisać.', 400, 'https://s.lubimyczytac.pl/upload/books/5013000/5013390/978467-352x500.jpg', 7.2, 2022);
 insert into book (title, author, description, pages, picture_url, rating, year) values ('Secretum', 'Katarzyna Grzegrzółka', 'Mroczny, niepokojący kryminał, który sprawi, że zwątpicie w dobre intencje któregokolwiek z bohaterów. Czy każdy jest tym, za kogo się podaje? Jakie relacje faktycznie łączą poszczególne osoby? Czy można zaufać komukolwiek?', 316, 'https://s.lubimyczytac.pl/upload/books/4993000/4993296/943986-352x500.jpg', 7.7, 2021);
 
-insert into reader (creation_date, password, username) values ('2018-03-28T12:00', 'admin', 'admin');
-insert into reader (creation_date, password, username) values ('2018-03-28T13:00', 'admin1', 'admin1');
-insert into reader (creation_date, password, username) values ('2018-03-28T13:00', 'admin2', 'admin2');
+insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T12:00', 'admin@bm.pl', '$2a$10$vG4nnG2eKe.FRAAOwxjZN.v/7iu9Yz4Y7.Agetvy4fdf0xh9d4s.C', 'admin', 'ADMIN');
+insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'moderator@bm.pl', '$2a$10$C./EkLRzRhvgQkeuZRaK9eKMvRS5NexIwuXXKIcoT1hu2PEXjDqTe', 'moderator', 'MODERATOR');
+insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'user@bm.pl', '$2a$10$47f2yfX21Xn/KGdj.QIDweVr9P6kpYOg4ROlfpA768Qqi0nfDElmm', 'user', 'USER');
 
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (55, '2023-04-03 16:02:06.010885', '', '2023-04-03 14:02:03.336000', null, '', '', 1, 2, null);
 INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, organizer_id, event_type) VALUES (56, '2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, 'dsadfa', 'sadfasdf', 5, 2, null);
@@ -104,7 +104,7 @@ insert into event_participants (events_id, participants_id)
 values (69,3);
 
 insert into comment (creation_time, message, author_id, topic_id)
-values ('2023-03-28T12:00', 'nie wiem', 2, 3)
+values ('2023-03-28T12:00', 'nie wiem', 2, 3);
 
 insert into topic_comments (topic_id, comments_id)
 values (3,1)
