@@ -64,11 +64,6 @@ public class UserService {
         }).orElse(false);
     }
 
-    public void addUser(String username, String password){
-        userRepository.save(new User(username, password));
-    }
-
-
     public List<BookDetailsDto> getUserBooks(long userId) {
         return bookDetailsRepository.findAllByUserId(userId)
                 .stream()
