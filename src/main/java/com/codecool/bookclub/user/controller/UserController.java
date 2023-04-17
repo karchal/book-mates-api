@@ -73,10 +73,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/register")
-    public void registerUser(@RequestBody User user){
-        userService.addUser(user.getUsername(), user.getPassword());
-    }
+
 
     @DeleteMapping("/user/{user_id}")
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
