@@ -38,17 +38,23 @@ public class BookController {
         return "Rate a book";
     }
 
+//    @GetMapping("/books")
+//    public ResponseEntity<List<Book>> getAll(@RequestParam(value = "author", required = false) String author,
+//                                             @RequestParam(value = "title", required = false) String title,
+//                                             @RequestParam(value = "genre", required = false) String genre,
+//                                             @RequestParam(value="amount", required = false) int amount) {
+//        List<Book> books = bookService.findTopFourBooks();
+////        if (books == null) {
+////            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+////        } else {
+//            return new ResponseEntity<>(books, HttpStatus.OK);
+////        }
+//    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/books")
-    public ResponseEntity<List<Book>> getAll(@RequestParam(value = "author", required = false) String author,
-                                             @RequestParam(value = "title", required = false) String title,
-                                             @RequestParam(value = "genre", required = false) String genre,
-                                             @RequestParam(value="amount", required = false) int amount) {
-        List<Book> books = bookService.findTopFourBooks();
-//        if (books == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-            return new ResponseEntity<>(books, HttpStatus.OK);
-//        }
+    public List<Book> showBooks() {
+        return bookService.getAllBooks();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
