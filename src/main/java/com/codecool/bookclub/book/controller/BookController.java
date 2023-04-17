@@ -3,12 +3,10 @@ package com.codecool.bookclub.book.controller;
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
-import com.codecool.bookclub.googleapi.ReturnResults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -66,6 +64,11 @@ public class BookController {
     @PostMapping("/book/{shelf}")
     public void addToShelf(Book book, @PathVariable Shelf shelf) {
         bookService.saveBookToShelf(book, shelf);
+    }
+
+    @GetMapping("books/by_title")
+    public List<Book> searchByTitle(@RequestParam String title) {
+        return bookService.getBooksByTitle(title);
     }
 
 
