@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     Book findBookById(long id);
@@ -18,4 +19,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAll();
 
     List<Book> findFirst4ByOrderByRatingDesc();
+
+    Optional<Book> findByExternalId(String externalId);
+
 }
