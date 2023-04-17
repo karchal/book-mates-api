@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    //@Value("${secret.key}")
-    private static final String SECRET_KEY = "482B4D6251655468576D5A7134743777217A25432646294A404E635266556A58";
+    @Value("${secret.key}")
+    private String secretKey;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -40,7 +41,7 @@ public class JwtService {
         return Jwts
                 .builder() // Returns a new JwtBuilder instance that can be configured and then used to create JWT compact serialized strings.
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getUsername()) // method getUsername (from User class) returns email
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 3600)) // 1h
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256) // Signs the constructed JWT with the specified key using the specified algorithm, producing a JWS (but return type is JwtBuilder)
@@ -61,7 +62,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts
+        return Jwts // Factory class useful for creating instances of JWT interfaces
                 .parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
@@ -70,7 +71,7 @@ public class JwtService {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
