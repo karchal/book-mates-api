@@ -60,7 +60,7 @@ public class TopicService {
                 .bookTitle(topic.getBook().getTitle())
                 .bookAuthor(topic.getBook().getAuthor())
                 .title(topic.getTitle())
-                .authorName(topic.getAuthor().getUsername())
+                .authorName(topic.getAuthor().getNickname())
                 .creationTime(topic.getCreationTime())
                 .authorId(topic.getAuthor().getId())
                 .numberOfComments(topic.getComments().size())

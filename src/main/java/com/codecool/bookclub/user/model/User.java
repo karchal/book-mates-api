@@ -7,6 +7,7 @@ import com.codecool.bookclub.forum.model.Topic;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,9 +25,10 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String nickname;
     private String email;
     private String password;
+    @CreationTimestamp
     private LocalDateTime creationDate;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<BookDetails> booksDetails;
@@ -36,16 +38,17 @@ public class User implements UserDetails {
     private List<Event> events;
     @ManyToMany
     private List<Comment> comments;
+    @Enumerated(EnumType.STRING)
     private Role role;
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.<GrantedAuthority>of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

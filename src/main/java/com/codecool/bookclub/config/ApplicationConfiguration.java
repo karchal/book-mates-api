@@ -23,7 +23,7 @@ public class ApplicationConfiguration {
         //to implement UserDetailsService it is necessary and sufficient to implement loadUserByUsername,
         // but instead of returning a class with overridden method we use lambda expression
         return username -> userRepository
-                .findByUsername(username)
+                .findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
