@@ -1,4 +1,4 @@
-package com.codecool.bookclub.jwt;
+package com.codecool.bookclub.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -62,7 +62,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts // Factory class useful for creating instances of JWT interfaces
+        return Jwts
                 .parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()

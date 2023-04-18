@@ -28,18 +28,18 @@ public class User implements UserDetails {
     private String nickname;
     private String email;
     private String password;
-    @CreationTimestamp
-    private LocalDateTime creationDate;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private List<BookDetails> booksDetails;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author")
-    private List<Topic> topics;
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "participants")
-    private List<Event> events;
-    @ManyToMany
-    private List<Comment> comments;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @CreationTimestamp
+    private LocalDateTime creationDate;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<BookDetails> booksDetails;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+    private List<Topic> topics;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "participants")
+    private List<Event> events;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+    private List<Comment> comments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

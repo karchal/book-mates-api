@@ -32,7 +32,7 @@ public class Topic {
     private LocalDateTime creationTime;
     @ManyToOne
     private Book book;
-    @OneToMany(fetch = FetchType.LAZY) //mappedBy = "topic",
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "topic")
     private List<Comment> comments;
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;

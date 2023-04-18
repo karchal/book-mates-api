@@ -1,12 +1,11 @@
-package com.codecool.bookclub.user.service;
+package com.codecool.bookclub.security.authentication;
 
-import com.codecool.bookclub.jwt.JwtService;
-import com.codecool.bookclub.user.controller.AuthenticationRequest;
-import com.codecool.bookclub.user.controller.AuthenticationResponse;
-import com.codecool.bookclub.user.controller.RegisterRequest;
+import com.codecool.bookclub.security.jwt.JwtService;
+import com.codecool.bookclub.security.authentication.AuthenticationRequest;
+import com.codecool.bookclub.security.authentication.AuthenticationResponse;
+import com.codecool.bookclub.security.authentication.RegisterRequest;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

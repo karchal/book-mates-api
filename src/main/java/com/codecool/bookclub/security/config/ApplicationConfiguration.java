@@ -1,4 +1,4 @@
-package com.codecool.bookclub.config;
+package com.codecool.bookclub.security.config;
 
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,6 @@ public class ApplicationConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        //to implement UserDetailsService it is necessary and sufficient to implement loadUserByUsername,
-        // but instead of returning a class with overridden method we use lambda expression
         return username -> userRepository
                 .findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

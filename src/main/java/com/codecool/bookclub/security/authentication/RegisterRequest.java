@@ -1,4 +1,4 @@
-package com.codecool.bookclub.user.controller;
+package com.codecool.bookclub.security.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class RegisterRequest {
+    private String username;
     private String email;
     private String password;
+
 }

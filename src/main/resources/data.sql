@@ -106,5 +106,5 @@ values (69,3);
 insert into comment (creation_time, message, author_id, topic_id)
 values ('2023-03-28T12:00', 'nie wiem', 2, 3);
 
-insert into topic_comments (topic_id, comments_id)
-values (3,1)
+-- insert into topic_comments (topic_id, comments_id)
+-- values (3,1)

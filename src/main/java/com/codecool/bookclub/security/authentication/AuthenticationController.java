@@ -1,8 +1,6 @@
-package com.codecool.bookclub.user.controller;
+package com.codecool.bookclub.security.authentication;
 
 
-import com.codecool.bookclub.user.controller.AuthenticationResponse;
-import com.codecool.bookclub.user.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

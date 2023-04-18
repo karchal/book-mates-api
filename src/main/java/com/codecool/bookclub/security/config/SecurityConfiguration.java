@@ -1,6 +1,6 @@
-package com.codecool.bookclub.config;
+package com.codecool.bookclub.security.config;
 
-import com.codecool.bookclub.jwt.JwtAuthenticationFilter;
+import com.codecool.bookclub.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,17 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final AuthenticationProvider authenticationProvider; // indicates a class can process a specific Authentication implementation.
+    private final AuthenticationProvider authenticationProvider;
 
-    // a bean responsible for configuring all the HTTP-security of the application
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                // Enables cross-site request forgery protection
                 .csrf()
-                // we disable CSRF protection for now
                 .disable()
-                // white list - requests that don't need to be authenticated
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/api/authentication/**",
@@ -36,15 +32,11 @@ public class SecurityConfiguration {
                         "/api/topics/**"
                 )
                     .permitAll()
-                // any other request should be authenticated
                 .anyRequest()
                     .authenticated()
-                // we don't want to store the authentication/session state, the session should be stateless
-                // we want authenticate any subsequent request that require authentication
-                // we need to configure the session management
                 .and()
                     .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Spring Security will never create an HttpSession and it will never use it to obtain the SecurityContext
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

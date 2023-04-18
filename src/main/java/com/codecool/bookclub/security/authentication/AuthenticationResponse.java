@@ -1,4 +1,4 @@
-package com.codecool.bookclub.user.controller;
+package com.codecool.bookclub.security.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

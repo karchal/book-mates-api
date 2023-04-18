@@ -1,6 +1,5 @@
-package com.codecool.bookclub.jwt;
+package com.codecool.bookclub.security.jwt;
 
-import com.codecool.bookclub.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+
 
     @Override
     protected void doFilterInternal(
@@ -52,14 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                 );
-                authToken.setDetails( // set details about the authentication request. These might be an IP address, certificate serial number etc.
-                        new WebAuthenticationDetailsSource() // an instance of a class which builds the details object from an HttpServletRequest object
-                                .buildDetails(request) // creating a WebAuthenticationDetails
-                );
-                // update SecurityContextHolder
-                SecurityContextHolder // SecurityContextHolder associates a given SecurityContext with the current execution thread.
-                        .getContext() // Obtain the current SecurityContext. SecurityContext is an interface defining the minimum security information associated with the current thread of execution.
-                        .setAuthentication(authToken); // Changes the currently authenticated principal to authToken
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         filterChain.doFilter(request, response);
