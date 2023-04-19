@@ -49,13 +49,13 @@ public class BookController {
 ////        }
 //    }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping("/books")
     public List<Book> showBooks() {
         return bookService.getAllBooks();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping("/books/search/{query}")
     public List<Book> searchBooks(@PathVariable String query) {
         return bookService.searchBooks(query);
@@ -65,6 +65,7 @@ public class BookController {
     public void addToShelf(Book book, @PathVariable Shelf shelf) {
         bookService.saveBookToShelf(book, shelf);
     }
+
 
     @GetMapping("books/by_title")
     public List<Book> searchByTitle(@RequestParam String title) {

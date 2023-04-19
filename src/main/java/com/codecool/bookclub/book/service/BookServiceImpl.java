@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -25,6 +26,9 @@ class BookServiceImpl implements BookService {
 
     @Value("${google.books.api.key}")
     private String apiKey;
+
+    @Value("${google.books.api.url}")
+    private String googleApiUrl;
 
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -79,6 +83,31 @@ class BookServiceImpl implements BookService {
         return builder.build()
                 .get()
                 .uri(apiUrl)
+                .retrieve()
+                .bodyToMono(ReturnResults.class)
+                .block();
+    }
+
+    public ReturnResults callApi2(BookSearchCriteria criteria) {
+        if ((criteria.getAuthor() == null || criteria.getAuthor().isBlank()) &&
+                (criteria.getTitle() == null || criteria.getTitle().isBlank())) {
+            ReturnResults rr = new ReturnResults();
+            rr.setTotalItems(0);
+            rr.setItems(new ArrayList<>());
+            return rr;
+        }
+        String url = googleApiUrl + "volumes?q=";
+        if (criteria.getAuthor() != null && !criteria.getAuthor().isBlank()) {
+            url = url + "inauthor:/\"" + criteria.getAuthor() + "\"";
+        }
+        if (criteria.getTitle() != null && !criteria.getTitle().isBlank()) {
+            url = url + "intitle:/\"" + criteria.getTitle() + "\"";
+        }
+        url = url + "&key=" + apiKey + "&maxResults=20";
+        WebClient.Builder builder = WebClient.builder();
+        return builder.build()
+                .get()
+                .uri(url)
                 .retrieve()
                 .bodyToMono(ReturnResults.class)
                 .block();
