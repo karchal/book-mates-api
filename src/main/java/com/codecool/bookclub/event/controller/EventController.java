@@ -98,5 +98,11 @@ public class EventController {
          eventService.deleteEventById(eventId);
     }
 
+    @PostMapping("events/{event_id}/join")
+    public void joinEvent(@PathVariable("event_id") long eventId){
+        System.out.println(eventId);
+        eventService.joinEvent(eventId);
+    }
+
 
 }
