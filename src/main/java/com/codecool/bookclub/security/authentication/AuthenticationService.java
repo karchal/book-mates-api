@@ -9,6 +9,7 @@ import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +39,17 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
+        System.out.println("email: " + request.getEmail() + " password: " + request.getPassword());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                request.getEmail(),
+                request.getPassword()
         );
+        System.out.println("authentication: " + authentication);
+        authenticationManager.authenticate(authentication);
+
+        System.out.println("email: " + request.getEmail() + " password: " + request.getPassword());
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        System.out.println(user);
         String jwt = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwt)

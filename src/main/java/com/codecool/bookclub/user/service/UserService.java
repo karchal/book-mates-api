@@ -14,6 +14,7 @@ import com.codecool.bookclub.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,7 +47,8 @@ public class UserService {
     }
 
     public List<EventDto> getUserEvents(long userId){
-    return eventRepository.findAllByParticipantsId(userId).stream().map(eventService::convertToDto).collect(Collectors.toList());
+        return new ArrayList<>();
+//        return eventRepository.findAllByParticipantsId(userId).stream().map(eventService::convertToDto).collect(Collectors.toList());
     }
 
     public List<TopicDto> getUserTopics(long userId){

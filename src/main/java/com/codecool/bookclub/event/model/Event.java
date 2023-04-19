@@ -34,16 +34,8 @@ public class Event {
 
     private EventType eventType;
 
-    @ManyToOne
-    private User organizer;
     private Integer maxParticipants;
 
-    @JsonIgnoreProperties
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<User> participants;
-
-    @ManyToMany
-    private List<User> waitingList;
     private String url;
 
 }

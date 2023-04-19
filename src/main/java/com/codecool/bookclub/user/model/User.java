@@ -1,7 +1,7 @@
 package com.codecool.bookclub.user.model;
 
 import com.codecool.bookclub.book.model.BookDetails;
-import com.codecool.bookclub.event.model.Event;
+import com.codecool.bookclub.event.model.EventDetails;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
 
@@ -36,8 +36,8 @@ public class User implements UserDetails {
     private List<BookDetails> booksDetails;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Topic> topics;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "participants")
-    private List<Event> events;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<EventDetails> events;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Comment> comments;
 
@@ -68,6 +68,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

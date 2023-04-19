@@ -35,10 +35,6 @@ public class EventDto {
 
     private String pictureUrl;
 
-    private List<Long> participantId;
-
-    private long organizerId;
-
-    private List<Long>  waitingListParticipantId;
+//    private List<Long> participantId;
 
 }
