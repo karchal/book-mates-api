@@ -2,6 +2,7 @@ package com.codecool.bookclub.event.service;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.model.EventDetails;
@@ -102,6 +103,18 @@ public class EventService{
                 .bookId(event.getBook().getId())
                 .bookTitle(event.getBook().getTitle())
                 .bookAuthor(event.getBook().getAuthor())
+                .build();
+    }
+
+    public EventDetailsDto convertDetailsToDto(EventDetails eventDetails){
+        return EventDetailsDto.builder()
+                .id(eventDetails.getEvent().getId())
+                .userId(eventDetails.getUser().getId())
+                .eventDate(eventDetails.getEvent().getEventDate())
+                .eventId(eventDetails.getEvent().getId())
+                .title(eventDetails.getEvent().getTitle())
+                .pictureUrl(eventDetails.getEvent().getBook().getPictureUrl())
+                .bookId(eventDetails.getEvent().getBook().getId())
                 .build();
     }
 }
