@@ -11,7 +11,4 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findFirst4ByOrderByCreationDateAndTimeDesc();
 
-//    List<Event> findAllByParticipantsId(long userId);
-
-
 }

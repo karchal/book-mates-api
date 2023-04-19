@@ -2,7 +2,7 @@ package com.codecool.bookclub.user.controller;
 
 import com.codecool.bookclub.book.dto.BookDetailsDto;
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.event.dto.EventDto;
+import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.user.model.User;
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}/events")
-    public ResponseEntity<List<EventDto>> getUserEvents(@PathVariable("user_id") long userId){
+    public ResponseEntity<List<EventDetailsDto>> getUserEvents(@PathVariable("user_id") long userId){
         return new ResponseEntity<>(userService.getUserEvents(userId), HttpStatus.OK);
     }
 

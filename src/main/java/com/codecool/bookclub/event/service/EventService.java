@@ -2,6 +2,7 @@ package com.codecool.bookclub.event.service;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.model.EventDetails;
@@ -9,6 +10,7 @@ import com.codecool.bookclub.event.model.ParticipantType;
 import com.codecool.bookclub.event.repository.EventDetailsRepository;
 import com.codecool.bookclub.event.repository.EventPaginationRepository;
 import com.codecool.bookclub.event.repository.EventRepository;
+import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -86,6 +88,25 @@ public class EventService{
                 .collect(Collectors.toList());
     }
 
+    public void joinEvent(long eventId) {
+        EventDetails event = eventDetailsRepository.findFirstByEventId(eventId);
+        int currentParticipantsNumber = eventDetailsRepository.findAllByEventId(eventId).size();
+        int maxParticipantNumber = event.getEvent().getMaxParticipants();
+        if (currentParticipantsNumber>=maxParticipantNumber){
+            eventDetailsRepository.save(EventDetails.builder()
+                    .participantType(ParticipantType.WAITING_LIST)
+                    .user(userRepository.findById(3L).orElse(null))
+                    .event(event.getEvent())
+                    .build());
+        } else {
+            eventDetailsRepository.save(EventDetails.builder()
+                    .participantType(ParticipantType.PARTICIPANT)
+                    .user(userRepository.findById(3L).orElse(null))
+                    .event(event.getEvent())
+                    .build());
+        }
+    }
+
     public EventDto convertToDto(Event event){
         return EventDto.builder()
                 .id(event.getId())
@@ -97,11 +118,36 @@ public class EventService{
                 .url(event.getUrl())
                 .description(event.getDescription())
                 .maxParticipants(event.getMaxParticipants())
-//                .organizerId(event.getOrganizer().getId())
-//                .participantId(event.getParticipants().stream().map(User::getId).collect(Collectors.toList()))
                 .bookId(event.getBook().getId())
                 .bookTitle(event.getBook().getTitle())
                 .bookAuthor(event.getBook().getAuthor())
+                .participants(eventDetailsRepository
+                        .findAllByEventId(event.getId())
+                        .stream()
+                        .filter(participant -> participant.getParticipantType().equals(ParticipantType.PARTICIPANT) || participant.getParticipantType().equals(ParticipantType.ORGANIZER))
+                        .toList()
+                        .size())
+                .waitingList(eventDetailsRepository
+                    .findAllByEventId(event.getId())
+                    .stream()
+                    .filter(participant -> participant.getParticipantType().equals(ParticipantType.WAITING_LIST))
+                    .toList()
+                    .size())
+                .organizatorName(userRepository.findById(eventDetailsRepository.findFirstByEventId(event.getId()).getUser().getId())
+                        .map(User::getNickname).orElse(null))
                 .build();
     }
+
+    public EventDetailsDto convertDetailsToDto(EventDetails eventDetails){
+        return EventDetailsDto.builder()
+                .id(eventDetails.getEvent().getId())
+                .userId(eventDetails.getUser().getId())
+                .eventDate(eventDetails.getEvent().getEventDate())
+                .eventId(eventDetails.getEvent().getId())
+                .title(eventDetails.getEvent().getTitle())
+                .pictureUrl(eventDetails.getEvent().getBook().getPictureUrl())
+                .bookId(eventDetails.getEvent().getBook().getId())
+                .build();
+    }
+
 }

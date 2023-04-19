@@ -2,8 +2,8 @@ package com.codecool.bookclub.user.service;
 
 import com.codecool.bookclub.book.dto.BookDetailsDto;
 import com.codecool.bookclub.book.repository.BookDetailsRepository;
-import com.codecool.bookclub.event.dto.EventDto;
-import com.codecool.bookclub.event.repository.EventRepository;
+import com.codecool.bookclub.event.dto.EventDetailsDto;
+import com.codecool.bookclub.event.repository.EventDetailsRepository;
 import com.codecool.bookclub.event.service.EventService;
 import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Comment;
@@ -24,7 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BookDetailsRepository bookDetailsRepository;
 
-    private final EventRepository eventRepository;
+    private final EventDetailsRepository eventDetailsRepository;
 
     private final TopicRepository topicRepository;
 
@@ -33,10 +33,10 @@ public class UserService {
     private final TopicService topicService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BookDetailsRepository bookDetailsRepository, EventRepository eventRepository, TopicRepository topicRepository, EventService eventService, TopicService topicService) {
+    public UserService(UserRepository userRepository, BookDetailsRepository bookDetailsRepository, EventDetailsRepository eventDetailsRepository, TopicRepository topicRepository, EventService eventService, TopicService topicService) {
         this.userRepository = userRepository;
         this.bookDetailsRepository = bookDetailsRepository;
-        this.eventRepository = eventRepository;
+        this.eventDetailsRepository = eventDetailsRepository;
         this.topicRepository = topicRepository;
         this.eventService = eventService;
         this.topicService = topicService;
@@ -46,9 +46,8 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public List<EventDto> getUserEvents(long userId){
-        return new ArrayList<>();
-//        return eventRepository.findAllByParticipantsId(userId).stream().map(eventService::convertToDto).collect(Collectors.toList());
+    public List<EventDetailsDto> getUserEvents(long userId){
+        return eventDetailsRepository.findAllByUserId(userId).stream().map(eventService::convertDetailsToDto).collect(Collectors.toList());
     }
 
     public List<TopicDto> getUserTopics(long userId){
