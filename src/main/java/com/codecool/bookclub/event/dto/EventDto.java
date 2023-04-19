@@ -32,4 +32,8 @@ public class EventDto {
 
     private String pictureUrl;
 
+    private Integer participants;
+    private Integer waitingList;
+    private String organizatorName;
+
 }
