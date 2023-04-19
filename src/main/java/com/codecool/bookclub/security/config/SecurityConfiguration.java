@@ -29,7 +29,8 @@ public class SecurityConfiguration {
                         "/api/authentication/**",
                         "/api/books/**",
                         "/api/events/**",
-                        "/api/topics/**"
+                        "/api/topics/**",
+                        "/api/users/**"
                 )
                     .permitAll()
                 .anyRequest()
