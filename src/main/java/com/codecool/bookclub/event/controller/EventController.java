@@ -85,7 +85,6 @@ public class EventController {
 
     @PostMapping("/books/{book_id}/event")
     public void createEvent(@PathVariable("book_id") long bookId, @RequestBody Event event){
-//        Event eventUrl = new Event();
         eventService.addEvent(bookId,event);
     }
 
