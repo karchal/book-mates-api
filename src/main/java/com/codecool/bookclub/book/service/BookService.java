@@ -10,14 +10,13 @@ public interface BookService {
 
     Book getById(Long id);// todo Optional<Book>
     List<Book> getAllBooks();
-    List<Book> getBooksByAuthor(String author);
-    List<Book> getBooksByTitle(String title);
 
     List<Book> findTopFourBooks();
 
-    List<Book> searchBooks(String query);
+    List<Book> searchBooks(String criteria, String query);
 
-    ReturnResults callApi(String query);
+//    ReturnResults callApi(String query);
 
     Book saveBookToShelf(Book book, Shelf shelf);
+    Book getBookByExternalId(String externalId);
 }

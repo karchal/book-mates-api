@@ -56,20 +56,20 @@ public class BookController {
     }
 
 
-    @GetMapping("/books/search/{query}")
-    public List<Book> searchBooks(@PathVariable String query) {
-        return bookService.searchBooks(query);
+    @GetMapping("/books/search")
+    public List<Book> searchBooks(@RequestParam(value = "criteria", required = false) String criteria,
+                                  @RequestParam(value = "query", required = false) String query) {
+        return bookService.searchBooks(criteria, query);
+    }
+
+    @GetMapping("/books/search/{id}")
+    public Book getBookByExternalId(@PathVariable String id) {
+        return bookService.getBookByExternalId(id);
     }
 
     @PostMapping("/book/{shelf}")
     public void addToShelf(Book book, @PathVariable Shelf shelf) {
         bookService.saveBookToShelf(book, shelf);
-    }
-
-
-    @GetMapping("books/by_title")
-    public List<Book> searchByTitle(@RequestParam String title) {
-        return bookService.getBooksByTitle(title);
     }
 
 

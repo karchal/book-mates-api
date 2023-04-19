@@ -5,6 +5,7 @@ import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.googleapi.GoogleApiBook;
 import com.codecool.bookclub.googleapi.ReturnResults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
@@ -46,15 +48,6 @@ class BookServiceImpl implements BookService {
         return bookRepository.findAll(pageable).getContent();
     }
 
-    @Override
-    public List<Book> getBooksByAuthor(String author) {
-        return bookRepository.findByAuthor(author);
-    }
-
-//    @Override
-//    public List<Book> getBooksByTitle(String title) {
-//        return bookRepository.findByTitle(title);
-//    }
 
     @Override
     public List<Book> findTopFourBooks() {
@@ -65,45 +58,59 @@ class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchBooks(String query) {
-       ReturnResults results = callApi(query);
-       return results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+    public List<Book> searchBooks(String criteria, String query) {
+       ReturnResults results = callApi(criteria, query);
+       if (results.getItems() != null)
+           return results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+       else
+           return new ArrayList<>();
     }
 
-    //TODO: decide if two BookService implementations: API and DB
-    @Override
-    public List<Book> getBooksByTitle(String title) {
-        ReturnResults results = callApi(title);
-        return results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+    public Book getBookByExternalId(String externalId) {
+        return convertToBook(callApiByBookId(externalId));
     }
 
-    public ReturnResults callApi(String query) {
-        String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=intitle:/"+ "\"" + query + "\"" + "&key=" + apiKey + "&maxResults=20";
+    private GoogleApiBook callApiByBookId(String externalId) {
+        String url = googleApiUrl + "volumes/" + externalId;
+        log.debug("Url for API: {}", url);
         WebClient.Builder builder = WebClient.builder();
         return builder.build()
                 .get()
-                .uri(apiUrl)
+                .uri(url)
                 .retrieve()
-                .bodyToMono(ReturnResults.class)
+                .bodyToMono(GoogleApiBook.class)
                 .block();
     }
 
-    public ReturnResults callApi2(BookSearchCriteria criteria) {
-        if ((criteria.getAuthor() == null || criteria.getAuthor().isBlank()) &&
-                (criteria.getTitle() == null || criteria.getTitle().isBlank())) {
+    public Book saveBookToShelf(Book book, Shelf shelf) {
+        Optional<Book> bookInDb = bookRepository.findByExternalId(book.getExternalId());
+        return bookInDb.orElseGet(() -> bookRepository.save(book));
+    }
+
+//    public ReturnResults callApi(String query) {
+//        String apiUrl = googleApiUrl + "volumes?q=" + query + "&key=" + apiKey + "&maxResults=20";
+//        WebClient.Builder builder = WebClient.builder();
+//        return builder.build()
+//                .get()
+//                .uri(apiUrl)
+//                .retrieve()
+//                .bodyToMono(ReturnResults.class)
+//                .block();
+//    }
+
+    private ReturnResults callApi(String criteria, String query) {
+        if (query == null || query.isBlank()) {
             ReturnResults rr = new ReturnResults();
             rr.setTotalItems(0);
             rr.setItems(new ArrayList<>());
             return rr;
         }
         String url = googleApiUrl + "volumes?q=";
-        if (criteria.getAuthor() != null && !criteria.getAuthor().isBlank()) {
-            url = url + "inauthor:/\"" + criteria.getAuthor() + "\"";
-        }
-        if (criteria.getTitle() != null && !criteria.getTitle().isBlank()) {
-            url = url + "intitle:/\"" + criteria.getTitle() + "\"";
+        if (query != null && !query.isBlank()) {
+            url = url + criteria + ":\"" + query + "\"";
         }
         url = url + "&key=" + apiKey + "&maxResults=20";
+        log.debug("Url for API: {}", url);
         WebClient.Builder builder = WebClient.builder();
         return builder.build()
                 .get()
@@ -115,12 +122,10 @@ class BookServiceImpl implements BookService {
 
     private int extractPublicationYear(GoogleApiBook googleApiBook) {
         String publishedDate = googleApiBook.getVolumeInfo().getPublishedDate();
-        int year = -1;
-
+        int year = 1970;
         if (publishedDate != null) {
             Pattern pattern = Pattern.compile("\\d{4}");
             Matcher matcher = pattern.matcher(publishedDate);
-
             if (matcher.find()) {
                 return Integer.parseInt(matcher.group());
             }
@@ -129,8 +134,7 @@ class BookServiceImpl implements BookService {
     }
 
 
-    public Book convertToBook(GoogleApiBook googleApiBook) {
-        // TODO: serve situation the book is not found
+    private Book convertToBook(GoogleApiBook googleApiBook) {
         return Book.builder()
                 .externalId(googleApiBook.getId())
                 .title(googleApiBook.getVolumeInfo().getTitle())
@@ -145,10 +149,6 @@ class BookServiceImpl implements BookService {
     }
 
 
-//    TODO: methods to serve searching in GoogleApi - one book and books by search param
-    public Book saveBookToShelf(Book book, Shelf shelf) {
-        Optional<Book> bookInDb = bookRepository.findByExternalId(book.getExternalId());
-        return bookInDb.orElseGet(() -> bookRepository.save(book));
-    }
+
 
 }
