@@ -4,12 +4,14 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.model.Event;
+import com.codecool.bookclub.event.model.EventDetails;
+import com.codecool.bookclub.event.model.ParticipantType;
+import com.codecool.bookclub.event.repository.EventDetailsRepository;
 import com.codecool.bookclub.event.repository.EventPaginationRepository;
 import com.codecool.bookclub.event.repository.EventRepository;
-import com.codecool.bookclub.user.model.User;
+import com.codecool.bookclub.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,16 @@ public class EventService{
     private final EventRepository eventRepository;
     private final BookRepository bookRepository;
     private final EventPaginationRepository paginationRepository;
+    private final EventDetailsRepository eventDetailsRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository, BookRepository bookRepository, EventPaginationRepository paginationRepository) {
+    public EventService(EventRepository eventRepository, BookRepository bookRepository, EventPaginationRepository paginationRepository, EventDetailsRepository eventDetailsRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.bookRepository = bookRepository;
         this.paginationRepository = paginationRepository;
+        this.eventDetailsRepository = eventDetailsRepository;
+        this.userRepository = userRepository;
     }
 
     public List<EventDto> getAllEvents(){
@@ -47,6 +53,11 @@ public class EventService{
         Book book = bookRepository.findBookById(bookId);
         event.setBook(book);
         eventRepository.save(event);
+        eventDetailsRepository.save(EventDetails.builder()
+                .participantType(ParticipantType.ORGANIZER)
+                .event(event)
+                .user(userRepository.findById(3L).orElse(null))
+                .build());
     }
 
 
@@ -86,8 +97,8 @@ public class EventService{
                 .url(event.getUrl())
                 .description(event.getDescription())
                 .maxParticipants(event.getMaxParticipants())
-                .organizerId(event.getOrganizer().getId())
-                .participantId(event.getParticipants().stream().map(User::getId).collect(Collectors.toList()))
+//                .organizerId(event.getOrganizer().getId())
+//                .participantId(event.getParticipants().stream().map(User::getId).collect(Collectors.toList()))
                 .bookId(event.getBook().getId())
                 .bookTitle(event.getBook().getTitle())
                 .bookAuthor(event.getBook().getAuthor())
