@@ -3,11 +3,8 @@ package com.codecool.bookclub.event.dto;
 import com.codecool.bookclub.event.model.EventType;
 import lombok.*;
 
-
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -34,7 +31,5 @@ public class EventDto {
     private String bookAuthor;
 
     private String pictureUrl;
-
-//    private List<Long> participantId;
 
 }
