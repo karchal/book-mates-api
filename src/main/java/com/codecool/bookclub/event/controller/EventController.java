@@ -104,8 +104,8 @@ public class EventController {
         eventService.joinEvent(eventId);
     }
     @GetMapping("books/{book_id}/events")
-    public List<Event> getEventsByBookExternalId(@PathVariable("book_id") String bookId){
-        List<Event> events = eventService.getEventsByBookExternalId(bookId);
+    public List<EventDto> getEventsByBookExternalId(@PathVariable("book_id") String bookId){
+        List<EventDto> events = eventService.getEventsByBookExternalId(bookId);
         return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 

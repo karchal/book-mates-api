@@ -18,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,8 +52,8 @@ public class EventService{
         return  convertToDto(eventRepository.findEventById(eventId)) ;
     }
 
-    public List<Event> getEventsByBookExternalId(String bookId){
-        return eventRepository.findEventsByBook_ExternalId(bookId);
+    public List<EventDto> getEventsByBookExternalId(String bookId){
+        return eventRepository.findEventsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public void addEvent(String bookId, NewEventDto newEventDto){
