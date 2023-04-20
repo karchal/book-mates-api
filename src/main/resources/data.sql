@@ -13,25 +13,25 @@ insert into reader (creation_date, email, password, nickname, role) values ('201
 insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'moderator@bm.pl', '$2a$10$C./EkLRzRhvgQkeuZRaK9eKMvRS5NexIwuXXKIcoT1hu2PEXjDqTe', 'moderator', 'MODERATOR');
 insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'user@bm.pl', '$2a$10$47f2yfX21Xn/KGdj.QIDweVr9P6kpYOg4ROlfpA768Qqi0nfDElmm', 'user', 'READER');
 
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,event_type) VALUES (1, '2023-04-03 16:02:06.010885', 'Opis', '2023-04-03 14:02:03.336000', 4, 'Tytuł', '', 1,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (2, '2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, '', 'sadfasdf', 5,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (3, '2023-04-03 16:07:36.519647', 'Opis', '2023-04-03 14:07:32.032000', 5, 'Tytuł', '', 1,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES (4, '2023-04-03 16:09:47.132448', 'Opis', '2023-04-03 14:09:41.410000', 6, 'Tytuł', '', 1,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (5, '2023-04-03 16:11:08.725736', 'Opis', '2023-04-03 14:11:06.820000', 7, 'Tytuł', '', 2,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES (6, '2023-04-03 16:11:19.338741', 'Opis', '2023-04-03 14:11:17.894000', 8, 'Tytuł', '', 2,  0);
+INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,event_type) VALUES (100, '2023-04-03 16:02:06.010885', 'Opis', '2023-04-03 14:02:03.336000', 4, 'Tytuł', '', 1,  0);
+INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (101, '2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, '', 'sadfasdf', 5,  0);
+INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (102, '2023-04-03 16:07:36.519647', 'Opis', '2023-04-03 14:07:32.032000', 5, 'Tytuł', '', 1,  0);
+INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES (103, '2023-04-03 16:09:47.132448', 'Opis', '2023-04-03 14:09:41.410000', 6, 'Tytuł', '', 1,  0);
+INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (104, '2023-04-03 16:11:08.725736', 'Opis', '2023-04-03 14:11:06.820000', 7, 'Tytuł', '', 2,  0);
+INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES (105, '2023-04-03 16:11:19.338741', 'Opis', '2023-04-03 14:11:17.894000', 8, 'Tytuł', '', 2,  0);
 
 insert into event_details(participant_type, event_id,user_id)
-values (0,1,3);
+values (0,100,2);
 insert into event_details(participant_type, event_id,user_id)
-values (0,2,3);
+values (0,101,2);
 insert into event_details(participant_type, event_id,user_id)
-values (0,3,3);
+values (0,102,2);
 insert into event_details(participant_type, event_id,user_id)
-values (0,4,3);
+values (0,103,2);
 insert into event_details(participant_type, event_id,user_id)
-values (0,5,3);
+values (0,104,2);
 insert into event_details(participant_type, event_id,user_id)
-values (0,6,3);
+values (0,105,2);
 
 
 insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 1, 1);
