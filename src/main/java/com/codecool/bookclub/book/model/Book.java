@@ -24,6 +24,8 @@ public class Book {
     private int year;
     @Column(length = 4000)//columnDefinition = "text")
     private String description;
+
+    @Column(length = 1000)
     private String pictureUrl;
     private int pages;
     private BigDecimal rating;
