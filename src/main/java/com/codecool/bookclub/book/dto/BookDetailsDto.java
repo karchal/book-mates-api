@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 public class BookDetailsDto {
     private Long bookDetailsId;
-    private String id;
+    private String externalId;
     private String title;
     private String author;
     private String pictureUrl;
@@ -17,7 +17,7 @@ public class BookDetailsDto {
 
     public BookDetailsDto(BookDetails bookDetails){
         this.bookDetailsId = bookDetails.getId();
-        this.id = bookDetails.getBook().getExternalId();
+        this.externalId = bookDetails.getBook().getExternalId();
         this.title = bookDetails.getBook().getTitle();
         this.author = bookDetails.getBook().getAuthor();
         this.pictureUrl = bookDetails.getBook().getPictureUrl();
