@@ -52,7 +52,7 @@ public class BookController {
 
     @GetMapping("/books")
     public List<Book> showBooks() {
-        return bookService.getAllBooks();
+        return bookService.findTopFourBooks();
     }
 
 

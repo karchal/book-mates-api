@@ -41,19 +41,14 @@ class BookServiceImpl implements BookService {
         return bookRepository.findBookById(id);
     }
 
-    /*TODO: add parameter page */
     @Override
     public List<Book> getAllBooks() {
-        Pageable pageable = PageRequest.of(0, 20, Sort.by("title"));
-        return bookRepository.findAll(pageable).getContent();
+        return null;
     }
-
 
     @Override
     public List<Book> findTopFourBooks() {
         List<Book> books = bookRepository.findFirst4ByOrderByRatingDesc();
-        //books = books.subList(0, 4);
-
         return books;
     }
 
@@ -99,7 +94,7 @@ class BookServiceImpl implements BookService {
 //    }
 
     private ReturnResults callApi(String criteria, String query) {
-        if (query == null || query.isBlank()) {
+        if (query == null || query.isBlank() && criteria == null || criteria.isBlank()) {
             ReturnResults rr = new ReturnResults();
             rr.setTotalItems(0);
             rr.setItems(new ArrayList<>());
@@ -147,8 +142,6 @@ class BookServiceImpl implements BookService {
                 .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() * 2 : 0))
                 .build();
     }
-
-
 
 
 }
