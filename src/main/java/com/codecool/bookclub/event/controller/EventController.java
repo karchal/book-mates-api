@@ -62,7 +62,6 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/events/all")
     public ResponseEntity<List<EventDto>> getEvents(){
         List<EventDto> events = eventService.getAllEvents();
@@ -103,6 +102,11 @@ public class EventController {
     public void joinEvent(@PathVariable("event_id") long eventId){
         System.out.println(eventId);
         eventService.joinEvent(eventId);
+    }
+    @GetMapping("books/{book_id}/events")
+    public List<Event> getEventsByBookExternalId(@PathVariable("book_id") String bookId){
+        List<Event> events = eventService.getEventsByBookExternalId(bookId);
+        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 
 
