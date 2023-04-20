@@ -1,4 +1,4 @@
-insert into book (title, author, description, pages, picture_url, rating, year) values ('Gdzie śpiewają raki', 'Delia Owens', 'Światowa sensacja, bijący wszelkie rekordy fenomen, który przykuł uwagę ponad 13 milionów czytelników.
+insert into book (external_id, title, author, description, pages, picture_url, rating, year) values ('w35bAAAAMAAJ', 'Gdzie śpiewają raki', 'Delia Owens', 'Światowa sensacja, bijący wszelkie rekordy fenomen, który przykuł uwagę ponad 13 milionów czytelników.
 Pogłoski o Dziewczynie z Bagien latami krążyły po Barkley Cove, sennym miasteczku u wybrzeży Karoliny Północnej. Dlatego pod koniec 1969 roku, gdy na mokradłach znaleziono ciało przystojnego Chase’a Andrewsa, miejscowi zwrócili się przeciwko Kyi Clark, zwanej Dziewczyną z Bagien.
 Lecz Kya nie jest taka, jak o niej szepczą. Wrażliwa i inteligentna, zdołała sama przetrwać wiele lat na bagnach, które nazywa domem, choć jej ciało tęskniło za dotykiem i miłością. Przyjaźni szukała u mew, a wiedzę czerpała z natury. Kiedy dzikie piękno dziewczyny intryguje dwóch młodych mężczyzn z miasteczka, Kya otwiera się na nowe doznania — i dzieją się rzeczy niewyobrażalne.', 416, 'https://s.lubimyczytac.pl/upload/books/5019000/5019183/1045632-352x500.jpg', 7.9, 2023);
 insert into book (external_id, title, author, description,  pages, picture_url, rating, year) values ('fC8kzwEACAAJ','Opowieści o pilocie Pirxie', 'Stanisław Lem', 'Jedna z najbardziej znanych i lubianych książek Lema', 515, 'https://s.lubimyczytac.pl/upload/books/148000/148887/352x500.jpg', 7.9, 2012);
@@ -13,25 +13,25 @@ insert into reader (creation_date, email, password, nickname, role) values ('201
 insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'moderator@bm.pl', '$2a$10$C./EkLRzRhvgQkeuZRaK9eKMvRS5NexIwuXXKIcoT1hu2PEXjDqTe', 'moderator', 'MODERATOR');
 insert into reader (creation_date, email, password, nickname, role) values ('2018-03-28T13:00', 'user@bm.pl', '$2a$10$47f2yfX21Xn/KGdj.QIDweVr9P6kpYOg4ROlfpA768Qqi0nfDElmm', 'user', 'READER');
 
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,event_type) VALUES (100, '2023-04-03 16:02:06.010885', 'Opis', '2023-04-03 14:02:03.336000', 4, 'Tytuł', '', 1,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (101, '2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, '', 'sadfasdf', 5,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (102, '2023-04-03 16:07:36.519647', 'Opis', '2023-04-03 14:07:32.032000', 5, 'Tytuł', '', 1,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES (103, '2023-04-03 16:09:47.132448', 'Opis', '2023-04-03 14:09:41.410000', 6, 'Tytuł', '', 1,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES (104, '2023-04-03 16:11:08.725736', 'Opis', '2023-04-03 14:11:06.820000', 7, 'Tytuł', '', 2,  0);
-INSERT INTO public.event (id, creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES (105, '2023-04-03 16:11:19.338741', 'Opis', '2023-04-03 14:11:17.894000', 8, 'Tytuł', '', 2,  0);
+INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id,event_type) VALUES ('2023-04-03 16:02:06.010885', 'Opis', '2023-04-03 14:02:03.336000', 4, 'Tytuł', '', 1,  0);
+INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES ('2023-04-03 16:02:30.878221', 'asdfasdf', '2023-04-03 14:02:24.656000', 12, '', 'sadfasdf', 5,  0);
+INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES ('2023-04-03 16:07:36.519647', 'Opis', '2023-04-03 14:07:32.032000', 5, 'Tytuł', '', 1,  0);
+INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES ('2023-04-03 16:09:47.132448', 'Opis', '2023-04-03 14:09:41.410000', 6, 'Tytuł', '', 1,  0);
+INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES ('2023-04-03 16:11:08.725736', 'Opis', '2023-04-03 14:11:06.820000', 7, 'Tytuł', '', 2,  0);
+INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES ('2023-04-03 16:11:19.338741', 'Opis', '2023-04-03 14:11:17.894000', 8, 'Tytuł', '', 2,  0);
 
-insert into event_details(participant_type, event_id,user_id)
-values (0,100,2);
-insert into event_details(participant_type, event_id,user_id)
-values (0,101,2);
-insert into event_details(participant_type, event_id,user_id)
-values (0,102,2);
-insert into event_details(participant_type, event_id,user_id)
-values (0,103,2);
-insert into event_details(participant_type, event_id,user_id)
-values (0,104,2);
-insert into event_details(participant_type, event_id,user_id)
-values (0,105,2);
+insert into event_details(participant_type, event_id, user_id)
+values (0,1,2);
+insert into event_details(participant_type, event_id, user_id)
+values (0,2,2);
+insert into event_details(participant_type, event_id, user_id)
+values (0,3,2);
+insert into event_details(participant_type, event_id, user_id)
+values (0,4,2);
+insert into event_details(participant_type, event_id, user_id)
+values (0,5,2);
+insert into event_details(participant_type, event_id, user_id)
+values (0,6,2);
 
 
 insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 1, 1);
