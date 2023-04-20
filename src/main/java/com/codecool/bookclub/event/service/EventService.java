@@ -4,6 +4,7 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.event.dto.EventDto;
+import com.codecool.bookclub.event.dto.NewEventDto;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.model.EventDetails;
 import com.codecool.bookclub.event.model.ParticipantType;
@@ -51,9 +52,29 @@ public class EventService{
         return  convertToDto(eventRepository.findEventById(eventId)) ;
     }
 
-    public void addEvent(long bookId, Event event){
-        Book book = bookRepository.findBookById(bookId);
-        event.setBook(book);
+    public void addEvent(String bookId, NewEventDto newEventDto){
+        Book book = bookRepository.findBookByExternalId(bookId);
+        Book newBook = new Book();
+        if (book==null){
+            newBook.setAuthor(newEventDto.getAuthor());
+            newBook.setDescription(newEventDto.getBookDescription());
+            newBook.setExternalId(newEventDto.getExternalId());
+            newBook.setPages(newEventDto.getPages());
+            newBook.setPictureUrl(newEventDto.getPictureUrl());
+            newBook.setRating(newEventDto.getRating());
+            newBook.setTitle(newEventDto.getBookTitle());
+            newBook.setYear(newEventDto.getYear());
+            bookRepository.save(newBook);
+        }
+        Event event = new Event();
+        event.setBook(Objects.requireNonNullElse(book, newBook));
+        event.setTitle(newEventDto.getTitle());
+        event.setDescription(newEventDto.getDescription());
+        event.setEventDate(newEventDto.getEventDate());
+        event.setEventType(newEventDto.getEventType());
+        event.setMaxParticipants(newEventDto.getMaxParticipants());
+        event.setUrl(newEventDto.getUrl());
+
         eventRepository.save(event);
         eventDetailsRepository.save(EventDetails.builder()
                 .participantType(ParticipantType.ORGANIZER)
@@ -149,5 +170,6 @@ public class EventService{
                 .bookId(eventDetails.getEvent().getBook().getId())
                 .build();
     }
+
 
 }

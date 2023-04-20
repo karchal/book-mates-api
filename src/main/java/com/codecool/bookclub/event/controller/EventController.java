@@ -2,6 +2,7 @@ package com.codecool.bookclub.event.controller;
 
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.event.dto.EventDto;
+import com.codecool.bookclub.event.dto.NewEventDto;
 import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.model.EventType;
 import com.codecool.bookclub.event.service.EventService;
@@ -84,7 +85,7 @@ public class EventController {
     }
 
     @PostMapping("/books/{book_id}/event")
-    public void createEvent(@PathVariable("book_id") long bookId, @RequestBody Event event){
+    public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event){
         eventService.addEvent(bookId,event);
     }
 
