@@ -11,4 +11,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findFirst4ByOrderByCreationDateAndTimeDesc();
 
+    List<Event> findEventsByBook_ExternalId(String bookId);
+
 }

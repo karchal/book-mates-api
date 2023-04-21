@@ -64,6 +64,7 @@ public class TopicService {
                 .creationTime(topic.getCreationTime())
                 .authorId(topic.getAuthor().getId())
                 .numberOfComments(topic.getComments().size())
+                .bookExternalId(topic.getBook().getExternalId())
                 .build();
     }
 }

@@ -52,6 +52,10 @@ public class EventService{
         return  convertToDto(eventRepository.findEventById(eventId)) ;
     }
 
+    public List<EventDto> getEventsByBookExternalId(String bookId){
+        return eventRepository.findEventsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
     public void addEvent(String bookId, NewEventDto newEventDto){
         Book book = bookRepository.findBookByExternalId(bookId);
         Book newBook = new Book();

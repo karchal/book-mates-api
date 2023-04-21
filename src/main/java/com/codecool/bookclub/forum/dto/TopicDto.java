@@ -21,5 +21,6 @@ public class TopicDto {
     private LocalDateTime creationTime;
 
     private int numberOfComments;
+    private String bookExternalId;
 
 }
