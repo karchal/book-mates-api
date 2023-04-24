@@ -10,6 +10,7 @@ import com.codecool.bookclub.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -67,8 +68,16 @@ public class UserController {
         return userService.getUserById(userId).get();
     }
 
-    @DeleteMapping("/user/{user_id}")
+    @DeleteMapping("/users/{user_id}")
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
         return userService.deleteUserById(userId);
     }
+
+    @GetMapping("/users/my_account/books")
+    public ResponseEntity<List<BookDetailsDto>> getMyBooks(@AuthenticationPrincipal User user){
+        return new ResponseEntity<>(userService.getUserBooks(user), HttpStatus.OK);
+    }
+
+
+
 }
