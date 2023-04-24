@@ -1,6 +1,7 @@
 package com.codecool.bookclub.user.service;
 
 import com.codecool.bookclub.book.dto.BookDetailsDto;
+import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.book.repository.BookDetailsRepository;
 import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.event.repository.EventDetailsRepository;
@@ -11,6 +12,7 @@ import com.codecool.bookclub.forum.repository.TopicRepository;
 import com.codecool.bookclub.forum.service.TopicService;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+@Slf4j
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -68,14 +72,25 @@ public class UserService {
     public List<BookDetailsDto> getUserBooks(long userId) {
         return bookDetailsRepository.findAllByUserId(userId)
                 .stream()
-                .map(b -> new BookDetailsDto(b))
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return userRepository
-//                .findByEmail(username)
-//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//    }
+    public List<BookDetailsDto> getUserBooks(User user){
+        return getUserBooks(user.getId());
+    }
+
+
+    private BookDetailsDto convertToDto(BookDetails bookDetails){
+        return BookDetailsDto.builder()
+                .bookDetailsId(bookDetails.getId())
+                .externalId(bookDetails.getBook().getExternalId())
+                .title(bookDetails.getBook().getTitle())
+                .author(bookDetails.getBook().getAuthor())
+                .pictureUrl(bookDetails.getBook().getPictureUrl())
+                .shelf(bookDetails.getShelf())
+                .userRating(bookDetails.getUserRating())
+                .build();
+    }
+
 }
