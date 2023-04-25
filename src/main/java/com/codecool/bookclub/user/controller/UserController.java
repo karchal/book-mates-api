@@ -5,6 +5,7 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Comment;
+import com.codecool.bookclub.user.dto.UserDto;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -58,8 +59,13 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}")
-    public User getUserById(@PathVariable("user_id") long userId){
-        return userService.getUserById(userId).get();
+    public ResponseEntity<UserDto> getUserById(@PathVariable("user_id") long userId){
+        UserDto userDto = userService.getUserDto(userId);
+        if (userDto != null) {
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/users/{user_id}")
