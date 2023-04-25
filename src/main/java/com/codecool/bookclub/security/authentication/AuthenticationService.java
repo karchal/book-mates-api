@@ -44,12 +44,10 @@ public class AuthenticationService {
                 request.getEmail(),
                 request.getPassword()
         );
-        System.out.println("authentication: " + authentication);
         authenticationManager.authenticate(authentication);
 
         System.out.println("email: " + request.getEmail() + " password: " + request.getPassword());
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        System.out.println(user);
         String jwt = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwt)
