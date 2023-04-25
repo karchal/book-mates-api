@@ -68,6 +68,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/users/profile")
+    public ResponseEntity<UserDto> getUserById(@AuthenticationPrincipal User user){
+        UserDto userDto = userService.getUserDto(user);
+        if (userDto != null) {
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/users/{user_id}")
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
         return userService.deleteUserById(userId);

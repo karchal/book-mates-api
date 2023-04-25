@@ -37,6 +37,10 @@ public class UserService {
         return getUser(userId).map(this::convertToDto).orElse(null);
     }
 
+    public UserDto getUserDto(User user) {
+        return getUser(user.getId()).map(this::convertToDto).orElse(null);
+    }
+
     public List<BookDetailsDto> getUserBooks(long userId) {
         return bookDetailsService.getBookDetailsDtos(userId);
     }
@@ -72,21 +76,18 @@ public class UserService {
         }).orElse(false);
     }
 
-    private UserDto convertToDto(User user) {
+    public UserDto convertToDto(User user) {
         return (user != null) ? UserDto.builder()
                 .id(user.getId())
                 .nickname(user.getNickname())
-//                .books(getUserBooks(user.getId()))
                 .books(user.getBooksDetails()
                         .stream()
                         .map(bookDetailsService::convertToDto)
                         .collect(Collectors.toList()))
-//                .events(getUserEvents(user.getId()))
                 .events(user.getEvents()
                         .stream()
                         .map(eventService::convertDetailsToDto)
                         .collect(Collectors.toList()))
-//                .topics(getUserTopics(user.getId()))
                 .topics(user.getTopics()
                         .stream()
                         .map(topicService::convertToDto)
