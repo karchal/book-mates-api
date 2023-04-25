@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,8 +17,7 @@ import java.util.List;
 public class UserDto {
     private Long id;
     private String nickname;
-    private LocalDateTime creationDate;
-    private List<BookDetailsDto> booksDetails;
+    private List<BookDetailsDto> books;
     private List<EventDetailsDto> events;
     private List<TopicDto> topics;
 }
