@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,25 +49,6 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public List<EventDetailsDto> getUserEvents(long userId){
-        return eventDetailsRepository.findAllByUserId(userId).stream().map(eventService::convertDetailsToDto).collect(Collectors.toList());
-    }
-
-    public List<TopicDto> getUserTopics(long userId){
-        return topicRepository.findAllByAuthorId(userId).stream().map(topicService::convertToDto).collect(Collectors.toList());
-    }
-
-    public List<Comment> getUserComments(long userId){
-        return getUserById(userId).map(User::getComments).orElse(null);
-    }
-
-    public boolean deleteUserById(long userId){
-        return getUserById(userId).map(user -> {
-            userRepository.deleteById(userId);
-            return true;
-        }).orElse(false);
-    }
-
     public List<BookDetailsDto> getUserBooks(long userId) {
         return bookDetailsRepository.findAllByUserId(userId)
                 .stream()
@@ -79,7 +59,37 @@ public class UserService {
     public List<BookDetailsDto> getUserBooks(User user){
         return getUserBooks(user.getId());
     }
+    public List<EventDetailsDto> getUserEvents(long userId){
+        return eventDetailsRepository.findAllByUserId(userId)
+                .stream()
+                .map(eventService::convertDetailsToDto)
+                .collect(Collectors.toList());
+    }
 
+    public List<EventDetailsDto> getUserEvents(User user){
+        return getUserEvents(user.getId());
+    }
+
+    public List<TopicDto> getUserTopics(long userId){
+        return topicRepository.findAllByAuthorId(userId).stream().map(topicService::convertToDto).collect(Collectors.toList());
+    }
+
+    public List<TopicDto> getUserTopics(User user){
+        return getUserTopics(user.getId());
+    }
+
+    public List<Comment> getUserComments(long userId){
+        return getUserById(userId).map(User::getComments).orElse(null);
+    }
+
+
+
+    public boolean deleteUserById(long userId){
+        return getUserById(userId).map(user -> {
+            userRepository.deleteById(userId);
+            return true;
+        }).orElse(false);
+    }
 
     private BookDetailsDto convertToDto(BookDetails bookDetails){
         return BookDetailsDto.builder()
