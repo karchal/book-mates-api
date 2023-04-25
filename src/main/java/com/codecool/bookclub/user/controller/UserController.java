@@ -7,26 +7,21 @@ import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/account")
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/users/{user_id}/books")
     public ResponseEntity<List<BookDetailsDto>> getUserBooks(@PathVariable("user_id") long userId){
@@ -48,16 +43,15 @@ public class UserController {
         return userService.getUserComments(userId);
     }
 
-    @GetMapping("/users/{user_id}/shelves/{shelf_id}")
-    public List<Book> getUserShelf(@PathVariable("user_id") long userId, @PathVariable("shelf_id") long shelfId){
-        return new ArrayList<>();
+    @GetMapping("/users/my_account/books")
+    public ResponseEntity<List<BookDetailsDto>> getMyBooks(@AuthenticationPrincipal User user){
+        return new ResponseEntity<>(userService.getUserBooks(user), HttpStatus.OK);
     }
 
     @PutMapping("/users/{user_id}/shelves")
     public boolean updateShelfType(@PathVariable("user_id") long userId, @RequestBody Book book){
         return false;
     }
-
     @DeleteMapping("/users/{user_id}/books")
     public boolean deleteBookFromShelf(@PathVariable("user_id") long userId, @RequestBody Book book){
         return false;
@@ -72,12 +66,6 @@ public class UserController {
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
         return userService.deleteUserById(userId);
     }
-
-    @GetMapping("/users/my_account/books")
-    public ResponseEntity<List<BookDetailsDto>> getMyBooks(@AuthenticationPrincipal User user){
-        return new ResponseEntity<>(userService.getUserBooks(user), HttpStatus.OK);
-    }
-
 
 
 }
