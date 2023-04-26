@@ -35,11 +35,6 @@ public class CommentService {
     }
 
     public void createComment(long topicId, NewCommentDto newCommentDto) {
-//        Optional<Topic> optionalTopic = topicRepository.findById(topicId);
-//        if (optionalTopic.isPresent()) {
-//            comment.setTopic(optionalTopic.get());
-//            commentRepository.save(comment);
-//        }
         Topic topic = topicRepository.findById(topicId).orElse(null);
         User user = userRepository.findById(1L).orElse(null);
         Comment comment = new Comment();
