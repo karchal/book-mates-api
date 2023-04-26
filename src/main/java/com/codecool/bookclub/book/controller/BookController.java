@@ -1,10 +1,14 @@
 package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
+import com.codecool.bookclub.user.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,6 +58,15 @@ public class BookController {
     @GetMapping("/books/search/{id}")
     public Book getBookByExternalId(@PathVariable String id) {
         return googleApiBookService.getBookByExternalId(id);
+    }
+
+
+    @PostMapping("/books/shelves/{shelfType}/{id}")
+    public void addBookToUserShelf(@PathVariable("shelfType") Shelf shelfType,
+                                   @PathVariable("id") String externalId,
+                                   @AuthenticationPrincipal User user) {
+        Book book = googleApiBookService.getBookByExternalId(externalId);
+        bookService.saveBookToShelf(book, shelfType, user);
     }
 
 

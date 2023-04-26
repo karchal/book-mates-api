@@ -45,7 +45,7 @@ public class GoogleApiBookService {
     public Book getBookByExternalId(String externalId) {
         return convertToBook(callApiByBookId(externalId));
     }
-
+    /* TODO serve api errors */
     private GoogleApiBook callApiByBookId(String externalId) {
         String url = googleApiUrl + API_PARAM_VOLUME + externalId;
         log.debug("Url for API: {}", url);
