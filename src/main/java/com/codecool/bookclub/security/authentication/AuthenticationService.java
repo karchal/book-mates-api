@@ -1,9 +1,6 @@
 package com.codecool.bookclub.security.authentication;
 
 import com.codecool.bookclub.security.jwt.JwtService;
-import com.codecool.bookclub.security.authentication.AuthenticationRequest;
-import com.codecool.bookclub.security.authentication.AuthenticationResponse;
-import com.codecool.bookclub.security.authentication.RegisterRequest;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,12 +41,8 @@ public class AuthenticationService {
                 request.getEmail(),
                 request.getPassword()
         );
-        System.out.println("authentication: " + authentication);
         authenticationManager.authenticate(authentication);
-
-        System.out.println("email: " + request.getEmail() + " password: " + request.getPassword());
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        System.out.println(user);
         String jwt = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwt)

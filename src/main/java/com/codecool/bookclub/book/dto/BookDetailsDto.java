@@ -1,11 +1,13 @@
 package com.codecool.bookclub.book.dto;
 
-import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.book.model.Shelf;
 import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BookDetailsDto {
     private Long bookDetailsId;
     private String externalId;
@@ -15,13 +17,4 @@ public class BookDetailsDto {
     private Shelf shelf;
     private Integer userRating;
 
-    public BookDetailsDto(BookDetails bookDetails){
-        this.bookDetailsId = bookDetails.getId();
-        this.externalId = bookDetails.getBook().getExternalId();
-        this.title = bookDetails.getBook().getTitle();
-        this.author = bookDetails.getBook().getAuthor();
-        this.pictureUrl = bookDetails.getBook().getPictureUrl();
-        this.shelf =  bookDetails.getShelf();
-        this.userRating = bookDetails.getUserRating();
-    }
 }

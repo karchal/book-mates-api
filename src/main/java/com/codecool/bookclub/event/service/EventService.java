@@ -132,6 +132,13 @@ public class EventService{
         }
     }
 
+    public List<EventDetailsDto> getUserEventDetailDtos(long userId) {
+        return eventDetailsRepository.findAllByUserId(userId)
+                .stream()
+                .map(this::convertDetailsToDto)
+                .collect(Collectors.toList());
+    }
+
     public EventDto convertToDto(Event event){
         return EventDto.builder()
                 .id(event.getId())
@@ -174,6 +181,5 @@ public class EventService{
                 .bookId(eventDetails.getEvent().getBook().getId())
                 .build();
     }
-
 
 }
