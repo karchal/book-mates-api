@@ -33,7 +33,4 @@ public class BookDetailsService {
                 .userRating(bookDetails.getUserRating())
                 .build();
     }
-
-
-
 }
