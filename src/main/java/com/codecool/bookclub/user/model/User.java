@@ -34,10 +34,10 @@ public class User implements UserDetails {
     private LocalDateTime creationDate;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<BookDetails> booksDetails;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    private List<Topic> topics;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<EventDetails> events;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+    private List<Topic> topics;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Comment> comments;
 

@@ -27,4 +27,15 @@ public class BookDetails {
     private User user;
     private Shelf shelf;
     private Integer userRating;
+
+    @Override
+    public String toString() {
+        return "BookDetails{" +
+                "id=" + id +
+                ", book=" + book +
+                ", userId=" + user.getId() +
+                ", shelf=" + shelf +
+                ", userRating=" + userRating +
+                '}';
+    }
 }

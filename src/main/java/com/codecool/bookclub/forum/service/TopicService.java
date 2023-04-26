@@ -24,11 +24,7 @@ public class TopicService {
 
     public List<Topic> getTopicsForBook(long bookId) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
-        if (optionalBook.isPresent()) {
-            return topicRepository.findByBook(optionalBook.get());
-        } else {
-            return null;
-        }
+        return optionalBook.map(topicRepository::findByBook).orElse(null);
     }
 
     public TopicDto getTopicById(long topicId) {
@@ -52,7 +48,15 @@ public class TopicService {
         return topicRepository
                 .findFirst4ByOrderByCreationTimeDesc()
                 .stream()
-                .map(topic -> convertToDto(topic))
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<TopicDto> getUserTopicDtos(long userId) {
+        return topicRepository
+                .findAllByAuthorId(userId)
+                .stream()
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -71,5 +75,4 @@ public class TopicService {
                 .bookExternalId(topic.getBook().getExternalId())
                 .build();
     }
-
 }
