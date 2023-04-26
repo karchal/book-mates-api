@@ -31,6 +31,10 @@ public class TopicService {
         }
     }
 
+    public TopicDto getTopicById(long topicId) {
+        return topicRepository.findById(topicId).stream().map(this::convertToDto).findFirst().orElse(new TopicDto());
+    }
+
 
     public void createTopic(long bookId, Topic topic) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
@@ -67,4 +71,5 @@ public class TopicService {
                 .bookExternalId(topic.getBook().getExternalId())
                 .build();
     }
+
 }
