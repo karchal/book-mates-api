@@ -28,7 +28,7 @@ public class TopicService {
     }
 
     public TopicDto getTopicById(long topicId) {
-        return topicRepository.findById(topicId).stream().map(this::convertToDto).findFirst().orElse(new TopicDto());
+        return topicRepository.findById(topicId).map(this::convertToDto).orElse(null);
     }
 
 
