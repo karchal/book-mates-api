@@ -38,11 +38,31 @@ public class GoogleApiBookService {
 
     public List<Book> searchBooks(String criteria, String query) {
         ReturnResults results = callApi(criteria, query);
-        if (results.getItems() != null)
-            return results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+        if (results.getItems() != null) {
+            List<Book> booksFromSearch = results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+            return checkIfUnique(booksFromSearch);
+        }
         else
             return new ArrayList<>();
     }
+
+    private List<Book> checkIfUnique(List<Book> books) {
+        List<Book> uniqueBooks = books.stream()
+                .distinct()
+                .filter(book -> books.stream()
+                    .filter(otherBook -> book != otherBook)
+                    .noneMatch(otherBook -> BookUtils.isDistinctByTitleAndAuthor(book, otherBook)))
+                .collect(Collectors.toList());
+        return uniqueBooks;
+    }
+
+//    private boolean isDistinctByTitleAndAuthor(Book book, Book book1) {
+//        if (book == null || book1 == null || book.getAuthor() == null || book1.getAuthor() == null ||
+//                book.getTitle() == null || book1.getTitle() == null) {
+//            return false;
+//        }
+//        return ((book.getAuthor().equalsIgnoreCase(book1.getAuthor())) && (book.getTitle().equalsIgnoreCase(book1.getTitle())));
+//    }
 
 
     public Book getBookByExternalId(String externalId) {
