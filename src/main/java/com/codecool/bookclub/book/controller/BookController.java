@@ -64,9 +64,9 @@ public class BookController {
     @PostMapping("/books/shelves/{shelfType}/{id}")
     public void addBookToUserShelf(@PathVariable("shelfType") Shelf shelfType,
                                    @PathVariable("id") String externalId,
-                                   @AuthenticationPrincipal User user) {
+                                   @AuthenticationPrincipal String userName) {
         Book book = googleApiBookService.getBookByExternalId(externalId);
-        bookService.saveBookToShelf(book, shelfType, user);
+        bookService.saveBookToShelf(book, shelfType, userName);
     }
 
 

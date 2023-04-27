@@ -5,8 +5,11 @@ import com.codecool.bookclub.googleapi.GoogleApiBook;
 import com.codecool.bookclub.googleapi.ReturnResults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,13 +52,26 @@ public class GoogleApiBookService {
     private GoogleApiBook callApiByBookId(String externalId) {
         String url = googleApiUrl + API_PARAM_VOLUME + externalId;
         log.debug("Url for API: {}", url);
+        return getGoogleApiBook(externalId, url);
+    }
+
+    private static GoogleApiBook getGoogleApiBook(String externalId, String url) {
         WebClient.Builder builder = WebClient.builder();
-        return builder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(GoogleApiBook.class)
-                .block();
+        try {
+            return builder.build()
+                    .get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(GoogleApiBook.class)
+                    .block();
+        } catch (WebClientResponseException exception) {
+            log.error("Error calling Google Books API for book by id: {}", exception.getMessage());
+            if (exception.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new BookNotFoundException("Book not found for id " + externalId);
+            } else {
+                throw new ApiException("Error when calling Google Books API: " + exception.getMessage());
+            }
+        }
     }
 
     private ReturnResults callApi(String criteria, String query) {
@@ -71,13 +87,26 @@ public class GoogleApiBookService {
         }
         url = url + API_PARAM_KEY + apiKey + API_PARAM_MAX_RESULTS + API_PARAM_RESULTS_NUMBER;
         log.debug("Url for API: {}", url);
+        return getReturnResults(criteria, query, url);
+    }
+
+    private static ReturnResults getReturnResults(String criteria, String query, String url) {
         WebClient.Builder builder = WebClient.builder();
-        return builder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(ReturnResults.class)
-                .block();
+        try {
+            return builder.build()
+                    .get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(ReturnResults.class)
+                    .block();
+        } catch (WebClientResponseException exception) {
+            log.error("Error calling Google Books API for books by criteria and query: {}", exception.getMessage());
+            if (exception.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new BookNotFoundException("Book not found for criteria: " + criteria + " and query: " + query);
+            } else {
+                throw new ApiException("Error when calling Google Books API: " + exception.getMessage());
+            }
+        }
     }
 
     private int extractPublicationYear(GoogleApiBook googleApiBook) {
