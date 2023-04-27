@@ -1,8 +1,8 @@
 package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
+import com.codecool.bookclub.book.service.GoogleApiBookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +15,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final GoogleApiBookService googleApiBookService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, GoogleApiBookService googleApiBookService) {
         this.bookService = bookService;
+        this.googleApiBookService = googleApiBookService;
     }
 
     @GetMapping("/books/{id}")
@@ -36,19 +38,6 @@ public class BookController {
         return "Rate a book";
     }
 
-//    @GetMapping("/books")
-//    public ResponseEntity<List<Book>> getAll(@RequestParam(value = "author", required = false) String author,
-//                                             @RequestParam(value = "title", required = false) String title,
-//                                             @RequestParam(value = "genre", required = false) String genre,
-//                                             @RequestParam(value="amount", required = false) int amount) {
-//        List<Book> books = bookService.findTopFourBooks();
-////        if (books == null) {
-////            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-////        } else {
-//            return new ResponseEntity<>(books, HttpStatus.OK);
-////        }
-//    }
-
 
     @GetMapping("/books")
     public List<Book> showBooks() {
@@ -59,17 +48,12 @@ public class BookController {
     @GetMapping("/books/search")
     public List<Book> searchBooks(@RequestParam(value = "criteria", required = false) String criteria,
                                   @RequestParam(value = "query", required = false) String query) {
-        return bookService.searchBooks(criteria, query);
+        return googleApiBookService.searchBooks(criteria, query);
     }
 
     @GetMapping("/books/search/{id}")
     public Book getBookByExternalId(@PathVariable String id) {
-        return bookService.getBookByExternalId(id);
-    }
-
-    @PostMapping("/book/{shelf}")
-    public void addToShelf(Book book, @PathVariable Shelf shelf) {
-        bookService.saveBookToShelf(book, shelf);
+        return googleApiBookService.getBookByExternalId(id);
     }
 
 

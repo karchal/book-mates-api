@@ -9,14 +9,13 @@ import com.codecool.bookclub.event.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -69,7 +68,7 @@ public class EventController {
     }
 
 
-
+/*TODO wydzielić do stałej liczby */
     @GetMapping("/events")
     public Page<EventDto> getALlEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
         Pageable paging = PageRequest.of(page,size, Sort.by("creationDateAndTime").descending());
@@ -85,7 +84,7 @@ public class EventController {
 
     @PostMapping("/books/{book_id}/event")
     public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event){
-        eventService.addEvent(bookId,event);
+        eventService.addEvent(bookId, event);
     }
 
     @PutMapping("events/{event_id}")
