@@ -1,16 +1,12 @@
 package com.codecool.bookclub.event.model;
 
 import com.codecool.bookclub.book.model.Book;
-import com.codecool.bookclub.user.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
-
 
 @Data
 @NoArgsConstructor
@@ -24,18 +20,14 @@ public class Event {
     private long id;
     @CreationTimestamp
     private LocalDateTime creationDateAndTime;
-
     @ManyToOne
     private Book book;
     private String title;
     @Column(length = 4000)
     private String description;
     private ZonedDateTime eventDate;
-
     private EventType eventType;
-
     private Integer maxParticipants;
-
     private String url;
 
 }

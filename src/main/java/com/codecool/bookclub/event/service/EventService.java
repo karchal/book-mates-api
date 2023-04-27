@@ -24,13 +24,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class EventService{
-
     private final EventRepository eventRepository;
     private final BookRepository bookRepository;
     private final EventPaginationRepository paginationRepository;
     private final EventDetailsRepository eventDetailsRepository;
     private final UserRepository userRepository;
-
     @Autowired
     public EventService(EventRepository eventRepository, BookRepository bookRepository, EventPaginationRepository paginationRepository, EventDetailsRepository eventDetailsRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
@@ -86,7 +84,6 @@ public class EventService{
                 .user(userRepository.findById(3L).orElse(null))
                 .build());
     }
-
 
     public void deleteEventById(long eventId){
         if (getEventById(eventId) != null) {
