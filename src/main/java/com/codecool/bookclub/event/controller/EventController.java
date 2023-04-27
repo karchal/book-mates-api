@@ -85,7 +85,7 @@ public class EventController {
 
     @PostMapping("/books/{book_id}/event")
     public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event){
-        eventService.addEvent(bookId,event);
+        eventService.addEvent(bookId, event);
     }
 
     @PutMapping("events/{event_id}")
