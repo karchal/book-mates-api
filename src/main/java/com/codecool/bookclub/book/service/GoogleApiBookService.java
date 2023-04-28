@@ -56,6 +56,7 @@ public class GoogleApiBookService {
         return uniqueBooks;
     }
 
+
 //    private boolean isDistinctByTitleAndAuthor(Book book, Book book1) {
 //        if (book == null || book1 == null || book.getAuthor() == null || book1.getAuthor() == null ||
 //                book.getTitle() == null || book1.getTitle() == null) {
@@ -152,7 +153,7 @@ public class GoogleApiBookService {
                 .description(googleApiBook.getVolumeInfo().getDescription() != null ? googleApiBook.getVolumeInfo().getDescription() : null)
                 .pictureUrl(googleApiBook.getVolumeInfo().getImageLinks() != null ? googleApiBook.getVolumeInfo().getImageLinks().getThumbnail() : null)
                 .pages(googleApiBook.getVolumeInfo().getPageCount())
-                .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() * RATING_RATIO : 0))
+                .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() : 0))
                 .build();
     }
 }
