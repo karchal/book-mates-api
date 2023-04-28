@@ -10,7 +10,6 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Builder
 public class EventDetailsDto {
-
     long id;
     private long userId;
     private long eventId;

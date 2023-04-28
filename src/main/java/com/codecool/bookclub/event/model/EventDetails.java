@@ -18,15 +18,12 @@ public class EventDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Event event;
     @JsonIgnoreProperties
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
     private ParticipantType participantType;
-
 
 }
 

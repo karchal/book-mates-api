@@ -5,12 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-
 public interface EventRepository extends JpaRepository<Event, Long> {
     Event findEventById(long id);
-
     List<Event> findFirst4ByOrderByCreationDateAndTimeDesc();
-
     List<Event> findEventsByBook_ExternalId(String bookId);
 
 }
