@@ -5,14 +5,17 @@ import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
 import com.codecool.bookclub.user.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/api")
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -37,10 +40,10 @@ public class BookController {
         //return bookService.getById(id).ifPresent(new ResponseEntity<>(book, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/books/{id}/rate")
-    public String rate(@PathVariable("id") String id, @RequestBody int rating) {
-        return "Rate a book";
-    }
+//    @PostMapping("/books/{id}/rate")
+//    public String rate(@PathVariable("id") String id, @RequestBody int rating) {
+//        return "Rate a book";
+//    }
 
 
     @GetMapping("/books")
@@ -63,10 +66,11 @@ public class BookController {
 
     @PostMapping("/books/shelves/{shelfType}/{id}")
     public void addBookToUserShelf(@PathVariable("shelfType") Shelf shelfType,
-                                   @PathVariable("id") String externalId,
-                                   @AuthenticationPrincipal User user) {
+                                   @PathVariable("id") String externalId) {
+        String userName = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
+        log.debug("addBookToUserShelf: shelf={}, id={}, user={}", shelfType, externalId, userName);
         Book book = googleApiBookService.getBookByExternalId(externalId);
-        bookService.saveBookToShelf(book, shelfType, user);
+        bookService.saveBookToShelf(book, shelfType, userName);
     }
 
 

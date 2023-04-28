@@ -11,5 +11,5 @@ public interface BookService {
     Book getById(Long id);// todo Optional<Book>
     List<Book> getAllBooks();
     List<Book> findTopFourBooks();
-    void saveBookToShelf(Book book, Shelf shelf, User user);
+    void saveBookToShelf(Book book, Shelf shelf, String userName);
 }
