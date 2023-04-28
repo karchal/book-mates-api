@@ -1,9 +1,14 @@
 package com.codecool.bookclub.security.authentication;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/authentication")
@@ -14,15 +19,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<String> register(
+            @RequestBody RegisterRequest request) {
+        return ResponseEntity.accepted().body(authenticationService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(
-            @RequestBody AuthenticationRequest request
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest request
     ) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }

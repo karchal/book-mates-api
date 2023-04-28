@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-    private String email;
-    private String password;
+public class RegisterResponse {
+    private boolean isEmailUnique;
+    private boolean isUsernameUnique;
+    private String message;
 }
