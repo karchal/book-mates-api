@@ -27,6 +27,11 @@ public class TopicService {
         return optionalBook.map(topicRepository::findByBook).orElse(null);
     }
 
+    public TopicDto getTopicById(long topicId) {
+        return topicRepository.findById(topicId).map(this::convertToDto).orElse(null);
+    }
+
+
     public void createTopic(long bookId, Topic topic) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
         if (optionalBook.isPresent()) {

@@ -1,13 +1,16 @@
 package com.codecool.bookclub.forum.controller;
 
+import com.codecool.bookclub.forum.dto.CommentDto;
+import com.codecool.bookclub.forum.dto.NewCommentDto;
 import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.service.CommentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 @RestController
 public class CommentController {
@@ -24,8 +27,8 @@ public class CommentController {
     }
 
 
-    @PostMapping("/books/{book_id}/topics/{topic_id}")
-    public void createComment(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId, @RequestBody Comment comment){
+    @PostMapping("/topics/{topic_id}/comments")
+    public void createComment(@PathVariable("topic_id") long topicId, @RequestBody NewCommentDto comment){
         commentService.createComment(topicId, comment);
     }
 
@@ -38,6 +41,12 @@ public class CommentController {
     @DeleteMapping("/books/{book_id}/topics/{topic_id}")
     public boolean deleteComment(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId, @RequestBody Comment comment){
         return false;
+    }
+
+    @GetMapping("/topics/{topic_id}/comments")
+    public ResponseEntity<List<CommentDto>> getCommentsForTopic(@PathVariable("topic_id") long topicId){
+        List<CommentDto> comments= commentService.getCommentsForTopic(topicId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
 

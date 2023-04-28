@@ -1,6 +1,5 @@
 package com.codecool.bookclub.event.controller;
 
-import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.dto.NewEventDto;
 import com.codecool.bookclub.event.model.Event;
@@ -23,29 +22,9 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
-    private final BookService bookService;
-
-
     @Autowired
-    public EventController(EventService eventService, BookService bookService) {
+    public EventController(EventService eventService) {
         this.eventService = eventService;
-        this.bookService = bookService;
-    }
-
-//    @GetMapping("/books/{book_id}/events")
-//    public List<Event> getEventsForBook(@PathVariable("book_id") long bookId){
-//        return eventService.getEventById(id);
-//        return new ArrayList<>();
-//    }
-
-    @GetMapping("/books/{book_id}/events/{event_id}")
-    public void getEventById(@PathVariable("book_id") long bookId, @PathVariable("event_id") long eventId) {
-//        Optional<Event> event = eventService.getEventById(eventId);
-//        if (event.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            return new ResponseEntity<>(event.get(), HttpStatus.OK);
-//        }
     }
 
     @GetMapping("/event-type/{enum-index}")
@@ -53,7 +32,6 @@ public class EventController {
         EventType enumValue = EventType.values()[enumIndex];
         return ResponseEntity.ok(enumValue);
     }
-
 
     @GetMapping("/events/{event_id}")
     public ResponseEntity<EventDto> getEventById( @PathVariable("event_id") long eventId) {
@@ -72,8 +50,6 @@ public class EventController {
     @GetMapping("/events")
     public Page<EventDto> getALlEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
         Pageable paging = PageRequest.of(page,size, Sort.by("creationDateAndTime").descending());
-//        List<Event> events = eventService.getAllEvents();
-//        return new ResponseEntity<>(events, HttpStatus.OK).getBody();
         return eventService.findAllEvents(paging);
     }
     @GetMapping("/events/top_4")
@@ -84,7 +60,7 @@ public class EventController {
 
     @PostMapping("/books/{book_id}/event")
     public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event){
-        eventService.addEvent(bookId,event);
+        eventService.addEvent(bookId, event);
     }
 
     @PutMapping("events/{event_id}")
@@ -99,7 +75,6 @@ public class EventController {
 
     @PostMapping("events/{event_id}/join")
     public void joinEvent(@PathVariable("event_id") long eventId){
-        System.out.println(eventId);
         eventService.joinEvent(eventId);
     }
     @GetMapping("books/{book_id}/events")
