@@ -66,7 +66,7 @@ public class JwtService {
                 .parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(token) // tu wywala ExpiredJwtException wewnątrz jest sprawdzenie czy token wygasł
                 .getBody();
     }
 

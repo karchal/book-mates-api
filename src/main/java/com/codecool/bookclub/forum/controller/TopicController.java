@@ -51,4 +51,10 @@ public class TopicController {
         List<Topic> topics = topicService.getAllTopics();
         return new ResponseEntity<>(topics, HttpStatus.OK).getBody();
     }
+
+    @GetMapping("/topics/{topic_id}")
+    public ResponseEntity<TopicDto> getTopicById(@PathVariable("topic_id") long topicId){
+        TopicDto topic = topicService.getTopicById(topicId);
+        return new ResponseEntity<>(topic, HttpStatus.OK);
+    }
 }

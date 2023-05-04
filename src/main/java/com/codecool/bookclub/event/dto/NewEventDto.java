@@ -18,7 +18,6 @@ public class NewEventDto {
     private EventType eventType;
     private Integer maxParticipants;
     private String url;
-
     private String externalId;
     private String author;
     private String bookDescription;
@@ -27,9 +26,5 @@ public class NewEventDto {
     private String pictureUrl;
     private BigDecimal rating;
     private Integer year;
-
-
-
-
 
 }

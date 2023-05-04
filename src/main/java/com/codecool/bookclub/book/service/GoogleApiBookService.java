@@ -5,8 +5,11 @@ import com.codecool.bookclub.googleapi.GoogleApiBook;
 import com.codecool.bookclub.googleapi.ReturnResults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,11 +38,32 @@ public class GoogleApiBookService {
 
     public List<Book> searchBooks(String criteria, String query) {
         ReturnResults results = callApi(criteria, query);
-        if (results.getItems() != null)
-            return results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+        if (results.getItems() != null) {
+            List<Book> booksFromSearch = results.getItems().stream().map(this::convertToBook).collect(Collectors.toList());
+            return checkIfUnique(booksFromSearch);
+        }
         else
             return new ArrayList<>();
     }
+
+    private List<Book> checkIfUnique(List<Book> books) {
+        List<Book> uniqueBooks = books.stream()
+                .distinct()
+                .filter(book -> books.stream()
+                    .filter(otherBook -> book != otherBook)
+                    .noneMatch(otherBook -> BookUtils.isDistinctByTitleAndAuthor(book, otherBook)))
+                .collect(Collectors.toList());
+        return uniqueBooks;
+    }
+
+
+//    private boolean isDistinctByTitleAndAuthor(Book book, Book book1) {
+//        if (book == null || book1 == null || book.getAuthor() == null || book1.getAuthor() == null ||
+//                book.getTitle() == null || book1.getTitle() == null) {
+//            return false;
+//        }
+//        return ((book.getAuthor().equalsIgnoreCase(book1.getAuthor())) && (book.getTitle().equalsIgnoreCase(book1.getTitle())));
+//    }
 
 
     public Book getBookByExternalId(String externalId) {
@@ -49,13 +73,26 @@ public class GoogleApiBookService {
     private GoogleApiBook callApiByBookId(String externalId) {
         String url = googleApiUrl + API_PARAM_VOLUME + externalId;
         log.debug("Url for API: {}", url);
+        return getGoogleApiBook(externalId, url);
+    }
+
+    private static GoogleApiBook getGoogleApiBook(String externalId, String url) {
         WebClient.Builder builder = WebClient.builder();
-        return builder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(GoogleApiBook.class)
-                .block();
+        try {
+            return builder.build()
+                    .get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(GoogleApiBook.class)
+                    .block();
+        } catch (WebClientResponseException exception) {
+            log.error("Error calling Google Books API for book by id: {}", exception.getMessage());
+            if (exception.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new BookNotFoundException("Book not found for id " + externalId);
+            } else {
+                throw new ApiException("Error when calling Google Books API: " + exception.getMessage());
+            }
+        }
     }
 
     private ReturnResults callApi(String criteria, String query) {
@@ -71,13 +108,26 @@ public class GoogleApiBookService {
         }
         url = url + API_PARAM_KEY + apiKey + API_PARAM_MAX_RESULTS + API_PARAM_RESULTS_NUMBER;
         log.debug("Url for API: {}", url);
+        return getReturnResults(criteria, query, url);
+    }
+
+    private static ReturnResults getReturnResults(String criteria, String query, String url) {
         WebClient.Builder builder = WebClient.builder();
-        return builder.build()
-                .get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(ReturnResults.class)
-                .block();
+        try {
+            return builder.build()
+                    .get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(ReturnResults.class)
+                    .block();
+        } catch (WebClientResponseException exception) {
+            log.error("Error calling Google Books API for books by criteria and query: {}", exception.getMessage());
+            if (exception.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new BookNotFoundException("Book not found for criteria: " + criteria + " and query: " + query);
+            } else {
+                throw new ApiException("Error when calling Google Books API: " + exception.getMessage());
+            }
+        }
     }
 
     private int extractPublicationYear(GoogleApiBook googleApiBook) {
@@ -103,7 +153,7 @@ public class GoogleApiBookService {
                 .description(googleApiBook.getVolumeInfo().getDescription() != null ? googleApiBook.getVolumeInfo().getDescription() : null)
                 .pictureUrl(googleApiBook.getVolumeInfo().getImageLinks() != null ? googleApiBook.getVolumeInfo().getImageLinks().getThumbnail() : null)
                 .pages(googleApiBook.getVolumeInfo().getPageCount())
-                .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() * RATING_RATIO : 0))
+                .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() : 0))
                 .build();
     }
 }

@@ -16,22 +16,14 @@ public class EventDto {
     private LocalDateTime creationDateAndTime;
     private String title;
     private String description;
-
     private ZonedDateTime eventDate;
-
     private EventType eventType;
-
     private Integer maxParticipants;
-
     private String url;
-
     private long bookId;
-
     private String bookTitle;
     private String bookAuthor;
-
     private String pictureUrl;
-
     private Integer participants;
     private Integer waitingList;
     private String organizatorName;

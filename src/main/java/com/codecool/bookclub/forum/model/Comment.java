@@ -1,6 +1,7 @@
 package com.codecool.bookclub.forum.model;
 
 import com.codecool.bookclub.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,8 @@ public class Comment {
     private LocalDateTime creationTime;
     @ManyToOne
     private User author;
-    @ManyToOne
+    @JsonIgnoreProperties
+    @ManyToOne(fetch = FetchType.LAZY)
     private Topic topic;
 
 }

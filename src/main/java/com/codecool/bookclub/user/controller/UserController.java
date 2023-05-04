@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("user_id") long userId){
+    public ResponseEntity<UserDto> getUserProfile(@PathVariable("user_id") long userId){
         UserDto userDto = userService.getUserDto(userId);
         if (userDto != null) {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/users/profile")
-    public ResponseEntity<UserDto> getUserById(@AuthenticationPrincipal User user){
+    public ResponseEntity<UserDto> getUserProfile(@AuthenticationPrincipal User user){
         UserDto userDto = userService.getUserDto(user);
         if (userDto != null) {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
