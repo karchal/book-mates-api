@@ -8,4 +8,7 @@
     <logger name="com.codecool.bookclub.book.service" level="trace" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
+    <logger name="org.springframework.web" level="trace">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
 </configuration>
