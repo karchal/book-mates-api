@@ -8,8 +8,6 @@ import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

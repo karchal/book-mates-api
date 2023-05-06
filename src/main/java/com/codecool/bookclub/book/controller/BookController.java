@@ -4,13 +4,10 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
-import com.codecool.bookclub.user.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,13 +34,8 @@ public class BookController {
         } else {
             return new ResponseEntity<>(book, HttpStatus.OK);
         }
-        //return bookService.getById(id).ifPresent(new ResponseEntity<>(book, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-//    @PostMapping("/books/{id}/rate")
-//    public String rate(@PathVariable("id") String id, @RequestBody int rating) {
-//        return "Rate a book";
-//    }
 
 
     @GetMapping("/books")
