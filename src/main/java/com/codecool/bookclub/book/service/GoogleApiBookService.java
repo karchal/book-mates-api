@@ -60,7 +60,7 @@ public class GoogleApiBookService {
         return getGoogleApiBook(externalId, url);
     }
 
-    private static GoogleApiBook getGoogleApiBook(String externalId, String url) {
+    private GoogleApiBook getGoogleApiBook(String externalId, String url) {
         WebClient.Builder builder = WebClient.builder();
         try {
             return builder.build()
@@ -95,7 +95,7 @@ public class GoogleApiBookService {
         return getReturnResults(criteria, query, url);
     }
 
-    private static ReturnResults getReturnResults(String criteria, String query, String url) {
+    private ReturnResults getReturnResults(String criteria, String query, String url) {
         WebClient.Builder builder = WebClient.builder();
         try {
             return builder.build()
