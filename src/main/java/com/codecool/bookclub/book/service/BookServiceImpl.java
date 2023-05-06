@@ -6,6 +6,7 @@ import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.repository.BookDetailsRepository;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.user.model.User;
+import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,13 +20,13 @@ import java.util.Optional;
 class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookDetailsRepository bookDetailsRepository;
-    private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
 
-    public BookServiceImpl(BookRepository bookRepository, BookDetailsRepository bookDetailsRepository, UserDetailsService userDetailsService) {
+    public BookServiceImpl(BookRepository bookRepository, BookDetailsRepository bookDetailsRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.bookDetailsRepository = bookDetailsRepository;
-        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -47,9 +48,8 @@ class BookServiceImpl implements BookService {
 
 
     /*TODO: check if the book is already in users books, optional if not in db => not in users books*/
-    public void saveBookToShelf(Book book, Shelf shelf, String userName) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-        User user = (User) userDetails;
+    public void saveBookToShelf(Book book, Shelf shelf, Long userId) {
+        User user = userRepository.getReferenceById(userId);
         Optional<Book> bookInDb = bookRepository.findByExternalId(book.getExternalId());
         Book savedBook = bookInDb.orElseGet(() -> bookRepository.save(book));
         if (bookDetailsRepository.findAllByUserIdAndBookId(user.getId(), savedBook.getId()).isEmpty()) {

@@ -66,11 +66,11 @@ public class BookController {
 
     @PostMapping("/books/shelves/{shelfType}/{id}")
     public void addBookToUserShelf(@PathVariable("shelfType") Shelf shelfType,
-                                   @PathVariable("id") String externalId) {
-        String userName = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
-        log.debug("addBookToUserShelf: shelf={}, id={}, user={}", shelfType, externalId, userName);
+                                   @PathVariable("id") String externalId,
+                                   @AuthenticationPrincipal Long userId) {
+        log.debug("addBookToUserShelf: shelf={}, id={}, user={}", shelfType, externalId, userId);
         Book book = googleApiBookService.getBookByExternalId(externalId);
-        bookService.saveBookToShelf(book, shelfType, userName);
+        bookService.saveBookToShelf(book, shelfType, userId);
     }
 
 

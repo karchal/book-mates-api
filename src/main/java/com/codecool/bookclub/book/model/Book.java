@@ -30,4 +30,6 @@ public class Book {
     private int pages;
     private BigDecimal rating;
 //    private int ratingsCount;
+
+
 }
