@@ -75,8 +75,8 @@ public class EventController {
     }
 
     @PostMapping("events/{event_id}/join")
-    public void joinEvent(@PathVariable("event_id") long eventId){
-        eventService.joinEvent(eventId);
+    public void joinEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
+        eventService.joinEvent(eventId,userId);
     }
     @GetMapping("books/{book_id}/events")
     public List<EventDto> getEventsByBookExternalId(@PathVariable("book_id") String bookId){
