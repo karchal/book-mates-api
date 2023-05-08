@@ -45,8 +45,8 @@ public class UserController {
     }
 
     @GetMapping("/users/my_account/books")
-    public ResponseEntity<List<BookDetailsDto>> getMyBooks(@AuthenticationPrincipal User user){
-        return new ResponseEntity<>(userService.getUserBooks(user), HttpStatus.OK);
+    public ResponseEntity<List<BookDetailsDto>> getMyBooks(@AuthenticationPrincipal Long userId){
+        return new ResponseEntity<>(userService.getUserBooks(userId), HttpStatus.OK);
     }
 
     @PutMapping("/users/{user_id}/shelves")
@@ -69,8 +69,8 @@ public class UserController {
     }
 
     @GetMapping("/users/profile")
-    public ResponseEntity<UserDto> getUserProfile(@AuthenticationPrincipal User user){
-        UserDto userDto = userService.getUserDto(user);
+    public ResponseEntity<UserDto> getUserProfile(@AuthenticationPrincipal Long userId){
+        UserDto userDto = userService.getUserDto(userId);
         if (userDto != null) {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         } else {

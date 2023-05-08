@@ -1,14 +1,18 @@
 package com.codecool.bookclub.book.controller;
 
 import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/api")
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,13 +34,8 @@ public class BookController {
         } else {
             return new ResponseEntity<>(book, HttpStatus.OK);
         }
-        //return bookService.getById(id).ifPresent(new ResponseEntity<>(book, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/books/{id}/rate")
-    public String rate(@PathVariable("id") String id, @RequestBody int rating) {
-        return "Rate a book";
-    }
 
 
     @GetMapping("/books")
@@ -54,6 +53,16 @@ public class BookController {
     @GetMapping("/books/search/{id}")
     public Book getBookByExternalId(@PathVariable String id) {
         return googleApiBookService.getBookByExternalId(id);
+    }
+
+
+    @PostMapping("/books/shelves/{shelfType}/{id}")
+    public void addBookToUserShelf(@PathVariable("shelfType") Shelf shelfType,
+                                   @PathVariable("id") String externalId,
+                                   @AuthenticationPrincipal Long userId) {
+        log.debug("addBookToUserShelf: shelf={}, id={}, user={}", shelfType, externalId, userId);
+        Book book = googleApiBookService.getBookByExternalId(externalId);
+        bookService.saveBookToShelf(book, shelfType, userId);
     }
 
 
