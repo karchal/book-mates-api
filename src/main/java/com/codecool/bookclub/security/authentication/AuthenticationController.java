@@ -20,8 +20,9 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(
-            @RequestBody RegisterRequest request) {
-        return ResponseEntity.accepted().body(authenticationService.register(request));
+            @Valid @RequestBody RegisterRequest request) {
+        authenticationService.register(request);
+        return ResponseEntity.accepted().body("user created");
     }
 
     @PostMapping("/login")

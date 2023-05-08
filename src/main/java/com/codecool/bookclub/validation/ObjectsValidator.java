@@ -1,6 +1,5 @@
 package com.codecool.bookclub.validation;
 
-import com.codecool.bookclub.security.authentication.RegisterRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

@@ -6,6 +6,8 @@ import com.codecool.bookclub.forum.model.Comment;
 import com.codecool.bookclub.forum.model.Topic;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,8 +27,16 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @NotEmpty
+    @Column(unique=true)
     private String nickname;
+    @NotNull
+    @NotEmpty
+    @Column(unique=true)
     private String email;
+    @NotNull
+    @NotEmpty
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;

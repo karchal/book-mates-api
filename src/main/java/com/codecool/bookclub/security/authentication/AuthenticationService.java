@@ -24,30 +24,18 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final ObjectsValidator<RegisterRequest> validator;
 
-    public String register(RegisterRequest request) {
-
-        RegisterResponse response = new RegisterResponse();
-        response.setEmailUnique(!userRepository.existsUserByEmail(request.getEmail()));
-        response.setUsernameUnique(!userRepository.existsUserByNickname(request.getUsername()));
-        if (!(response.isEmailUnique() && response.isUsernameUnique())) {
-            response.setMessage("data not unique");
-            return response.getMessage();
-        }
+    public User register(RegisterRequest request) {
         User user = User.builder()
                 .nickname(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(READER)
                 .build();
-        userRepository.save(user);
-        response.setMessage("account created");
-        return response.getMessage();
+        return userRepository.save(user);
     }
 
     public LoginResponse authenticate(LoginRequest request) {
-        System.out.println("email: " + request.getEmail() + " password: " + request.getPassword());
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
                 request.getPassword()
