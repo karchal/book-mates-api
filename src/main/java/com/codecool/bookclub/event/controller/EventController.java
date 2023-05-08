@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,8 +60,8 @@ public class EventController {
     }
 
     @PostMapping("/books/{book_id}/event")
-    public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event){
-        eventService.addEvent(bookId, event);
+    public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event, @AuthenticationPrincipal Long userId){
+        eventService.addEvent(bookId, event, userId);
     }
 
     @PutMapping("events/{event_id}")

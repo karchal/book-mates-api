@@ -54,7 +54,7 @@ public class EventService{
         return eventRepository.findEventsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public void addEvent(String bookId, NewEventDto newEventDto){
+    public void addEvent(String bookId, NewEventDto newEventDto, long userId){
         Book book = bookRepository.findBookByExternalId(bookId);
         Book newBook = new Book();
         if (book==null){
@@ -81,7 +81,7 @@ public class EventService{
         eventDetailsRepository.save(EventDetails.builder()
                 .participantType(ParticipantType.ORGANIZER)
                 .event(event)
-                .user(userRepository.findById(3L).orElse(null))
+                .user(userRepository.findById(userId).orElse(null))
                 .build());
     }
 
