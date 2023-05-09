@@ -54,7 +54,7 @@ public class EventService{
         return eventRepository.findEventsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public void addEvent(String bookId, NewEventDto newEventDto){
+    public void addEvent(String bookId, NewEventDto newEventDto, long userId){
         Book book = bookRepository.findBookByExternalId(bookId);
         Book newBook = new Book();
         if (book==null){
@@ -81,7 +81,7 @@ public class EventService{
         eventDetailsRepository.save(EventDetails.builder()
                 .participantType(ParticipantType.ORGANIZER)
                 .event(event)
-                .user(userRepository.findById(3L).orElse(null))
+                .user(userRepository.findById(userId).orElse(null))
                 .build());
     }
 
@@ -110,20 +110,20 @@ public class EventService{
                 .collect(Collectors.toList());
     }
 
-    public void joinEvent(long eventId) {
+    public void joinEvent(long eventId, long userId) {
         EventDetails event = eventDetailsRepository.findFirstByEventId(eventId);
         int currentParticipantsNumber = eventDetailsRepository.findAllByEventId(eventId).size();
         int maxParticipantNumber = event.getEvent().getMaxParticipants();
         if (currentParticipantsNumber>=maxParticipantNumber){
             eventDetailsRepository.save(EventDetails.builder()
                     .participantType(ParticipantType.WAITING_LIST)
-                    .user(userRepository.findById(3L).orElse(null))
+                    .user(userRepository.findById(userId).orElse(null))
                     .event(event.getEvent())
                     .build());
         } else {
             eventDetailsRepository.save(EventDetails.builder()
                     .participantType(ParticipantType.PARTICIPANT)
-                    .user(userRepository.findById(3L).orElse(null))
+                    .user(userRepository.findById(userId).orElse(null))
                     .event(event.getEvent())
                     .build());
         }
