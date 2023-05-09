@@ -27,10 +27,4 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorDto> handleException(DataIntegrityViolationException ex) {
-        ErrorDto dto = new ErrorDto(HttpStatus.BAD_REQUEST, "Not unique input");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
-    }
-
 }
