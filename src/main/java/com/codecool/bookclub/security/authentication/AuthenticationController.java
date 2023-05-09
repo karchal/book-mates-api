@@ -4,11 +4,7 @@ package com.codecool.bookclub.security.authentication;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/authentication")
@@ -21,10 +17,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(
             @Valid @RequestBody RegisterRequest request) {
-        if (authenticationService.isEmailUnique(request)) {
+        if (authenticationService.isEmailNotUnique(request)) {
             return ResponseEntity.status(400).body("Istnieje konto zarejestrowane przy użyciu podanego adresu email.");
         }
-        if (authenticationService.isUsernameUnique(request)){
+        if (authenticationService.isUsernameNotUnique(request)){
             return ResponseEntity.status(400).body("Podana nazwa użytkownika jest już zajęta.");
         };
         authenticationService.register(request);

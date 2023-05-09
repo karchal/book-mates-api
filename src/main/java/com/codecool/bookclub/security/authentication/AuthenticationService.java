@@ -3,16 +3,12 @@ package com.codecool.bookclub.security.authentication;
 import com.codecool.bookclub.security.jwt.JwtService;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
-import com.codecool.bookclub.validation.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.codecool.bookclub.user.model.Role.READER;
 
@@ -32,6 +28,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(READER)
                 .build();
+
         return userRepository.save(user);
     }
 
@@ -48,11 +45,11 @@ public class AuthenticationService {
                 .build();
     }
 
-    public boolean isEmailUnique(RegisterRequest request) {
+    public boolean isEmailNotUnique(RegisterRequest request) {
         return userRepository.existsUserByEmail(request.getEmail());
     }
 
-    public boolean isUsernameUnique(RegisterRequest request) {
+    public boolean isUsernameNotUnique(RegisterRequest request) {
         return userRepository.existsUserByNickname(request.getUsername());
     }
 }
