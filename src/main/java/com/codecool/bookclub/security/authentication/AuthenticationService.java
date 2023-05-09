@@ -47,4 +47,12 @@ public class AuthenticationService {
                 .token(jwt)
                 .build();
     }
+
+    public boolean isEmailUnique(RegisterRequest request) {
+        return userRepository.existsUserByEmail(request.getEmail());
+    }
+
+    public boolean isUsernameUnique(RegisterRequest request) {
+        return userRepository.existsUserByNickname(request.getUsername());
+    }
 }

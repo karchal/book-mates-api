@@ -21,7 +21,12 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(
             @Valid @RequestBody RegisterRequest request) {
-        //authenticationService.checkUniqueness(request);
+        if (authenticationService.isEmailUnique(request)) {
+            return ResponseEntity.status(400).body("Istnieje konto zarejestrowane przy użyciu podanego adresu email.");
+        }
+        if (authenticationService.isUsernameUnique(request)){
+            return ResponseEntity.status(400).body("Podana nazwa użytkownika jest już zajęta.");
+        };
         authenticationService.register(request);
         return ResponseEntity.accepted().body("user created");
     }
