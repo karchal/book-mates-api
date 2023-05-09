@@ -7,6 +7,7 @@ import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class CommentController {
 
 
     @PostMapping("/topics/{topic_id}/comments")
-    public void createComment(@PathVariable("topic_id") long topicId, @RequestBody NewCommentDto comment){
-        commentService.createComment(topicId, comment);
+    public void createComment(@PathVariable("topic_id") long topicId, @RequestBody NewCommentDto comment, @AuthenticationPrincipal Long userId){
+        commentService.createComment(topicId, comment, userId);
     }
 
 

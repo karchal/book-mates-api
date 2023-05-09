@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String BEARER = "Bearer ";
@@ -45,6 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authenticationHeader.substring(BEARER.length());
+        log.debug("Checking jwt token: {}", jwt);
         try {
             email = jwtService.extractUsername(jwt);
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -60,9 +63,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
-            filterChain.doFilter(request, response);
+            //filterChain.doFilter(request, response);
         } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            //response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            log.debug("Problem with token validation", e);
+        } finally {
+            filterChain.doFilter(request, response);
         }
     }
 }
