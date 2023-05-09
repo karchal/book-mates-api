@@ -1,6 +1,8 @@
 package com.codecool.bookclub.error;
 
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,6 +24,12 @@ public class RestExceptionHandler {
                 .map(err -> String.format("%s: %s", err.getPropertyPath(), err.getMessage()))
                 .collect(Collectors.toList()));
 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorDto> handleException(DataIntegrityViolationException ex) {
+        ErrorDto dto = new ErrorDto(HttpStatus.BAD_REQUEST, "Not unique input");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
     }
 

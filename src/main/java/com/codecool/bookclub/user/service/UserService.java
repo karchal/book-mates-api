@@ -37,32 +37,16 @@ public class UserService {
         return getUser(userId).map(this::convertToDto).orElse(null);
     }
 
-    public UserDto getUserDto(User user) {
-        return getUser(user.getId()).map(this::convertToDto).orElse(null);
-    }
-
     public List<BookDetailsDto> getUserBooks(long userId) {
         return bookDetailsService.getBookDetailsDtos(userId);
-    }
-
-    public List<BookDetailsDto> getUserBooks(User user){
-        return getUserBooks(user.getId());
     }
 
     public List<EventDetailsDto> getUserEvents(long userId){
         return eventService.getUserEventDetailDtos(userId);
     }
 
-    public List<EventDetailsDto> getUserEvents(User user){
-        return getUserEvents(user.getId());
-    }
-
     public List<TopicDto> getUserTopics(long userId){
         return topicService.getUserTopicDtos(userId);
-    }
-
-    public List<TopicDto> getUserTopics(User user){
-        return getUserTopics(user.getId());
     }
 
     public List<Comment> getUserComments(long userId){
@@ -94,5 +78,4 @@ public class UserService {
                         .collect(Collectors.toList()))
                 .build() : null;
     }
-
 }

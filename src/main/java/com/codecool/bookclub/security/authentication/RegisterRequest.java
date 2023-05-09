@@ -1,5 +1,6 @@
 package com.codecool.bookclub.security.authentication;
 
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

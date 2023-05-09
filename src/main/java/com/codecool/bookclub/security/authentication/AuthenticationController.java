@@ -21,6 +21,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(
             @Valid @RequestBody RegisterRequest request) {
+        //authenticationService.checkUniqueness(request);
         authenticationService.register(request);
         return ResponseEntity.accepted().body("user created");
     }
