@@ -21,15 +21,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public User register(RegisterRequest request) {
+    public void register(RegisterRequest request) {
         User user = User.builder()
                 .nickname(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(READER)
                 .build();
-
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public LoginResponse authenticate(LoginRequest request) {
