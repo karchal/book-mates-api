@@ -2,8 +2,6 @@ package com.codecool.bookclub.forum.controller;
 
 import com.codecool.bookclub.forum.dto.CommentDto;
 import com.codecool.bookclub.forum.dto.NewCommentDto;
-import com.codecool.bookclub.forum.model.Comment;
-import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,26 +20,21 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/books/{book_id}/topics/{topic_id}")
-    public List<Topic> getCommentsOnTopic(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId){
-        return commentService.getCommentsOnTopic(topicId);
+
+    @PostMapping("/comments")
+    public void createComment(@RequestBody NewCommentDto comment, @AuthenticationPrincipal Long userId){
+        commentService.createComment(comment, userId);
+    }
+
+    @GetMapping("/comments/{id}/report-abuse")
+    public ResponseEntity<String> reportAbuse(@PathVariable("id") long id){
+        return commentService.reportAbuse(id);
     }
 
 
-    @PostMapping("/topics/{topic_id}/comments")
-    public void createComment(@PathVariable("topic_id") long topicId, @RequestBody NewCommentDto comment, @AuthenticationPrincipal Long userId){
-        commentService.createComment(topicId, comment, userId);
-    }
-
-
-    @PutMapping("/books/{book_id}/topics/{topic_id}")
-    public boolean updateComment(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId, @RequestBody Comment comment) {
-        return false;
-    }
-
-    @DeleteMapping("/books/{book_id}/topics/{topic_id}")
-    public boolean deleteComment(@PathVariable("book_id") long bookId, @PathVariable("topic_id") long topicId, @RequestBody Comment comment){
-        return false;
+    @DeleteMapping("/comments/{comment_id}")
+    public void deleteComment(@PathVariable("comment_id") long commentId){
+        commentService.deleteComment(commentId);
     }
 
     @GetMapping("/topics/{topic_id}/comments")
