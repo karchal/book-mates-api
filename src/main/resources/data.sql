@@ -65,8 +65,8 @@ values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bo
 
 
 
-insert into comment (creation_time, message, author_id, topic_id)
-values ('2023-03-28T12:00', 'nie wiem', 2, 3);
+insert into comment (creation_time, message, author_id, topic_id, abuse_report_count, status) values ('2023-03-28T12:00', 'nie wiem', 2, 1, 0, 0);
+insert into comment (creation_time, message, author_id, topic_id, abuse_report_count, status) values ('2023-03-28T12:00', 'nie wiem', 3, 1, 0, 0);
 
 -- insert into topic_comments (topic_id, comments_id)
 -- values (3,1)

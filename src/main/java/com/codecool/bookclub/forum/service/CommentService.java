@@ -3,15 +3,18 @@ package com.codecool.bookclub.forum.service;
 import com.codecool.bookclub.forum.dto.CommentDto;
 import com.codecool.bookclub.forum.dto.NewCommentDto;
 import com.codecool.bookclub.forum.model.Comment;
+import com.codecool.bookclub.forum.model.Status;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.repository.CommentRepository;
 import com.codecool.bookclub.forum.repository.TopicRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,5 +52,19 @@ public class CommentService {
 
     public void deleteComment(long id) {
         commentRepository.deleteById(id);
+    }
+
+    public ResponseEntity<String> reportAbuse(long id) {
+        Optional<Comment> optionalComment = commentRepository.findById(id);
+        if (optionalComment.isEmpty()) {
+            return ResponseEntity.status(404).body("Komentarz o podanym id nie istnieje.");
+        }
+        Comment comment = optionalComment.get();
+        if (comment.getStatus() == Status.VERIFIED) {
+            return ResponseEntity.status(208).body("Komentarz został już zweryfikowany i zaakceptowany.");
+        }
+        comment.reportAbuse();
+        commentRepository.save(comment);
+        return ResponseEntity.status(202).body("Komentarz został zgłoszony do weryfikacji.");
     }
 }
