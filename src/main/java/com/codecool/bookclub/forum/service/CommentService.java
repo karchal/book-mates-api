@@ -8,31 +8,19 @@ import com.codecool.bookclub.forum.repository.CommentRepository;
 import com.codecool.bookclub.forum.repository.TopicRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
     private final TopicRepository topicRepository;
     private final UserRepository userRepository;
 
-    public CommentService(CommentRepository commentRepository, TopicRepository topicRepository, UserRepository userRepository) {
-        this.commentRepository = commentRepository;
-        this.topicRepository = topicRepository;
-        this.userRepository = userRepository;
-    }
-
-    public List<Topic> getCommentsOnTopic(long topicId) {
-        Optional<Topic> optionalTopic = topicRepository.findById(topicId);
-        if (optionalTopic.isPresent()) {
-            return commentRepository.findAllByTopic(optionalTopic.get());
-        }
-        return null;
-    }
 
     public void createComment(long topicId, NewCommentDto newCommentDto, long userId) {
         Topic topic = topicRepository.findById(topicId).orElse(null);
@@ -57,5 +45,9 @@ public class CommentService {
                 .topicId(comment.getTopic().getId())
                 .authorName(comment.getAuthor().getNickname())
                 .build();
+    }
+
+    public void deleteComment(long id) {
+        commentRepository.deleteById(id);
     }
 }
