@@ -21,12 +21,12 @@ public class CommentController {
     }
 
 
-    @PostMapping("/topics/{topic_id}/comments")
-    public void createComment(@PathVariable("topic_id") long topicId, @RequestBody NewCommentDto comment, @AuthenticationPrincipal Long userId){
-        commentService.createComment(topicId, comment, userId);
+    @PostMapping("/comments")
+    public void createComment(@RequestBody NewCommentDto comment, @AuthenticationPrincipal Long userId){
+        commentService.createComment(comment, userId);
     }
 
-    @DeleteMapping("/comment/{comment_id}")
+    @DeleteMapping("/comments/{comment_id}")
     public void deleteComment(@PathVariable("comment_id") long commentId){
         commentService.deleteComment(commentId);
     }
