@@ -75,4 +75,8 @@ public class TopicService {
                 .bookExternalId(topic.getBook().getExternalId())
                 .build();
     }
+
+    public List<TopicDto> getTopicsByBookExternalId(String bookId) {
+        return topicRepository.findTopicsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
+    }
 }
