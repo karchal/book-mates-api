@@ -1,6 +1,7 @@
 package com.codecool.bookclub.security.authentication;
 
 
+import com.codecool.bookclub.security.jwt.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,11 @@ public class AuthenticationController {
             @RequestBody LoginRequest request
     ) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponse> refresh(@RequestBody String refreshToken) {
+        // authenticationService -> new method to re-generate refreshToken amd generate new access token
+        return null;
     }
 }
