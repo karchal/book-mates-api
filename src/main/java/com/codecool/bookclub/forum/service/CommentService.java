@@ -22,8 +22,8 @@ public class CommentService {
     private final UserRepository userRepository;
 
 
-    public void createComment(long topicId, NewCommentDto newCommentDto, long userId) {
-        Topic topic = topicRepository.findById(topicId).orElse(null);
+    public void createComment(NewCommentDto newCommentDto, long userId) {
+        Topic topic = topicRepository.findById(newCommentDto.getTopicId()).orElse(null);
         User user = userRepository.findById(userId).orElse(null);
         Comment comment = new Comment();
         comment.setMessage(newCommentDto.getCommentMessage());
