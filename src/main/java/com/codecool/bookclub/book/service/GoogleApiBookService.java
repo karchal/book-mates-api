@@ -40,7 +40,12 @@ public class GoogleApiBookService {
         if (results.getItems() != null) {
             return results.getItems().stream()
                     .filter(GoogleApiBook.distinctByKey())
-                    .map(this::convertToBook).collect(Collectors.toList());
+                    .filter(book -> {
+                        String salesCountry = book.getSaleInfo().getCountry();
+                        return salesCountry != null && salesCountry.equals("PL");
+                    })
+                    .map(this::convertToBook)
+                    .collect(Collectors.toList());
 
         }
         else
@@ -116,7 +121,6 @@ public class GoogleApiBookService {
 
     private int extractPublicationYear(GoogleApiBook googleApiBook) {
         String publishedDate = googleApiBook.getVolumeInfo().getPublishedDate();
-        int year = DEFAULT_PUBLICATION_YEAR;
         if (publishedDate != null) {
             Pattern pattern = Pattern.compile("\\d{4}");
             Matcher matcher = pattern.matcher(publishedDate);
@@ -124,7 +128,7 @@ public class GoogleApiBookService {
                 return Integer.parseInt(matcher.group());
             }
         }
-        return year;
+        return DEFAULT_PUBLICATION_YEAR;
     }
 
     private Book convertToBook(GoogleApiBook googleApiBook) {
