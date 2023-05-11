@@ -1,7 +1,7 @@
 package com.codecool.bookclub.security.authentication;
 
 import com.codecool.bookclub.security.jwt.JwtService;
-import com.codecool.bookclub.security.model.RefreshToken;
+import com.codecool.bookclub.security.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
     public void register(RegisterRequest request) {
         User user = User.builder()
@@ -49,7 +50,17 @@ public class AuthenticationService {
 
     /*TODO*/
     public LoginResponse refresh(String refreshToken) {
-        return null;
+        String newRefreshToken = jwtService.generateRefreshToken(refreshToken);
+        if (newRefreshToken != null) {
+            String newJwt = jwtService.generateToken(tokenRepository.findById(newRefreshToken).get().getUser());
+
+            return LoginResponse.builder()
+                    .token(newJwt)
+                    .refreshToken(newRefreshToken)
+                    .build();
+        } else {
+            throw new IllegalArgumentException("Wrong refresh token");
+        }
     }
 
     public boolean isEmailNotUnique(RegisterRequest request) {

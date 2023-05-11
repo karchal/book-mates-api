@@ -1,9 +1,10 @@
 package com.codecool.bookclub.security.authentication;
 
 
-import com.codecool.bookclub.security.jwt.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/authentication")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -37,7 +39,11 @@ public class AuthenticationController {
 
     @PostMapping("/refresh")
     public ResponseEntity<LoginResponse> refresh(@RequestBody String refreshToken) {
-        // authenticationService -> new method to re-generate refreshToken amd generate new access token
-        return null;
+        log.debug("Refresh token request: {}", refreshToken);
+        try {
+            return ResponseEntity.ok(authenticationService.refresh(refreshToken));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.codecool.bookclub.security.jwt;
 
-import ch.qos.logback.core.subst.Token;
 import com.codecool.bookclub.security.model.RefreshToken;
 import com.codecool.bookclub.security.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
@@ -33,7 +32,7 @@ public class JwtService {
     @Value("${token.expiry}")
     private long tokenExpiration;
 
-    private TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
 
     public JwtService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
@@ -81,7 +80,7 @@ public class JwtService {
     }
 
 
-    public String generateToken(
+    private String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
