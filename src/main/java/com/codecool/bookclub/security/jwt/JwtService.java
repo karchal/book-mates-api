@@ -10,6 +10,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +78,11 @@ public class JwtService {
         }
         tokenRepository.deleteById(refreshToken);
         return generateRefreshToken(token.get().getUser(), token.get().getExpirationDate());
+    }
+
+    @Scheduled(fixedDelayString = "${fixed.delay}")
+    public void deleteExpiredTokens() {
+        tokenRepository.deleteRefreshTokenByExpirationDateBefore(new Date());
     }
 
 

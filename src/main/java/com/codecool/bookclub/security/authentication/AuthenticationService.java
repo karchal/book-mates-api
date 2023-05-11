@@ -48,12 +48,10 @@ public class AuthenticationService {
                 .build();
     }
 
-    /*TODO*/
     public LoginResponse refresh(String refreshToken) {
         String newRefreshToken = jwtService.generateRefreshToken(refreshToken);
-        if (newRefreshToken != null) {
+        if (newRefreshToken != null && tokenRepository.findById(newRefreshToken).isPresent()) {
             String newJwt = jwtService.generateToken(tokenRepository.findById(newRefreshToken).get().getUser());
-
             return LoginResponse.builder()
                     .token(newJwt)
                     .refreshToken(newRefreshToken)
