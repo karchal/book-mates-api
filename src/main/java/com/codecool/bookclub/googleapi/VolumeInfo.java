@@ -14,5 +14,7 @@ public class VolumeInfo {
     private ImageLinks imageLinks;
     private Double averageRating;
     private int ratingsCount;
+    private String language;
+
 
 }

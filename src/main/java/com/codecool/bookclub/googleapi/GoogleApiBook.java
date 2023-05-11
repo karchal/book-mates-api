@@ -11,7 +11,6 @@ import java.util.function.Predicate;
 public class GoogleApiBook {
     private String id;
     private VolumeInfo volumeInfo;
-    private SaleInfo saleInfo;
 
     public static Predicate<GoogleApiBook> distinctByKey() {
 
