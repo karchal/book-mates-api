@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class NewCommentDto {
-    private Long id;
     private String commentMessage;
     private long authorId;
     private Long topicId;
