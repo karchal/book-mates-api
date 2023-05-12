@@ -75,15 +75,14 @@ public class EventController {
     }
 
     @PostMapping("events/{event_id}/join")
-    public void joinEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
-        eventService.joinEvent(eventId,userId);
+    public ResponseEntity<ResponseEntity<String>> joinEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
+        ResponseEntity<String> joinEvent =  eventService.joinEvent(eventId,userId);
+        return new ResponseEntity<>(joinEvent, HttpStatus.OK);
     }
     @GetMapping("books/{book_id}/events")
     public List<EventDto> getEventsByBookExternalId(@PathVariable("book_id") String bookId){
         List<EventDto> events = eventService.getEventsByBookExternalId(bookId);
-
         return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
-
 
 }
