@@ -1,6 +1,7 @@
 package com.codecool.bookclub.security.authentication;
 
 import com.codecool.bookclub.security.jwt.JwtService;
+import com.codecool.bookclub.security.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
     public void register(RegisterRequest request) {
         User user = User.builder()
@@ -39,9 +41,24 @@ public class AuthenticationService {
         authenticationManager.authenticate(authentication);
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String jwt = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user, null);
         return LoginResponse.builder()
                 .token(jwt)
+                .refreshToken(refreshToken)
                 .build();
+    }
+
+    public LoginResponse refresh(String refreshToken) {
+        String newRefreshToken = jwtService.generateRefreshToken(refreshToken);
+        if (newRefreshToken != null && tokenRepository.findById(newRefreshToken).isPresent()) {
+            String newJwt = jwtService.generateToken(tokenRepository.findById(newRefreshToken).get().getUser());
+            return LoginResponse.builder()
+                    .token(newJwt)
+                    .refreshToken(newRefreshToken)
+                    .build();
+        } else {
+            throw new IllegalArgumentException("Wrong refresh token");
+        }
     }
 
     public boolean isEmailNotUnique(RegisterRequest request) {

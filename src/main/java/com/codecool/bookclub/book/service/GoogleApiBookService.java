@@ -23,7 +23,7 @@ public class GoogleApiBookService {
     public static final String API_PARAM_VOLUMES = "volumes?q=";
     public static final String API_PARAM_KEY = "&key=";
     public static final String API_PARAM_MAX_RESULTS = "&maxResults=";
-    static final String API_PARAM_RESULTS_NUMBER = "20";
+    static final String API_PARAM_RESULTS_NUMBER = "40";
     public static final int RATING_RATIO = 2;
     public static final String API_PARAM_VOLUME = "volumes/";
     public static final int DEFAULT_PUBLICATION_YEAR = 1970;
@@ -40,8 +40,12 @@ public class GoogleApiBookService {
         if (results.getItems() != null) {
             return results.getItems().stream()
                     .filter(GoogleApiBook.distinctByKey())
-                    .map(this::convertToBook).collect(Collectors.toList());
-
+                    .filter(book -> {
+                        String language = book.getVolumeInfo().getLanguage();
+                        return language != null && language.equalsIgnoreCase("pl");
+                    })
+                    .map(this::convertToBook)
+                    .collect(Collectors.toList());
         }
         else
             return new ArrayList<>();
@@ -116,7 +120,6 @@ public class GoogleApiBookService {
 
     private int extractPublicationYear(GoogleApiBook googleApiBook) {
         String publishedDate = googleApiBook.getVolumeInfo().getPublishedDate();
-        int year = DEFAULT_PUBLICATION_YEAR;
         if (publishedDate != null) {
             Pattern pattern = Pattern.compile("\\d{4}");
             Matcher matcher = pattern.matcher(publishedDate);
@@ -124,7 +127,7 @@ public class GoogleApiBookService {
                 return Integer.parseInt(matcher.group());
             }
         }
-        return year;
+        return DEFAULT_PUBLICATION_YEAR;
     }
 
     private Book convertToBook(GoogleApiBook googleApiBook) {
