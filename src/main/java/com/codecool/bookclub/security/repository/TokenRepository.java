@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Date;
 
 public interface TokenRepository extends JpaRepository<RefreshToken, String> {
-    void deleteRefreshTokenByExpirationDateBefore(Date date);
+    int deleteRefreshTokenByExpirationDateBefore(Date date);
 
 }
