@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -110,23 +112,49 @@ public class EventService{
                 .collect(Collectors.toList());
     }
 
-    public void joinEvent(long eventId, long userId) {
-        EventDetails event = eventDetailsRepository.findFirstByEventId(eventId);
+    public ResponseEntity<String> joinEvent(long eventId, long userId) {
+        Event event = eventRepository.findEventById(eventId);
+        User currentUser = userRepository.findById(userId).orElse(null);
         int currentParticipantsNumber = eventDetailsRepository.findAllByEventId(eventId).size();
-        int maxParticipantNumber = event.getEvent().getMaxParticipants();
-        if (currentParticipantsNumber>=maxParticipantNumber){
-            eventDetailsRepository.save(EventDetails.builder()
-                    .participantType(ParticipantType.WAITING_LIST)
-                    .user(userRepository.findById(userId).orElse(null))
-                    .event(event.getEvent())
-                    .build());
+        int maxParticipantNumber = event.getMaxParticipants();
+        if (isUserAlreadyEventParticipant(event, userId)){
+            return ResponseEntity.status(202).body("Już uczestniczysz w tym wydarzeniu.");
+
+        } else if (isEventAlreadyExpired(event)){
+            return ResponseEntity.status(202).body("To wydarzenie już się odbyło.");
         } else {
-            eventDetailsRepository.save(EventDetails.builder()
-                    .participantType(ParticipantType.PARTICIPANT)
-                    .user(userRepository.findById(userId).orElse(null))
-                    .event(event.getEvent())
-                    .build());
+            if (currentParticipantsNumber>=maxParticipantNumber){
+                eventDetailsRepository.save(EventDetails.builder()
+                        .participantType(ParticipantType.WAITING_LIST)
+                        .user(currentUser)
+                        .event(event)
+                        .build());
+            } else {
+                eventDetailsRepository.save(EventDetails.builder()
+                        .participantType(ParticipantType.PARTICIPANT)
+                        .user(currentUser)
+                        .event(event)
+                        .build());
+            }
+            return ResponseEntity.status(200).body("Zostałeś prawidłowo zarejestrowany na wydarzenie.");
         }
+    }
+
+    public boolean isUserAlreadyEventParticipant(Event event, long userId){
+        List<EventDetails> userEvents = eventDetailsRepository.findAllByUserId(userId);
+        boolean isUserAlreadySubscribed = false;
+        for (EventDetails userEvent : userEvents) {
+            if (event == userEvent.getEvent()) {
+                isUserAlreadySubscribed = true;
+                break;
+            }
+        }
+        return isUserAlreadySubscribed;
+    }
+    public boolean isEventAlreadyExpired(Event event){
+        ZonedDateTime eventTime = event.getEventDate();
+        ZonedDateTime currentTime = ZonedDateTime.now();
+        return currentTime.isAfter(eventTime);
     }
 
     public List<EventDetailsDto> getUserEventDetailDtos(long userId) {
