@@ -4,10 +4,14 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.BookDetails;
 import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.repository.BookDetailsRepository;
+import com.codecool.bookclub.book.repository.BookPaginationRepository;
 import com.codecool.bookclub.book.repository.BookRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,12 +23,14 @@ class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookDetailsRepository bookDetailsRepository;
     private final UserRepository userRepository;
+    private final BookPaginationRepository paginationRepository;
 
 
-    public BookServiceImpl(BookRepository bookRepository, BookDetailsRepository bookDetailsRepository, UserRepository userRepository) {
+    public BookServiceImpl(BookRepository bookRepository, BookDetailsRepository bookDetailsRepository, UserRepository userRepository, BookPaginationRepository paginationRepository) {
         this.bookRepository = bookRepository;
         this.bookDetailsRepository = bookDetailsRepository;
         this.userRepository = userRepository;
+        this.paginationRepository = paginationRepository;
     }
 
     @Override
@@ -34,16 +40,19 @@ class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getAllBooks() {
-        return null;
+        return bookRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
+
+    public Page<Book> findAllBooks(Pageable paging) {
+        return paginationRepository.findAll(paging);
+    }
+
 
     @Override
     public List<Book> findTopFourBooks() {
         List<Book> books = bookRepository.findFirst4ByOrderByRatingDesc();
         return books;
     }
-
-
 
     /*TODO: check if the book is already in users books, optional if not in db => not in users books*/
     public void saveBookToShelf(Book book, Shelf shelf, Long userId) {
@@ -59,6 +68,8 @@ class BookServiceImpl implements BookService {
             bookDetailsRepository.save(bookDetails);
         }
     }
+
+
 
 //    public int rateBook(BigDecimal userRating, long bookId) {
 //        BigDecimal currentRating = bookRepository.findBookById(bookId).getRating();

@@ -4,7 +4,12 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
+import com.codecool.bookclub.event.dto.EventDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,9 +41,19 @@ public class BookController {
         }
     }
 
-
+    @GetMapping("/books/all")
+    public ResponseEntity<List<Book>> recommendBooks() {
+        List<Book> books = bookService.getAllBooks();
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 
     @GetMapping("/books")
+    public Page<Book> getAllBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
+        Pageable paging = PageRequest.of(page,size, Sort.by("id").descending());
+        return bookService.findAllBooks(paging);
+    }
+
+    @GetMapping("/books/homepage")
     public List<Book> showBooks() {
         return bookService.findTopFourBooks();
     }
