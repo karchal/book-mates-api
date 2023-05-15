@@ -52,8 +52,6 @@ public class GoogleApiBookService {
     }
 
 
-
-
     public Book getBookByExternalId(String externalId) {
         return convertToBook(callApiByBookId(externalId));
     }

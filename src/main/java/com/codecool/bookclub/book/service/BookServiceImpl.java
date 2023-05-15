@@ -50,15 +50,13 @@ class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findTopFourBooks() {
-        List<Book> books = bookRepository.findFirst4ByOrderByRatingDesc();
-        return books;
+        return bookRepository.findFirst4ByOrderByRatingDesc();
     }
 
     /*TODO: check if the book is already in users books, optional if not in db => not in users books*/
     public void saveBookToShelf(Book book, Shelf shelf, Long userId) {
         User user = userRepository.getReferenceById(userId);
-        Optional<Book> bookInDb = bookRepository.findByExternalId(book.getExternalId());
-        Book savedBook = bookInDb.orElseGet(() -> bookRepository.save(book));
+        Book savedBook = saveBook(book);
         if (bookDetailsRepository.findAllByUserIdAndBookId(user.getId(), savedBook.getId()).isEmpty()) {
             BookDetails bookDetails = BookDetails.builder()
                     .book(savedBook)
@@ -67,6 +65,12 @@ class BookServiceImpl implements BookService {
                     .build();
             bookDetailsRepository.save(bookDetails);
         }
+    }
+
+    public Book saveBook(Book book) {
+        Optional<Book> bookInDb = bookRepository.findByExternalId(book.getExternalId());
+        Book savedBook = bookInDb.orElseGet(() -> bookRepository.save(book));
+        return savedBook;
     }
 
 

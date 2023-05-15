@@ -14,4 +14,5 @@ public interface BookService {
     List<Book> findTopFourBooks();
     void saveBookToShelf(Book book, Shelf shelf, Long userId);
     Page<Book> findAllBooks(Pageable paging);
+    Book saveBook(Book book);
 }

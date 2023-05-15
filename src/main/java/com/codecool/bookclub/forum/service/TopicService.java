@@ -2,42 +2,54 @@ package com.codecool.bookclub.forum.service;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.book.service.BookService;
+import com.codecool.bookclub.forum.dto.NewTopicDto;
 import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.repository.TopicRepository;
+import com.codecool.bookclub.user.model.User;
+import com.codecool.bookclub.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class TopicService {
 
     private final TopicRepository topicRepository;
     private final BookRepository bookRepository;
+    private final BookService bookService;
+    private final UserRepository userRepository;
 
-    public TopicService(TopicRepository topicRepository, BookRepository bookRepository) {
+    public TopicService(TopicRepository topicRepository, BookRepository bookRepository, BookService bookService, UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.bookRepository = bookRepository;
-    }
-
-    public List<Topic> getTopicsForBook(long bookId) {
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-        return optionalBook.map(topicRepository::findByBook).orElse(null);
+        this.bookService = bookService;
+        this.userRepository = userRepository;
     }
 
     public TopicDto getTopicById(long topicId) {
         return topicRepository.findById(topicId).map(this::convertToDto).orElse(null);
     }
 
-
-    public void createTopic(long bookId, Topic topic) {
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-        if (optionalBook.isPresent()) {
-            topic.setBook(optionalBook.get());
-            topicRepository.save(topic);
-        }
+    public void createTopic(Book book, NewTopicDto newTopicDto, Long userId) {
+       Book bookInDb = bookService.saveBook(book);
+       log.debug("Saving book to db {}", bookInDb);
+       User user = userRepository.findById(userId).orElse(null);
+       log.debug("User saving book {}", user);
+       if (user != null) {
+           Topic topic = new Topic();
+           topic.setAuthor(user);
+           topic.setBook(bookInDb);
+           topic.setTitle(newTopicDto.getTitle());
+           topic.setMessage(newTopicDto.getMessage());
+           topicRepository.save(topic);
+           log.debug("Topic saved {}", topic);
+       }
     }
 
     public List<Topic> getAllTopics(){

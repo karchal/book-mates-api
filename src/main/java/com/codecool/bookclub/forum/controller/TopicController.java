@@ -1,11 +1,15 @@
 package com.codecool.bookclub.forum.controller;
 
+import com.codecool.bookclub.book.model.Book;
+import com.codecool.bookclub.book.service.GoogleApiBookService;
+import com.codecool.bookclub.forum.dto.NewTopicDto;
 import com.codecool.bookclub.forum.dto.TopicDto;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.service.TopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +21,11 @@ import java.util.List;
 public class TopicController {
 
     private final TopicService topicService;
+    private final GoogleApiBookService googleApiBookService;
 
-    public TopicController(TopicService topicService) {
+    public TopicController(TopicService topicService, GoogleApiBookService googleApiBookService) {
         this.topicService = topicService;
-    }
-
-    @PutMapping("/books/{book_id}/topics")
-    public boolean updateTopic(@PathVariable("book_id") long bookId, @RequestBody Topic updatedTopic) {
-        return false;
+        this.googleApiBookService = googleApiBookService;
     }
 
     @DeleteMapping("/books/{book_id}/topics")
@@ -54,5 +55,14 @@ public class TopicController {
         List<TopicDto> topics = topicService.getTopicsByBookExternalId(bookId);
         log.debug("Topics for book: bookId={}, topics={}", bookId,topics);
         return new ResponseEntity<>(topics, HttpStatus.OK).getBody();
+    }
+
+    @PostMapping("/books/{book_id}/topics")
+    public void createTopic(@PathVariable("book_id") String bookId,
+                            @RequestBody NewTopicDto topic,
+                            @AuthenticationPrincipal Long userId) {
+        Book book = googleApiBookService.getBookByExternalId(bookId);
+        topicService.createTopic(book, topic, userId);
+
     }
 }
