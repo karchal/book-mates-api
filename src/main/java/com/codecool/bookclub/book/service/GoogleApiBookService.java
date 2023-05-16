@@ -135,10 +135,17 @@ public class GoogleApiBookService {
                 .author(googleApiBook.getVolumeInfo().getAuthors() != null && googleApiBook.getVolumeInfo().getAuthors().size() > 0 ?
                         googleApiBook.getVolumeInfo().getAuthors().get(0) : null)
                 .year(extractPublicationYear(googleApiBook))
-                .description(googleApiBook.getVolumeInfo().getDescription() != null ? googleApiBook.getVolumeInfo().getDescription() : null)
+                .description(googleApiBook.getVolumeInfo().getDescription() != null ? clearDescription(googleApiBook) : null)
                 .pictureUrl(googleApiBook.getVolumeInfo().getImageLinks() != null ? googleApiBook.getVolumeInfo().getImageLinks().getThumbnail() : null)
                 .pages(googleApiBook.getVolumeInfo().getPageCount())
                 .rating(BigDecimal.valueOf(googleApiBook.getVolumeInfo().getAverageRating() != null ? googleApiBook.getVolumeInfo().getAverageRating() : 0))
                 .build();
+    }
+
+    private String  clearDescription(GoogleApiBook googleApiBook) {
+        String description = googleApiBook.getVolumeInfo().getDescription();
+        description = description.replace("<p>", "");
+        description = description.replace("</p>","");
+        return description;
     }
 }
