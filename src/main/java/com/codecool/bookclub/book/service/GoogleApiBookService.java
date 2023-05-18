@@ -144,8 +144,10 @@ public class GoogleApiBookService {
 
     private String  clearDescription(GoogleApiBook googleApiBook) {
         String description = googleApiBook.getVolumeInfo().getDescription();
-        description = description.replace("<p>", "");
-        description = description.replace("</p>","");
+        String[] tagsToRemove = {"<p>", "</p>", "<br>", "<b>", "</b>", "<i>", "</i>"};
+        for (String tag : tagsToRemove) {
+            description = description.replace(tag, "");
+        }
         return description;
     }
 }
