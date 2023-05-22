@@ -1,6 +1,5 @@
 package com.codecool.bookclub.abuse;
 
-import com.codecool.bookclub.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +17,6 @@ public class AbuseReport {
     private ContentType contentType;
     private Long elementId;
     private ProblemType problemType;
-    @ManyToOne
-    private User reporter;
+    private Long contentAuthorId;
+    private Long reporterId;
 }
