@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,4 +35,15 @@ public class Topic {
     private List<Comment> comments;
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
+    private int abuseReportCount;
+    private Status status;
+
+    public void reportAbuse(){
+        if (status == Status.NOT_VERIFIED) {
+            status = Status.NEEDS_VERIFICATION;
+            abuseReportCount++;
+        } else if (status == Status.NEEDS_VERIFICATION) {
+            abuseReportCount++;
+        }
+    }
 }
