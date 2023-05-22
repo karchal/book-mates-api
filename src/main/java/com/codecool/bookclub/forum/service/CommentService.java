@@ -39,17 +39,6 @@ public class CommentService {
         return commentRepository.findAllByTopicIdOrderByCreationTimeDesc(topicId).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public CommentDto convertToDto(Comment comment){
-        return CommentDto.builder()
-                .id(comment.getId())
-                .creationTime(comment.getCreationTime())
-                .commentMessage(comment.getMessage())
-                .authorId(comment.getAuthor().getId())
-                .topicId(comment.getTopic().getId())
-                .authorName(comment.getAuthor().getNickname())
-                .build();
-    }
-
     public void deleteComment(long id) {
         commentRepository.deleteById(id);
     }
@@ -66,5 +55,16 @@ public class CommentService {
         comment.reportAbuse();
         commentRepository.save(comment);
         return ResponseEntity.status(202).body("Komentarz został zgłoszony do weryfikacji.");
+    }
+
+    public CommentDto convertToDto(Comment comment){
+        return CommentDto.builder()
+                .id(comment.getId())
+                .creationTime(comment.getCreationTime())
+                .commentMessage(comment.getMessage())
+                .authorId(comment.getAuthor().getId())
+                .topicId(comment.getTopic().getId())
+                .authorName(comment.getAuthor().getNickname())
+                .build();
     }
 }
