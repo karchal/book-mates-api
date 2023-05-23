@@ -56,6 +56,19 @@ public class EventService{
         return eventRepository.findEventsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+    public void resignFromEvent(long eventId, long userId){
+        EventDetails eventDetails = eventDetailsRepository.findAllByEventIdAndUserId(eventId, userId);
+        if (eventDetails.getParticipantType()==ParticipantType.PARTICIPANT || eventDetails.getParticipantType()==ParticipantType.WAITING_LIST){
+            eventDetailsRepository.deleteById(eventDetails.getId());
+        }
+        EventDetails firstOnWaitingList = eventDetailsRepository.findFirstByEventIdAndParticipantType(eventId, ParticipantType.WAITING_LIST);
+        if (firstOnWaitingList!=null){
+            firstOnWaitingList.setParticipantType(ParticipantType.PARTICIPANT);
+            eventDetailsRepository.save(firstOnWaitingList);
+        }
+
+    }
+
     public void addEvent(String bookId, NewEventDto newEventDto, long userId){
         Book book = bookRepository.findBookByExternalId(bookId);
         Book newBook = new Book();

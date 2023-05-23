@@ -85,4 +85,9 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK).getBody();
     }
 
+    @DeleteMapping("events/{event_id}/resign")
+    public void resignFromEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
+        eventService.resignFromEvent(eventId, userId);
+    }
+
 }
