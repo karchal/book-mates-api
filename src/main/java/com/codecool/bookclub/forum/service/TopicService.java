@@ -4,15 +4,18 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.forum.dto.NewTopicDto;
 import com.codecool.bookclub.forum.dto.TopicDto;
+import com.codecool.bookclub.forum.model.Status;
 import com.codecool.bookclub.forum.model.Topic;
 import com.codecool.bookclub.forum.repository.TopicRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -61,6 +64,20 @@ public class TopicService {
 
     public void deleteTopicById(long id) {
         topicRepository.deleteById(id);
+    }
+
+    public ResponseEntity<String> reportAbuse(long id) {
+        Optional<Topic> optionalTopic = topicRepository.findById(id);
+        if (optionalTopic.isEmpty()) {
+            return ResponseEntity.status(404).body("Wątek o podanym id nie istnieje.");
+        }
+        Topic topic = optionalTopic.get();
+        if (topic.getStatus() == Status.VERIFIED) {
+            return ResponseEntity.status(404).body("Wątek został już zweryfikowany i zaakceptowany.");
+        }
+        topic.reportAbuse();
+        topicRepository.save(topic);
+        return ResponseEntity.status(202).body("Komentarz został zgłoszony do weryfikacji.");
     }
 
     public TopicDto convertToDto(Topic topic) {
