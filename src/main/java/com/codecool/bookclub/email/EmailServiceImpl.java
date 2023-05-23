@@ -1,5 +1,6 @@
 package com.codecool.bookclub.email;
 
+import com.codecool.bookclub.event.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-
     private final JavaMailSender mailSender;
-
     @Autowired
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -24,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoja rejestracja zakończyła się sukcesem. \n" +
                 "Jesteśmy podekscytowani, że dołączyłeś do naszej dynamicznej społeczności miłośników książek. \n\n " +
-                "Pozdrawiamy, \n " +
+                "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -44,7 +43,7 @@ public class EmailServiceImpl implements EmailService {
                 "Aby skontaktować się z nami, możesz odpowiedzieć na tę wiadomość email lub " +
                 "skorzystać z formularza kontaktowego dostępnego na naszej stronie internetowej." +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy, \n " +
+                "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -62,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 /*TODO dodać link  */
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy, \n " +
+                "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -80,13 +79,13 @@ public class EmailServiceImpl implements EmailService {
                 "W przypadku rezygnacji z chęci udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 /*TODO dodać link  */
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy, \n " +
+                "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
 
     @Override
-    public void sendEventResignationEmail() {
+    public void sendEventResignationEmail(Event event) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo("contact.bookmates@gmail.com");
@@ -94,10 +93,11 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Potwierdzamy Twoją rezygnację z udziału w wybranym wydarzeniu. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
-                /*TODO dodać dane wydarzenia  */
-
+                "Nazwa wydarzenia: " + event.getTitle() + "\n" +
+                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "Zapraszamy do przeglądania innych wydarzeń. \n\n" +
-                "Pozdrawiamy, \n " +
+                "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -115,7 +115,7 @@ public class EmailServiceImpl implements EmailService {
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 /*TODO dodać link  */
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy, \n " +
+                "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
