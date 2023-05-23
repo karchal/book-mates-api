@@ -69,7 +69,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendSignUpForEventWaitingListEmail() {
+    public void sendSignUpForEventWaitingListEmail(Event event) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo("contact.bookmates@gmail.com");
@@ -77,7 +77,9 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. W obecnym momencie znajdujesz się na liście rezerwowych. Jeżeli zwolnią się miejsca na to wydarzenie, zostaniesz o tym poinformowany. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
-                /*TODO dodać dane wydarzenia  */
+                "Nazwa wydarzenia: " + event.getTitle() + "\n" +
+                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "W przypadku rezygnacji z chęci udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 /*TODO dodać link  */
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +

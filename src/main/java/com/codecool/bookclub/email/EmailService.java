@@ -6,7 +6,7 @@ public interface EmailService {
     void sendRegistrationEmail();
     void sendNewEventCreatedEmail();
     void sendJoinEventEmail(Event event);
-    void sendSignUpForEventWaitingListEmail();
+    void sendSignUpForEventWaitingListEmail(Event event);
     void sendEventResignationEmail(Event event);
     void sendMovingFromWaitingListToParticipantEmail();
 
