@@ -29,14 +29,16 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendNewEventCreatedEmail() {
+    public void sendNewEventCreatedEmail(Event event) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo("contact.bookmates@gmail.com");
         email.setSubject("Bookmates - Potwierdzenie utworzenia wydarzenia!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoje wydarzenie zostało pomyślnie utworzone i jest teraz widoczne dla innych użytkowników. \n\n" +
-                /*TODO dodać dane wydarzenia  */
+                "Nazwa wydarzenia: " + event.getTitle() + "\n" +
+                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "Jeśli masz jakiekolwiek pytania, " +
                 "potrzebujesz wprowadzić zmiany lub skasować wydarzenie, prosimy o kontakt. " +
                 "Nasz zespół jest gotowy do udzielenia Ci wsparcia i odpowiedzi na wszystkie pytania. \n" +

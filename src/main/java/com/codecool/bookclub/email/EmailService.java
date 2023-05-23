@@ -4,7 +4,7 @@ import com.codecool.bookclub.event.model.Event;
 
 public interface EmailService {
     void sendRegistrationEmail();
-    void sendNewEventCreatedEmail();
+    void sendNewEventCreatedEmail(Event event);
     void sendJoinEventEmail(Event event);
     void sendSignUpForEventWaitingListEmail(Event event);
     void sendEventResignationEmail(Event event);
