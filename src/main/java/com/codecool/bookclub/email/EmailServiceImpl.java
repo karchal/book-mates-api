@@ -40,10 +40,10 @@ public class EmailServiceImpl implements EmailService {
                 "Data wydarzenia: " + event.getEventDate() + "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "Jeśli masz jakiekolwiek pytania, " +
-                "potrzebujesz wprowadzić zmiany lub skasować wydarzenie, prosimy o kontakt. " +
+                "potrzebujesz wprowadzić zmiany lub skasować wydarzenie, prosimy o kontakt. \n" +
                 "Nasz zespół jest gotowy do udzielenia Ci wsparcia i odpowiedzi na wszystkie pytania. \n" +
                 "Aby skontaktować się z nami, możesz odpowiedzieć na tę wiadomość email lub " +
-                "skorzystać z formularza kontaktowego dostępnego na naszej stronie internetowej." +
+                "skorzystać z formularza kontaktowego dostępnego na naszej stronie internetowej. \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
@@ -63,7 +63,7 @@ public class EmailServiceImpl implements EmailService {
                 "Data wydarzenia: " + event.getEventDate() + "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
-                /*TODO dodać link  */
+                "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
@@ -77,13 +77,14 @@ public class EmailServiceImpl implements EmailService {
         email.setTo("contact.bookmates@gmail.com");
         email.setSubject("Bookmates - Potwierdzenie rejestracji na wydarzenie!");
         email.setText("Drogi użytkowniku, \n\n" +
-                "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. W obecnym momencie znajdujesz się na liście rezerwowych. Jeżeli zwolnią się miejsca na to wydarzenie, zostaniesz o tym poinformowany. \n\n" +
+                "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. \n" +
+                "W obecnym momencie znajdujesz się na liście rezerwowych. Jeżeli zwolnią się miejsca na to wydarzenie, zostaniesz o tym poinformowany. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
                 "Nazwa wydarzenia: " + event.getTitle() + "\n" +
                 "Data wydarzenia: " + event.getEventDate() + "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "W przypadku rezygnacji z chęci udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
-                /*TODO dodać link  */
+                "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
@@ -121,7 +122,7 @@ public class EmailServiceImpl implements EmailService {
                 "Data wydarzenia: " + event.getEventDate() + "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
-                /*TODO dodać link  */
+                "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
