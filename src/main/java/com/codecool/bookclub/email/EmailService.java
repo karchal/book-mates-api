@@ -8,6 +8,6 @@ public interface EmailService {
     void sendJoinEventEmail(Event event);
     void sendSignUpForEventWaitingListEmail(Event event);
     void sendEventResignationEmail(Event event);
-    void sendMovingFromWaitingListToParticipantEmail();
+    void sendMovingFromWaitingListToParticipantEmail(Event event);
 
 }
