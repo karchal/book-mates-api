@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendJoinEventEmail() {
+    public void sendJoinEventEmail(Event event) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo("contact.bookmates@gmail.com");
@@ -57,7 +57,9 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
-                /*TODO dodać dane wydarzenia  */
+                "Nazwa wydarzenia: " + event.getTitle() + "\n" +
+                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 /*TODO dodać link  */
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
