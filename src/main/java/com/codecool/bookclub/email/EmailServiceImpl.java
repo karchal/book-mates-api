@@ -114,7 +114,7 @@ public class EmailServiceImpl implements EmailService {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo("contact.bookmates@gmail.com");
-        email.setSubject("Bookmates - Potwierdzenie rejestracji na wydarzenie!");
+        email.setSubject("Bookmates - Potwierdzenie udziału w wydarzeniu!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Z radością informujemy Cię, że masz teraz możliwość uczestniczenia w nadchodzącym wydarzeniu, na które wcześniej byłeś zapisany(a) na liście rezerwowych.\n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
