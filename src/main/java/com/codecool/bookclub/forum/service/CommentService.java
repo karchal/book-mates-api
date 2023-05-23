@@ -50,7 +50,7 @@ public class CommentService {
         }
         Comment comment = optionalComment.get();
         if (comment.getStatus() == Status.VERIFIED) {
-            return ResponseEntity.status(208).body("Komentarz został już zweryfikowany i zaakceptowany.");
+            return ResponseEntity.status(404).body("Komentarz został już zweryfikowany i zaakceptowany.");
         }
         comment.reportAbuse();
         commentRepository.save(comment);
