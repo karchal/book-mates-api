@@ -25,7 +25,7 @@ public class AuthenticationController {
         }
         if (authenticationService.isUsernameNotUnique(request)){
             return ResponseEntity.status(400).body("Podana nazwa użytkownika jest już zajęta.");
-        };
+        }
         authenticationService.register(request);
         return ResponseEntity.accepted().body("user created");
     }
@@ -46,4 +46,10 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
+    @PostMapping("/logout_user")
+    public void logoutUser(@RequestBody String refreshToken) {
+        authenticationService.deleteRefreshToken(refreshToken);
+    }
+
 }

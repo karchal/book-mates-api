@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -64,13 +63,6 @@ public class TopicService {
                 .collect(Collectors.toList());
     }
 
-    public List<TopicDto> getUserTopicDtos(long userId) {
-        return topicRepository
-                .findAllByAuthorId(userId)
-                .stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
 
     public TopicDto convertToDto(Topic topic) { //toDtoMapper fromDtoMapper
         return TopicDto.builder()
@@ -80,6 +72,7 @@ public class TopicService {
                 .bookTitle(topic.getBook().getTitle())
                 .bookAuthor(topic.getBook().getAuthor())
                 .title(topic.getTitle())
+                .message(topic.getMessage())
                 .authorName(topic.getAuthor().getNickname())
                 .creationTime(topic.getCreationTime())
                 .authorId(topic.getAuthor().getId())

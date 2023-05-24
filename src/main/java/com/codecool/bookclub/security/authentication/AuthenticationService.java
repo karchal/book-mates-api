@@ -68,4 +68,11 @@ public class AuthenticationService {
     public boolean isUsernameNotUnique(RegisterRequest request) {
         return userRepository.existsUserByNickname(request.getUsername());
     }
+
+    public void deleteRefreshToken(String refreshToken) {
+        if (refreshToken != null && tokenRepository.findById(refreshToken).isPresent()) {
+            tokenRepository.deleteById(refreshToken);
+        }
+
+    }
 }
