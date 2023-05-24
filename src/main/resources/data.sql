@@ -98,8 +98,14 @@ values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bo
 
 
 
-insert into comment (creation_time, message, author_id, topic_id, abuse_report_count, status) values ('2023-03-28T12:00', 'nie wiem', 2, 1, 0, 0);
-insert into comment (creation_time, message, author_id, topic_id, abuse_report_count, status) values ('2023-03-28T12:00', 'nie wiem', 3, 1, 0, 0);
+insert into comment (creation_time, message, author_id, topic_id, status) values ('2023-03-28T12:00', 'nie wiem', 2, 1, 0);
+insert into comment (creation_time, message, author_id, topic_id, status) values ('2023-03-28T12:00', 'nie wiem', 3, 1, 0);
 
--- insert into topic_comments (topic_id, comments_id)
--- values (3,1)
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status)
+values (0, '2023-05-23 14:26:35.654668', 1, 1, 3, 0);
+update comment set status = 1 where id = 1;
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status)
+values (1, '2023-05-23T14:26:39', 1, 4, 2, 0);
+update topic set status = 1 where id = 1;
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status)
+values (1, '2023-05-23T14:26:40', 1, 4, 3, 0);
