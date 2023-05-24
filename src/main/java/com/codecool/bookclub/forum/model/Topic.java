@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,4 +35,7 @@ public class Topic {
     private List<Comment> comments;
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
+    @Column(columnDefinition = "smallint default 0")
+    private Status status;
+
 }

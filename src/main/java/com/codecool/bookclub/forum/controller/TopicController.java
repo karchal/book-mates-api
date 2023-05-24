@@ -2,10 +2,12 @@ package com.codecool.bookclub.forum.controller;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
+import com.codecool.bookclub.forum.dto.CommentDto;
 import com.codecool.bookclub.forum.dto.NewTopicDto;
 import com.codecool.bookclub.forum.dto.TopicDto;
-import com.codecool.bookclub.forum.model.Topic;
+import com.codecool.bookclub.forum.service.CommentService;
 import com.codecool.bookclub.forum.service.TopicService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,36 +20,34 @@ import java.util.List;
 @RequestMapping("/api")
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class TopicController {
 
     private final TopicService topicService;
     private final GoogleApiBookService googleApiBookService;
-
-    public TopicController(TopicService topicService, GoogleApiBookService googleApiBookService) {
-        this.topicService = topicService;
-        this.googleApiBookService = googleApiBookService;
-    }
-
-    @DeleteMapping("/books/{book_id}/topics")
-    public boolean deleteTopic(@PathVariable("book_id") long bookId, @RequestBody Topic topic){
-        return false;
-    }
+    private final CommentService commentService;
 
     @GetMapping("/topics/top_4")
     public ResponseEntity<List<TopicDto>> getTop4Topics(){
         List<TopicDto> topics= topicService.getTopFourTopics();
         return new ResponseEntity<>(topics, HttpStatus.OK);
     }
-    @GetMapping("/topics")
-    public List<Topic> getAllTopics(){
-        List<Topic> topics = topicService.getAllTopics();
-        return new ResponseEntity<>(topics, HttpStatus.OK).getBody();
-    }
 
-    @GetMapping("/topics/{topic_id}")
+    @GetMapping("/topics/{topic_id}") // used in Topic.js
     public ResponseEntity<TopicDto> getTopicById(@PathVariable("topic_id") long topicId){
         TopicDto topic = topicService.getTopicById(topicId);
         return new ResponseEntity<>(topic, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/topics/{topic_id}" )
+    public void deleteTopic(@PathVariable("topic_id") long topicId){
+        topicService.deleteTopicById(topicId);
+    }
+
+    @GetMapping("/topics/{topic_id}/comments") // used in Topic.js
+    public ResponseEntity<List<CommentDto>> getCommentsForTopic(@PathVariable("topic_id") long topicId){
+        List<CommentDto> comments = commentService.getCommentsForTopic(topicId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @GetMapping("/books/{book_id}/topics")
@@ -63,6 +63,5 @@ public class TopicController {
                             @AuthenticationPrincipal Long userId) {
         Book book = googleApiBookService.getBookByExternalId(bookId);
         topicService.createTopic(book, topic, userId);
-
     }
 }
