@@ -66,20 +66,6 @@ public class TopicService {
         topicRepository.deleteById(id);
     }
 
-    public ResponseEntity<String> reportAbuse(long id) {
-        Optional<Topic> optionalTopic = topicRepository.findById(id);
-        if (optionalTopic.isEmpty()) {
-            return ResponseEntity.status(404).body("Wątek o podanym id nie istnieje.");
-        }
-        Topic topic = optionalTopic.get();
-        if (topic.getStatus() == Status.VERIFIED) {
-            return ResponseEntity.status(404).body("Wątek został już zweryfikowany i zaakceptowany.");
-        }
-        topic.reportAbuse();
-        topicRepository.save(topic);
-        return ResponseEntity.status(202).body("Komentarz został zgłoszony do weryfikacji.");
-    }
-
     public TopicDto convertToDto(Topic topic) {
         return TopicDto.builder()
                 .id(topic.getId())
@@ -96,4 +82,30 @@ public class TopicService {
                 .build();
     }
 
+    public ResponseEntity<String> reportAbuse(long id) {
+        Optional<Topic> optionalTopic = topicRepository.findById(id);
+        if (optionalTopic.isEmpty()) {
+            return ResponseEntity.status(404).body("Wątek o podanym id nie istnieje.");
+        }
+        Topic topic = optionalTopic.get();
+        if (topic.getStatus() == Status.ACCEPTED) {
+            return ResponseEntity.status(404).body("Wątek został już zweryfikowany i zaakceptowany.");
+        }
+        if (topic.getStatus() == Status.BLOCKED) {
+            return ResponseEntity.status(404).body("Wątek został już zablokowany.");
+        }
+        if (topic.getStatus() == Status.NOT_VERIFIED) {
+            topic.setStatus(Status.NEEDS_VERIFICATION);
+            topicRepository.save(topic);
+        }
+        return ResponseEntity.status(202).body("Komentarz został zgłoszony do weryfikacji.");
+    }
+
+    public void blockTopic(Long id) {
+        Topic topic = topicRepository.findById(id).orElse(null);
+        if (topic != null && topic.getStatus() != Status.BLOCKED){
+            topic.setStatus(Status.BLOCKED);
+            topicRepository.save(topic);
+        }
+    }
 }
