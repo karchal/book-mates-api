@@ -110,3 +110,5 @@ values (1, '2023-05-23T14:26:39', 1, 4, 2, 0);
 update topic set status = 1 where id = 1;
 insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status)
 values (1, '2023-05-23T14:26:40', 1, 4, 3, 0);
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status, reviewer_id)
+values (1, '2023-05-23T14:27:40', 5, 4, 3, 2, 2);
