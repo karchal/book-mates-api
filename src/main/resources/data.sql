@@ -87,15 +87,16 @@ insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 8,
 insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 7, 3);
 insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 8, 3);
 
-insert into topic (creation_time, message, title, author_id ,book_id)
-values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,1);
-insert into topic (creation_time, message, title, author_id ,book_id)
-values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,2);
-insert into topic (creation_time, message, title, author_id ,book_id)
-values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,3);
-insert into topic (creation_time, message, title, author_id ,book_id)
-values ('2023-03-28T12:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4);
-
+insert into topic (creation_time, message, title, author_id ,book_id, status)
+values ('2023-03-28T12:21', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,1,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status)
+values ('2023-03-28T12:22', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,2,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status)
+values ('2023-03-28T13:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,3,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status)
+values ('2023-03-28T12:30', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status)
+values ('2023-03-28T13:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4,3);
 
 
 insert into comment (creation_time, message, author_id, topic_id, status) values ('2023-03-28T12:00', 'nie wiem', 2, 1, 0);

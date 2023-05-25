@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,7 +27,7 @@ public class TopicService {
     private final UserRepository userRepository;
 
     public TopicDto getTopicById(long topicId) {
-        return topicRepository.findById(topicId).map(this::convertToDto).orElse(null);
+        return topicRepository.findByIdAndStatusNot(topicId, Status.BLOCKED).map(this::convertToDto).orElse(null);
     }
 
     public void createTopic(Book book, NewTopicDto newTopicDto, Long userId) {
@@ -42,6 +41,7 @@ public class TopicService {
            topic.setBook(bookInDb);
            topic.setTitle(newTopicDto.getTitle());
            topic.setMessage(newTopicDto.getMessage());
+           topic.setStatus(Status.NOT_VERIFIED);
            topicRepository.save(topic);
            log.debug("Topic saved {}", topic);
        }
@@ -49,15 +49,16 @@ public class TopicService {
 
     public List<TopicDto> getTopFourTopics(){
         return topicRepository
-                .findFirst4ByOrderByCreationTimeDesc()
+                .find4LatestNonBlockedTopics(Status.BLOCKED)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     public List<TopicDto> getTopicsByBookExternalId(String bookId) {
-        return topicRepository.findTopicsByBook_ExternalId(bookId)
+        return topicRepository.findTopicsByBookExternalId(bookId)
                 .stream()
+                .filter(t -> t.getStatus() != Status.BLOCKED)
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -83,11 +84,10 @@ public class TopicService {
     }
 
     public ResponseEntity<String> reportAbuse(long id) {
-        Optional<Topic> optionalTopic = topicRepository.findById(id);
-        if (optionalTopic.isEmpty()) {
+        Topic topic = topicRepository.findById(id).orElse(null);
+        if (topic == null) {
             return ResponseEntity.status(404).body("Wątek o podanym id nie istnieje.");
         }
-        Topic topic = optionalTopic.get();
         if (topic.getStatus() == Status.ACCEPTED) {
             return ResponseEntity.status(404).body("Wątek został już zweryfikowany i zaakceptowany.");
         }
