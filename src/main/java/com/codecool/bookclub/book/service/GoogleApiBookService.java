@@ -24,7 +24,6 @@ public class GoogleApiBookService {
     public static final String API_PARAM_KEY = "&key=";
     public static final String API_PARAM_MAX_RESULTS = "&maxResults=";
     static final String API_PARAM_RESULTS_NUMBER = "40";
-    public static final int RATING_RATIO = 2;
     public static final String API_PARAM_VOLUME = "volumes/";
     public static final int DEFAULT_PUBLICATION_YEAR = 1970;
     @Value("${google.books.api.key}")
@@ -55,7 +54,7 @@ public class GoogleApiBookService {
     public Book getBookByExternalId(String externalId) {
         return convertToBook(callApiByBookId(externalId));
     }
-    /* TODO serve api errors */
+
     private GoogleApiBook callApiByBookId(String externalId) {
         String url = googleApiUrl + API_PARAM_VOLUME + externalId;
         log.debug("Url for API: {}", url);
@@ -85,7 +84,7 @@ public class GoogleApiBookService {
         if ((query == null || query.isBlank()) && (criteria == null || criteria.isBlank())) {
             ReturnResults rr = new ReturnResults();
             rr.setTotalItems(0);
-            rr.setItems(new ArrayList<GoogleApiBook>());
+            rr.setItems(new ArrayList<>());
             return rr;
         }
         String url = googleApiUrl + API_PARAM_VOLUMES;

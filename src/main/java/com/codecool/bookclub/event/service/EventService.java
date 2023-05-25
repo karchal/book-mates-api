@@ -2,6 +2,7 @@ package com.codecool.bookclub.event.service;
 
 import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.repository.BookRepository;
+import com.codecool.bookclub.email.EmailService;
 import com.codecool.bookclub.event.dto.EventDetailsDto;
 import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.dto.NewEventDto;
@@ -31,13 +32,15 @@ public class EventService{
     private final EventPaginationRepository paginationRepository;
     private final EventDetailsRepository eventDetailsRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
     @Autowired
-    public EventService(EventRepository eventRepository, BookRepository bookRepository, EventPaginationRepository paginationRepository, EventDetailsRepository eventDetailsRepository, UserRepository userRepository) {
+    public EventService(EventRepository eventRepository, BookRepository bookRepository, EventPaginationRepository paginationRepository, EventDetailsRepository eventDetailsRepository, UserRepository userRepository, EmailService emailService) {
         this.eventRepository = eventRepository;
         this.bookRepository = bookRepository;
         this.paginationRepository = paginationRepository;
         this.eventDetailsRepository = eventDetailsRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     public List<EventDto> getAllEvents(){
@@ -54,6 +57,23 @@ public class EventService{
 
     public List<EventDto> getEventsByBookExternalId(String bookId){
         return eventRepository.findEventsByBook_ExternalId(bookId).stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public void resignFromEvent(long eventId, long userId){
+        EventDetails eventDetails = eventDetailsRepository.findAllByEventIdAndUserId(eventId, userId);
+        Event event = eventRepository.findEventById(eventId);
+        User user = userRepository.findById(userId).orElse(null);
+        if (eventDetails.getParticipantType()==ParticipantType.PARTICIPANT || eventDetails.getParticipantType()==ParticipantType.WAITING_LIST){
+            eventDetailsRepository.deleteById(eventDetails.getId());
+            emailService.sendEventResignationEmail(event, user);
+        }
+        EventDetails firstOnWaitingList = eventDetailsRepository.findFirstByEventIdAndParticipantType(eventId, ParticipantType.WAITING_LIST);
+        if (firstOnWaitingList!=null){
+            firstOnWaitingList.setParticipantType(ParticipantType.PARTICIPANT);
+            eventDetailsRepository.save(firstOnWaitingList);
+            emailService.sendMovingFromWaitingListToParticipantEmail(event, user);
+        }
+
     }
 
     public void addEvent(String bookId, NewEventDto newEventDto, long userId){
@@ -79,12 +99,16 @@ public class EventService{
         event.setMaxParticipants(newEventDto.getMaxParticipants());
         event.setUrl(newEventDto.getUrl());
 
+        User eventAuthor = userRepository.findById(userId).orElse(null);
+
         eventRepository.save(event);
         eventDetailsRepository.save(EventDetails.builder()
                 .participantType(ParticipantType.ORGANIZER)
                 .event(event)
-                .user(userRepository.findById(userId).orElse(null))
+                .user(eventAuthor)
                 .build());
+        emailService.sendNewEventCreatedEmail(event, eventAuthor);
+
     }
 
     public void deleteEventById(long eventId){
@@ -119,7 +143,6 @@ public class EventService{
         int maxParticipantNumber = event.getMaxParticipants();
         if (isUserAlreadyEventParticipant(event, userId)){
             return ResponseEntity.status(202).body("Już uczestniczysz w tym wydarzeniu.");
-
         } else if (isEventAlreadyExpired(event)){
             return ResponseEntity.status(202).body("To wydarzenie już się odbyło.");
         } else {
@@ -129,13 +152,16 @@ public class EventService{
                         .user(currentUser)
                         .event(event)
                         .build());
+                emailService.sendSignUpForEventWaitingListEmail(event, currentUser);
             } else {
                 eventDetailsRepository.save(EventDetails.builder()
                         .participantType(ParticipantType.PARTICIPANT)
                         .user(currentUser)
                         .event(event)
                         .build());
+                emailService.sendJoinEventEmail(event, currentUser);
             }
+
             return ResponseEntity.status(200).body("Zostałeś prawidłowo zarejestrowany na wydarzenie.");
         }
     }

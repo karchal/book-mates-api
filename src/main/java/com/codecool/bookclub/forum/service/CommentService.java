@@ -36,7 +36,7 @@ public class CommentService {
     }
 
     public List<CommentDto> getCommentsForTopic(long topicId){
-        return commentRepository.findAllByTopicIdOrderByCreationTimeDesc(topicId).stream().map(this::convertToDto).collect(Collectors.toList());
+        return commentRepository.findAllByTopicIdOrderByCreationTimeAsc(topicId).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public void deleteComment(long id) {

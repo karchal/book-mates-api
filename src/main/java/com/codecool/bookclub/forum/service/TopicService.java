@@ -75,6 +75,7 @@ public class TopicService {
                 .bookTitle(topic.getBook().getTitle())
                 .bookAuthor(topic.getBook().getAuthor())
                 .title(topic.getTitle())
+                .message(topic.getMessage())
                 .authorName(topic.getAuthor().getNickname())
                 .creationTime(topic.getCreationTime())
                 .authorId(topic.getAuthor().getId())
