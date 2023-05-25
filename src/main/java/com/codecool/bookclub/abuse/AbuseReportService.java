@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.codecool.bookclub.abuse.ReviewStatus.CONTENT_BLOCKED;
 import static com.codecool.bookclub.abuse.ReviewStatus.WAITING_FOR_REVIEW;
@@ -43,7 +42,7 @@ public class AbuseReportService {
     }
 
     public List<AbuseReport> getReportsWaitingForReview() {
-        return abuseReportRepository.findAllByReviewStatus(WAITING_FOR_REVIEW, Sort.by(Sort.Direction.ASC, "creationDateAndTime"));
+        return abuseReportRepository.findAllByReviewStatus(WAITING_FOR_REVIEW, Sort.by(Sort.Direction.ASC, "creationTime"));
     }
 
     public ResponseEntity<String> updateStatus(Long id, ReviewStatus newReviewStatus, Long reviewerId) {
@@ -83,7 +82,7 @@ public class AbuseReportService {
         switch (contentType) {
             case COMMENT -> commentService.blockComment(elementId);
             case TOPIC -> topicService.blockTopic(elementId);
-        };
+        }
     }
 
 }
