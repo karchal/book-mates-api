@@ -1,6 +1,7 @@
 package com.codecool.bookclub.email;
 
 import com.codecool.bookclub.event.model.Event;
+import com.codecool.bookclub.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,10 +16,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendRegistrationEmail() {
+    public void sendRegistrationEmail(String userEmail) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
-        email.setTo("contact.bookmates@gmail.com");
+        email.setTo(userEmail);
         email.setSubject("Bookmates - Pomyślna rejestracja!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoja rejestracja zakończyła się sukcesem. \n" +
@@ -29,10 +30,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendNewEventCreatedEmail(Event event) {
+    public void sendNewEventCreatedEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
-        email.setTo("contact.bookmates@gmail.com");
+        email.setTo(user.getEmail());
         email.setSubject("Bookmates - Potwierdzenie utworzenia wydarzenia!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoje wydarzenie zostało pomyślnie utworzone i jest teraz widoczne dla innych użytkowników. \n\n" +
@@ -51,10 +52,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendJoinEventEmail(Event event) {
+    public void sendJoinEventEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
-        email.setTo("contact.bookmates@gmail.com");
+        email.setTo(user.getEmail());
         email.setSubject("Bookmates - Potwierdzenie rejestracji na wydarzenie!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. \n\n" +
@@ -71,10 +72,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendSignUpForEventWaitingListEmail(Event event) {
+    public void sendSignUpForEventWaitingListEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
-        email.setTo("contact.bookmates@gmail.com");
+        email.setTo(user.getEmail());
         email.setSubject("Bookmates - Potwierdzenie rejestracji na wydarzenie!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. \n" +
@@ -92,10 +93,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEventResignationEmail(Event event) {
+    public void sendEventResignationEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
-        email.setTo("contact.bookmates@gmail.com");
+        email.setTo(user.getEmail());
         email.setSubject("Bookmates - Potwierdzenie rezygnacji z wydarzenia!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Potwierdzamy Twoją rezygnację z udziału w wybranym wydarzeniu. \n\n" +
@@ -110,10 +111,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMovingFromWaitingListToParticipantEmail(Event event) {
+    public void sendMovingFromWaitingListToParticipantEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
-        email.setTo("contact.bookmates@gmail.com");
+        email.setTo(user.getEmail());
         email.setSubject("Bookmates - Potwierdzenie udziału w wydarzeniu! ");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Z radością informujemy Cię, że masz teraz możliwość uczestniczenia w nadchodzącym wydarzeniu, na które wcześniej byłeś zapisany(a) na liście rezerwowych.\n\n" +
