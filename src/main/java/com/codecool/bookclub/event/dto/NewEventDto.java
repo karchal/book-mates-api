@@ -1,6 +1,7 @@
 package com.codecool.bookclub.event.dto;
 
 import com.codecool.bookclub.event.model.EventType;
+import jakarta.validation.constraints.Future;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.time.ZonedDateTime;
 public class NewEventDto {
     private String title;
     private String description;
+    @Future
     private ZonedDateTime eventDate;
     private EventType eventType;
     private Integer maxParticipants;

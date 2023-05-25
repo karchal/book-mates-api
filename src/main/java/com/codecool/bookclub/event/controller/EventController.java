@@ -2,9 +2,9 @@ package com.codecool.bookclub.event.controller;
 
 import com.codecool.bookclub.event.dto.EventDto;
 import com.codecool.bookclub.event.dto.NewEventDto;
-import com.codecool.bookclub.event.model.Event;
 import com.codecool.bookclub.event.model.EventType;
 import com.codecool.bookclub.event.service.EventService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,24 +60,17 @@ public class EventController {
     }
 
     @PostMapping("/books/{book_id}/event")
-    public void createEvent(@PathVariable("book_id") String bookId, @RequestBody NewEventDto event, @AuthenticationPrincipal Long userId){
+    public void createEvent(@PathVariable("book_id") String bookId, @Valid @RequestBody NewEventDto event, @AuthenticationPrincipal Long userId){
         eventService.addEvent(bookId, event, userId);
     }
-
-    @PutMapping("events/{event_id}")
-    public void updateEventById (@PathVariable("event_id") long eventId, @RequestBody Event event) {
-        eventService.updateEventById(eventId, event);
-    }
-
     @DeleteMapping("events/{event_id}")
     public void deleteEventById (@PathVariable("event_id") long eventId){
          eventService.deleteEventById(eventId);
     }
 
     @PostMapping("events/{event_id}/join")
-    public ResponseEntity<ResponseEntity<String>> joinEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
-        ResponseEntity<String> joinEvent =  eventService.joinEvent(eventId,userId);
-        return new ResponseEntity<>(joinEvent, HttpStatus.OK);
+    public ResponseEntity<String> joinEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
+        return eventService.joinEvent(eventId,userId);
     }
     @GetMapping("books/{book_id}/events")
     public List<EventDto> getEventsByBookExternalId(@PathVariable("book_id") String bookId){
