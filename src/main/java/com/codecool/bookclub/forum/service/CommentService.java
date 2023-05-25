@@ -31,6 +31,7 @@ public class CommentService {
         comment.setMessage(newCommentDto.getCommentMessage());
         comment.setTopic(topic);
         comment.setAuthor(user);
+        comment.setStatus(Status.NOT_VERIFIED);
         commentRepository.save(comment);
     }
 
