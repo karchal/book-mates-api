@@ -12,12 +12,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +26,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -39,9 +40,9 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/api/books/**", "/api/events/**", "/api/topics/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
                     .requestMatchers("/api/users/profile/**").authenticated()
-                    .requestMatchers(HttpMethod.POST, "/api/books/**", "/api/events/**", "/api/topics/**").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/books/**", "/api/events/**", "/api/topics/**", "/api/comments/**").authenticated()
                     .requestMatchers(HttpMethod.PUT, "/api/events/*/resign").authenticated()
-                    .requestMatchers(HttpMethod.DELETE, "/api/events/**", "/api/topics/**").hasAnyRole("MODERATOR", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/events/**", "/api/topics/**", "/api/comments/**").hasAnyRole("MODERATOR", "ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/events/**", "/api/topics/**").hasAnyRole("MODERATOR", "ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/users/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
@@ -61,9 +62,9 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedHeaders(List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

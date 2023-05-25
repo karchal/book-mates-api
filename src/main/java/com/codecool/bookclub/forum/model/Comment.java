@@ -32,15 +32,6 @@ public class Comment {
     @JsonIgnoreProperties
     @ManyToOne(fetch = FetchType.LAZY)
     private Topic topic;
-    private int abuseReportCount;
+    @Column(columnDefinition = "smallint default 0")
     private Status status;
-
-    public void reportAbuse(){
-        if (status == Status.NOT_VERIFIED) {
-            status = Status.NEEDS_VERIFICATION;
-            abuseReportCount++;
-        } else if (status == Status.NEEDS_VERIFICATION) {
-            abuseReportCount++;
-        }
-    }
 }
