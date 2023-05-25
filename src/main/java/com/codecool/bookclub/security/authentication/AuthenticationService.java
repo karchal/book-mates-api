@@ -1,5 +1,6 @@
 package com.codecool.bookclub.security.authentication;
 
+import com.codecool.bookclub.email.EmailService;
 import com.codecool.bookclub.security.jwt.JwtService;
 import com.codecool.bookclub.security.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
@@ -22,6 +23,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
+    private final EmailService emailService;
 
     public void register(RegisterRequest request) {
         User user = User.builder()
@@ -31,6 +33,7 @@ public class AuthenticationService {
                 .role(READER)
                 .build();
         userRepository.save(user);
+        emailService.sendRegistrationEmail(request.getEmail());
     }
 
     public LoginResponse authenticate(LoginRequest request) {
