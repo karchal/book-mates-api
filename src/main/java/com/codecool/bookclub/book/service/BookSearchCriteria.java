@@ -6,6 +6,6 @@ import lombok.Value;
 @Value
 @Builder
 public class BookSearchCriteria {
-    private String author;
-    private String title;
+    String author;
+    String title;
 }

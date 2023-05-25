@@ -57,13 +57,20 @@ class BookServiceImpl implements BookService {
     public void saveBookToShelf(Book book, Shelf shelf, Long userId) {
         User user = userRepository.getReferenceById(userId);
         Book savedBook = saveBook(book);
-        if (bookDetailsRepository.findAllByUserIdAndBookId(user.getId(), savedBook.getId()).isEmpty()) {
-            BookDetails bookDetails = BookDetails.builder()
-                    .book(savedBook)
-                    .shelf(shelf)
-                    .user(user)
-                    .build();
+        List<BookDetails> usersBookDetails = bookDetailsRepository.findAllByUserIdAndBookId(user.getId(), savedBook.getId());
+        BookDetails bookDetails = BookDetails.builder()
+                .book(savedBook)
+                .shelf(shelf)
+                .user(user)
+                .build();
+        if (usersBookDetails.isEmpty()) {
             bookDetailsRepository.save(bookDetails);
+        } else {
+            if (usersBookDetails.contains(bookDetails))
+                log.debug("Book already added by user {} to shelf {}.", userId, shelf);
+            else {
+                bookDetailsRepository.save(bookDetails);
+            }
         }
     }
 
