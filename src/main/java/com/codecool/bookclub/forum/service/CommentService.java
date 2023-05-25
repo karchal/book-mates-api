@@ -10,11 +10,11 @@ import com.codecool.bookclub.forum.repository.TopicRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +36,11 @@ public class CommentService {
     }
 
     public List<CommentDto> getCommentsForTopic(long topicId){
-        return commentRepository.findAllByTopicIdOrderByCreationTimeAsc(topicId).stream().map(this::convertToDto).collect(Collectors.toList());
+        return commentRepository
+                .findAllByTopicIdAndStatusNot(topicId, Status.BLOCKED, Sort.by(Sort.Direction.ASC, "creationTime"))
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public void deleteComment(long id) {
@@ -44,11 +48,10 @@ public class CommentService {
     }
 
     public ResponseEntity<String> reportAbuse(long id) {
-        Optional<Comment> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isEmpty()) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        if (comment == null) {
             return ResponseEntity.status(404).body("Komentarz o podanym id nie istnieje.");
         }
-        Comment comment = optionalComment.get();
         if (comment.getStatus() == Status.ACCEPTED) {
             return ResponseEntity.status(404).body("Komentarz został już zweryfikowany i zaakceptowany.");
         }
