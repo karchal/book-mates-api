@@ -79,9 +79,13 @@ public class TopicService {
                 .authorName(topic.getAuthor().getNickname())
                 .creationTime(topic.getCreationTime())
                 .authorId(topic.getAuthor().getId())
-                .numberOfComments(topic.getComments().size())
+                .numberOfComments(getNumberOfComments(topic))
                 .bookExternalId(topic.getBook().getExternalId())
                 .build();
+    }
+
+    private static int getNumberOfComments(Topic topic) {
+        return (int) topic.getComments().stream().filter(c -> c.getStatus() != Status.BLOCKED).count();
     }
 
     public ResponseEntity<String> reportAbuse(long id) {
