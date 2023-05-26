@@ -1,5 +1,6 @@
 package com.codecool.bookclub.event.dto;
 
+import com.codecool.bookclub.event.model.ParticipantType;
 import lombok.*;
 
 import java.time.ZonedDateTime;
@@ -17,5 +18,6 @@ public class EventDetailsDto {
     private String title;
     private ZonedDateTime eventDate;
     private String pictureUrl;
+    private ParticipantType participantType;
 
 }

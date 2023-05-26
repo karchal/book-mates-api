@@ -230,6 +230,7 @@ public class EventService{
                 .title(eventDetails.getEvent().getTitle())
                 .pictureUrl(eventDetails.getEvent().getBook().getPictureUrl())
                 .bookId(eventDetails.getEvent().getBook().getId())
+                .participantType(eventDetails.getParticipantType())
                 .build();
     }
 
