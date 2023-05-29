@@ -65,11 +65,11 @@ public class UserService {
             return new ResponseEntity<>("Użytkownik nie istnieje", HttpStatus.BAD_REQUEST);
         }
         if (user.isEnabled()) {
-            return new ResponseEntity<>("Konto użytkownika jest już aktywne", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Konto użytkownika jest już aktywne. Zaloguj się!", HttpStatus.BAD_REQUEST);
         } else {
             user.setEnabled(true);
             userRepository.save(user);
-            return new ResponseEntity<>("Konto zostało aktywowane", HttpStatus.OK);
+            return new ResponseEntity<>("Konto zostało aktywowane. Teraz można się zalogować.", HttpStatus.OK);
         }
     }
 }
