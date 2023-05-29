@@ -51,6 +51,7 @@ public class User implements UserDetails {
     private List<Topic> topics;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Comment> comments;
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,6 +80,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

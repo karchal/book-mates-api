@@ -8,6 +8,8 @@ import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -55,5 +57,19 @@ public class UserService {
                         .map(topicService::convertToDto)
                         .collect(Collectors.toList()))
                 .build() : null;
+    }
+
+    public ResponseEntity<String> activateAccount(long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return new ResponseEntity<>("Użytkownik nie istnieje", HttpStatus.BAD_REQUEST);
+        }
+        if (user.isEnabled()) {
+            return new ResponseEntity<>("Konto użytkownika jest już aktywne", HttpStatus.BAD_REQUEST);
+        } else {
+            user.setEnabled(true);
+            userRepository.save(user);
+            return new ResponseEntity<>("Konto zostało aktywowane", HttpStatus.OK);
+        }
     }
 }
