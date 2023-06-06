@@ -51,7 +51,8 @@ public class User implements UserDetails {
     private List<Topic> topics;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Comment> comments;
-    private boolean enabled;
+    @Column(name = "non_locked")
+    private boolean isAccountNonLocked;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -70,7 +71,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isAccountNonLocked;
     }
 
     @Override
@@ -80,6 +81,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 }
