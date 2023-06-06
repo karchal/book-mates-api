@@ -53,6 +53,20 @@ public class JwtService {
         return generateToken(new HashMap<>(), userdetails);
     }
 
+    private String generateToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     public String generateRefreshToken(UserDetails userDetails, Date expirationDate) {
         if (expirationDate == null) {
             expirationDate = new Date(System.currentTimeMillis() + 1000 * 86400 * refreshTokenExpiration);
@@ -89,20 +103,6 @@ public class JwtService {
         log.debug("Removed {} expired tokens", removedCnt);
     }
 
-
-    private String generateToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails
-    ) {
-        return Jwts
-                .builder() // Returns a new JwtBuilder instance that can be configured and then used to create JWT compact serialized strings.
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername()) // method getUsername (from User class) returns email
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration)) // 1h
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // Signs the constructed JWT with the specified key using the specified algorithm, producing a JWS (but return type is JwtBuilder)
-                .compact(); // Actually builds the JWS and serializes it to a compact, URL-safe string according to the JWT Compact Serialization  rules.
-    }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
