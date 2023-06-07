@@ -31,7 +31,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(READER)
-                .isAccountNonLocked(true) //TODO change to false, when activation is implemented
+                .enabled(true) //TODO change to false, when activation is implemented
                 .build();
         userRepository.save(user);
         emailService.sendRegistrationEmail(request.getEmail());
