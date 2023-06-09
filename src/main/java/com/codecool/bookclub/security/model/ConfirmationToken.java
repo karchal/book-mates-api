@@ -20,7 +20,8 @@ public class ConfirmationToken {
     private String token;
     @CreationTimestamp
     private LocalDateTime creationTime;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private User user;
 
     public ConfirmationToken(User user){

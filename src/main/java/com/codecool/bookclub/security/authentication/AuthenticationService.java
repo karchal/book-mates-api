@@ -8,6 +8,8 @@ import com.codecool.bookclub.security.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -81,6 +83,21 @@ public class AuthenticationService {
     public void deleteRefreshToken(String refreshToken) {
         if (refreshToken != null && tokenRepository.findById(refreshToken).isPresent()) {
             tokenRepository.deleteById(refreshToken);
+        }
+    }
+
+    public ResponseEntity<String> confirmAccount(String token) {
+        ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token).orElse(null);
+        if (confirmationToken == null) {
+            return new ResponseEntity<>("Wprowadzono nieprawidłowy link.", HttpStatus.BAD_REQUEST);
+        }
+        User user = confirmationToken.getUser();
+        if (user.isEnabled()) {
+            return new ResponseEntity<>("Konto użytkownika jest już aktywne. Zaloguj się!", HttpStatus.BAD_REQUEST);
+        } else {
+            user.setEnabled(true);
+            userRepository.save(user);
+            return new ResponseEntity<>("Konto zostało aktywowane. Teraz można się zalogować.", HttpStatus.OK);
         }
     }
 }

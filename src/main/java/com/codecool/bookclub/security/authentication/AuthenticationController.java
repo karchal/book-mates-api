@@ -52,4 +52,8 @@ public class AuthenticationController {
         authenticationService.deleteRefreshToken(refreshToken);
     }
 
+    @GetMapping("/confirm-account")
+    public ResponseEntity<String> confirmAccount(@RequestParam String token){
+        return authenticationService.confirmAccount(token);
+    }
 }

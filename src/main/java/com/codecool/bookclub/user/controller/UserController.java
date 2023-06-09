@@ -40,9 +40,4 @@ public class UserController {
     public boolean deleteUserAccountByUserId(@PathVariable("user_id") long userId){
         return userService.deleteUserById(userId);
     }
-
-    @GetMapping("/users/{user_id}/activate")
-    public ResponseEntity<String> activateUserAccount(@PathVariable("user_id") long userId){
-        return userService.activateAccount(userId);
-    }
 }
