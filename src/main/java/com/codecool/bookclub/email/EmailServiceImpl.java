@@ -16,7 +16,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendRegistrationEmail(String userEmail) {
+    public void sendRegistrationEmail(String userEmail, String token) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo(userEmail);
@@ -24,6 +24,8 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoja rejestracja zakończyła się sukcesem. \n" +
                 "Jesteśmy podekscytowani, że dołączyłeś do naszej dynamicznej społeczności miłośników książek. \n\n " +
+                "Aby dokończyć proces rejestracji aktywuj swoje konto klikając w poniższy link" +
+                "http://localhost:3030/confirm-account?token=" + token + "\n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);

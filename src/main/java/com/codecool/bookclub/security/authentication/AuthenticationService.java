@@ -2,6 +2,8 @@ package com.codecool.bookclub.security.authentication;
 
 import com.codecool.bookclub.email.EmailService;
 import com.codecool.bookclub.security.jwt.JwtService;
+import com.codecool.bookclub.security.model.ConfirmationToken;
+import com.codecool.bookclub.security.repository.ConfirmationTokenRepository;
 import com.codecool.bookclub.security.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
@@ -22,7 +24,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository; //TODO move to the JwtService
+    private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailService emailService;
 
     public void register(RegisterRequest request) {
@@ -34,7 +37,9 @@ public class AuthenticationService {
                 .enabled(true) //TODO change to false, when activation is implemented
                 .build();
         userRepository.save(user);
-        emailService.sendRegistrationEmail(request.getEmail());
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        confirmationTokenRepository.save(confirmationToken);
+        emailService.sendRegistrationEmail(request.getEmail(), confirmationToken.getToken());
     }
 
     public LoginResponse authenticate(LoginRequest request) {

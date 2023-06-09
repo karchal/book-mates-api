@@ -27,7 +27,7 @@ public class AuthenticationController {
             return ResponseEntity.status(400).body("Podana nazwa użytkownika jest już zajęta.");
         }
         authenticationService.register(request);
-        return ResponseEntity.accepted().body("user created");
+        return ResponseEntity.accepted().body("Konto zostało utworzone. Na twój adres email został wysłany link aktywacyjny.");
     }
 
     @PostMapping("/login")
