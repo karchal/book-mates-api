@@ -48,7 +48,7 @@ public class AuthenticationService {
                 request.getPassword()
         );
         authenticationManager.authenticate(authentication);
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = userRepository.findByEmailIgnoreCase(request.getEmail()).orElseThrow();
         String jwt = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user, null);
         return LoginResponse.builder()
@@ -82,6 +82,5 @@ public class AuthenticationService {
         if (refreshToken != null && tokenRepository.findById(refreshToken).isPresent()) {
             tokenRepository.deleteById(refreshToken);
         }
-
     }
 }
