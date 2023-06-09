@@ -36,7 +36,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(READER)
-                .enabled(true) //TODO change to false, when activation is implemented
+                .enabled(false)
                 .build();
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
