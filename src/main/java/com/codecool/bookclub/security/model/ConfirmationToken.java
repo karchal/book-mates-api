@@ -8,8 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 public class ConfirmationToken {
@@ -20,8 +19,7 @@ public class ConfirmationToken {
     private String token;
     @CreationTimestamp
     private LocalDateTime creationTime;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false)
+    @OneToOne
     private User user;
 
     public ConfirmationToken(User user){

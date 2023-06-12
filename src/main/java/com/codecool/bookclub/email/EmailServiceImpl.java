@@ -5,6 +5,7 @@ import com.codecool.bookclub.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,8 @@ public class EmailServiceImpl implements EmailService {
         this.mailSender = mailSender;
     }
 
+
+    @Async
     @Override
     public void sendRegistrationEmail(String userEmail, String token) {
         SimpleMailMessage email = new SimpleMailMessage();
@@ -24,8 +27,8 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoja rejestracja zakończyła się sukcesem. \n" +
                 "Jesteśmy podekscytowani, że dołączyłeś do naszej dynamicznej społeczności miłośników książek. \n\n " +
-                "Aby dokończyć proces rejestracji aktywuj swoje konto klikając w poniższy link" +
-                "http://localhost:3030/confirm-account?token=" + token + "\n\n" +
+                "Aby dokończyć proces rejestracji aktywuj swoje konto klikając w poniższy link \n\n" +
+                "http://localhost:3000/confirm-account?token=" + token + "\n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
