@@ -1,4 +1,4 @@
-package com.codecool.bookclub.security.model;
+package com.codecool.bookclub.security.token.model;
 
 import com.codecool.bookclub.user.model.User;
 import jakarta.persistence.*;

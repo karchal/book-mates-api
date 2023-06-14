@@ -1,10 +1,10 @@
 package com.codecool.bookclub.security.authentication;
 
 import com.codecool.bookclub.email.EmailService;
-import com.codecool.bookclub.security.jwt.JwtService;
-import com.codecool.bookclub.security.model.ConfirmationToken;
-import com.codecool.bookclub.security.repository.ConfirmationTokenRepository;
-import com.codecool.bookclub.security.repository.TokenRepository;
+import com.codecool.bookclub.security.token.service.JwtService;
+import com.codecool.bookclub.security.token.model.ConfirmationToken;
+import com.codecool.bookclub.security.token.repository.ConfirmationTokenRepository;
+import com.codecool.bookclub.security.token.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
 import com.codecool.bookclub.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

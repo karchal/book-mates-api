@@ -1,7 +1,7 @@
-package com.codecool.bookclub.security.jwt;
+package com.codecool.bookclub.security.token.service;
 
-import com.codecool.bookclub.security.model.RefreshToken;
-import com.codecool.bookclub.security.repository.TokenRepository;
+import com.codecool.bookclub.security.token.model.RefreshToken;
+import com.codecool.bookclub.security.token.repository.TokenRepository;
 import com.codecool.bookclub.user.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

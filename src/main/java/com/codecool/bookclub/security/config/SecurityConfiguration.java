@@ -1,6 +1,5 @@
 package com.codecool.bookclub.security.config;
 
-import com.codecool.bookclub.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
