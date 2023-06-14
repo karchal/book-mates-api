@@ -89,7 +89,7 @@ public class AuthenticationService {
     public ResponseEntity<String> confirmAccount(String token) {
         ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token).orElse(null);
         if (confirmationToken == null) {
-            return new ResponseEntity<>("Wprowadzono nieprawidłowy link.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Nieprawidłowy url.", HttpStatus.BAD_REQUEST);
         }
         User user = confirmationToken.getUser();
         if (user.isEnabled()) {
