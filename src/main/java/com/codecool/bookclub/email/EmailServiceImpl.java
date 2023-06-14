@@ -26,10 +26,10 @@ public class EmailServiceImpl implements EmailService {
         email.setSubject("Bookmates - Pomyślna rejestracja!");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoja rejestracja zakończyła się sukcesem. \n" +
-                "Jesteśmy podekscytowani, że dołączyłeś do naszej dynamicznej społeczności miłośników książek. \n\n " +
+                "Jesteśmy podekscytowani, że dołączyłeś do naszej dynamicznej społeczności miłośników książek. \n\n" +
                 "Aby dokończyć proces rejestracji aktywuj swoje konto klikając w poniższy link \n\n" +
                 "http://localhost:3000/confirm-account?token=" + token + "\n\n" +
-                "Pozdrawiamy,\n " +
+                "Pozdrawiamy,\n" +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -51,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
                 "Aby skontaktować się z nami, możesz odpowiedzieć na tę wiadomość email lub " +
                 "skorzystać z formularza kontaktowego dostępnego na naszej stronie internetowej. \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy,\n " +
+                "Pozdrawiamy,\n" +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -71,7 +71,7 @@ public class EmailServiceImpl implements EmailService {
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy,\n " +
+                "Pozdrawiamy,\n" +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
@@ -92,7 +92,7 @@ public class EmailServiceImpl implements EmailService {
                 "W przypadku rezygnacji z chęci udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
-                "Pozdrawiamy,\n " +
+                "Pozdrawiamy,\n" +
                 "Zespół Bookmates");
         mailSender.send(email);
     }
