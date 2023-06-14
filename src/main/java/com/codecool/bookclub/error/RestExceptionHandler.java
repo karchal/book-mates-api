@@ -1,11 +1,10 @@
 package com.codecool.bookclub.error;
 
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,9 +28,12 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<String> handleLoginException(BadCredentialsException ex){
+    public ResponseEntity<String> handleLoginException(){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Niepoprawne dane logowania");
     }
 
-
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<String> handleDisabledUserException(){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Twoje konto jest nieaktywne");
+    }
 }
