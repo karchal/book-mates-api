@@ -56,4 +56,10 @@ public class AuthenticationController {
     public ResponseEntity<String> confirmAccount(@RequestParam String token){
         return authenticationService.confirmAccount(token);
     }
+
+    @PostMapping("/reset_password_confirmation")
+    public String confirmResetPassword(@RequestParam String email){
+        return authenticationService.confirmResetPassword(email);
+    }
+
 }
