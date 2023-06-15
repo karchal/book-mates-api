@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface AbuseReportRepository extends JpaRepository<AbuseReport, Long> {
 
-    boolean existsByReporterIdAndElementIdAndContentType(Long reporterId, Long elementId, ContentType contentType);
+    boolean existsByReporterIdAndItemIdAndItemType(Long reporterId, Long elementId, ItemType itemType);
     List<AbuseReport> findAllByReviewStatus(ReviewStatus reviewStatus, Sort creationTime);
-    List<AbuseReport> findAllByElementIdAndContentTypeAndProblemType(Long elementId, ContentType contentType, ProblemType problemType);
+    List<AbuseReport> findAllByItemIdAndItemTypeAndProblemType(Long elementId, ItemType itemType, ProblemType problemType);
 
 }

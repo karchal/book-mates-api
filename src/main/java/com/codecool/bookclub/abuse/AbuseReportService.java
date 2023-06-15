@@ -22,16 +22,16 @@ public class AbuseReportService {
     private final TopicService topicService;
 
     public ResponseEntity<String> createReport(NewAbuseReportDto newAbuseReportDto, Long userId) {
-        ContentType contentType = newAbuseReportDto.getContentType();
-        Long elementId = newAbuseReportDto.getElementId();
-        if (abuseReportRepository.existsByReporterIdAndElementIdAndContentType(userId, elementId, contentType)) {
+        ItemType itemType = newAbuseReportDto.getItemType();
+        Long itemId = newAbuseReportDto.getItemId();
+        if (abuseReportRepository.existsByReporterIdAndItemIdAndItemType(userId, itemId, itemType)) {
             return new ResponseEntity<>("Już zgłaszałeś problem", HttpStatus.OK);
         }
-        ResponseEntity<String> responseEntity = reportContent(contentType, elementId);
+        ResponseEntity<String> responseEntity = updateItemStatusToNeedsVerification(itemType, itemId);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             AbuseReport abuseReport = AbuseReport.builder()
-                    .elementId(newAbuseReportDto.getElementId())
-                    .contentType(newAbuseReportDto.getContentType())
+                    .itemId(newAbuseReportDto.getItemId())
+                    .itemType(newAbuseReportDto.getItemType())
                     .problemType(newAbuseReportDto.getProblemType())
                     .reporterId(userId)
                     .reviewStatus(WAITING_FOR_REVIEW)
@@ -54,9 +54,9 @@ public class AbuseReportService {
             new ResponseEntity<>("Zgłoszenie zostało już zweryfikowane", HttpStatus.BAD_REQUEST);
         }
         List<AbuseReport> reportsToUpdate =
-                abuseReportRepository.findAllByElementIdAndContentTypeAndProblemType(
-                        abuseReport.getElementId(),
-                        abuseReport.getContentType(),
+                abuseReportRepository.findAllByItemIdAndItemTypeAndProblemType(
+                        abuseReport.getItemId(),
+                        abuseReport.getItemType(),
                         abuseReport.getProblemType()
                 );
         reportsToUpdate.forEach(x -> {
@@ -65,21 +65,21 @@ public class AbuseReportService {
         });
         abuseReportRepository.saveAll(reportsToUpdate);
         if (newReviewStatus == CONTENT_BLOCKED){
-            blockContent(abuseReport.getContentType(), abuseReport.getElementId());
+            blockContent(abuseReport.getItemType(), abuseReport.getItemId());
         }
         return new ResponseEntity<>("Status zgłoszenia został pomyślnie zaktualizowany", HttpStatus.OK);
     }
 
-    private ResponseEntity<String> reportContent(ContentType contentType, Long elementId){
-        return switch (contentType) {
-            case COMMENT -> commentService.reportAbuse(elementId);
-            case TOPIC -> topicService.reportAbuse(elementId);
+    private ResponseEntity<String> updateItemStatusToNeedsVerification(ItemType itemType, Long itemId){
+        return switch (itemType) {
+            case COMMENT -> commentService.reportAbuse(itemId);
+            case TOPIC -> topicService.reportAbuse(itemId);
             case EVENT -> null;
         };
     }
 
-    private void blockContent(ContentType contentType, Long elementId){
-        switch (contentType) {
+    private void blockContent(ItemType itemType, Long elementId){
+        switch (itemType) {
             case COMMENT -> commentService.blockComment(elementId);
             case TOPIC -> topicService.blockTopic(elementId);
         }
