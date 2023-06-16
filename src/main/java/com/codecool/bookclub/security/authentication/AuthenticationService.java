@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.codecool.bookclub.user.model.Role.READER;
 
 @Service
@@ -99,5 +101,13 @@ public class AuthenticationService {
             userRepository.save(user);
             return new ResponseEntity<>("Konto zostało aktywowane. Teraz można się zalogować.", HttpStatus.OK);
         }
+    }
+
+    public String confirmResetPassword(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isEmpty()){
+            return "Użytkownik o takim adresie email nie istnieje.";
+        }
+        return "Email z linkiem do resetowania hasła został wysłany.";
     }
 }
