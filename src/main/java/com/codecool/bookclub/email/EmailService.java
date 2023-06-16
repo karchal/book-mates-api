@@ -10,6 +10,6 @@ public interface EmailService {
     void sendSignUpForEventWaitingListEmail(Event event, User user);
     void sendEventResignationEmail(Event event, User user);
     void sendMovingFromWaitingListToParticipantEmail(Event event, User user);
-    void sendPasswordRecoverEmail(String userEmail, String recoveryLink);
+    void sendPasswordRecoverEmail(String userEmail, String passwordRecoveryLink);
 
 }

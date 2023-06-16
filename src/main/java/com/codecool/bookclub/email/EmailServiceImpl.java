@@ -136,14 +136,14 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendPasswordRecoverEmail(String userEmail, String recoveryLink) {
+    public void sendPasswordRecoverEmail(String userEmail, String passwordRecoveryLink) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
         email.setTo(userEmail);
         email.setSubject("Bookmates - Resetowanie hasła! ");
         email.setText("Drogi użytkowniku, \n\n" +
                 "Aby zresetować hasło naciśnij na poniższy link: \n\n" +
-                recoveryLink+ "\n\n" +
+                passwordRecoveryLink + "\n\n" +
                 "Pozdrawiamy,\n " +
                 "Zespół Bookmates");
         mailSender.send(email);
