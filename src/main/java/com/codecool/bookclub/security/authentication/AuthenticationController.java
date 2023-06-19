@@ -1,6 +1,5 @@
 package com.codecool.bookclub.security.authentication;
 
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,8 +57,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/reset_password_confirmation")
-    public String confirmResetPassword(@RequestParam String email){
-        return authenticationService.confirmResetPassword(email);
+    public ResponseEntity<String> confirmResetPassword(@RequestParam String email){
+        return ResponseEntity.ok(authenticationService.confirmResetPassword(email));
+    }
+    @PutMapping("/reset_password")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody ResetPasswordRequest password){
+        return ResponseEntity.ok(authenticationService.resetPassword(token, password));
     }
 
 }
