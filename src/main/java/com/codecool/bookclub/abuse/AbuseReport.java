@@ -19,8 +19,8 @@ public class AbuseReport {
     private Long id;
     @CreationTimestamp
     private LocalDateTime creationTime;
-    private ContentType contentType;
-    private Long elementId;
+    private ItemType itemType;
+    private Long itemId;
     private ProblemType problemType;
     private Long reporterId;
     private ReviewStatus reviewStatus;

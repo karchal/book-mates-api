@@ -1,5 +1,6 @@
 package com.codecool.bookclub.forum.dto;
 
+import com.codecool.bookclub.forum.model.Status;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,4 +17,5 @@ public class CommentDto {
     private long authorId;
     private Long topicId;
     private String authorName;
+    private Status status;
 }

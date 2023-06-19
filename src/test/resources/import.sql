@@ -1,6 +1,4 @@
-INSERT INTO public.book (id, author, description, external_id, pages, picture_url, rating, title, year) VALUES (1, 'Delia Owens', e'Światowa sensacja, bijący wszelkie rekordy fenomen, który przykuł uwagę ponad 13 milionów czytelników.
-Pogłoski o Dziewczynie z Bagien latami krążyły po Barkley Cove, sennym miasteczku u wybrzeży Karoliny Północnej. Dlatego pod koniec 1969 roku, gdy na mokradłach znaleziono ciało przystojnego Chase’a Andrewsa, miejscowi zwrócili się przeciwko Kyi Clark, zwanej Dziewczyną z Bagien.
-Lecz Kya nie jest taka, jak o niej szepczą. Wrażliwa i inteligentna, zdołała sama przetrwać wiele lat na bagnach, które nazywa domem, choć jej ciało tęskniło za dotykiem i miłością. Przyjaźni szukała u mew, a wiedzę czerpała z natury. Kiedy dzikie piękno dziewczyny intryguje dwóch młodych mężczyzn z miasteczka, Kya otwiera się na nowe doznania — i dzieją się rzeczy niewyobrażalne.', 'fC8kzwEACAAJ', 416, 'https://s.lubimyczytac.pl/upload/books/5019000/5019183/1045632-352x500.jpg', 7.90, 'Gdzie śpiewają raki', 2023);
+INSERT INTO public.book (id, author, description, external_id, pages, picture_url, rating, title, year) VALUES (1, 'Delia Owens', 'Światowa sensacja, bijący wszelkie rekordy fenomen, który przykuł uwagę ponad 13 milionów czytelników.Pogłoski o Dziewczynie z Bagien latami krążyły po Barkley Cove, sennym miasteczku u wybrzeży Karoliny Północnej. Dlatego pod koniec 1969 roku, gdy na mokradłach znaleziono ciało przystojnego Chase’a Andrewsa, miejscowi zwrócili się przeciwko Kyi Clark, zwanej Dziewczyną z Bagien.', 'fC8kzwEACAAJ', 416, 'https://s.lubimyczytac.pl/upload/books/5019000/5019183/1045632-352x500.jpg', 7.90, 'Gdzie śpiewają raki', 2023);
 INSERT INTO public.book (id, author, description, external_id, pages, picture_url, rating, title, year) VALUES (2, 'Stanisław Lem', 'Jedna z najbardziej znanych i lubianych książek Lema', 'DVrCoAEACAAJ', 515, 'https://s.lubimyczytac.pl/upload/books/148000/148887/352x500.jpg', 7.90, 'Opowieści o pilocie Pirxie', 2012);
 INSERT INTO public.book (id, author, description, external_id, pages, picture_url, rating, title, year) VALUES (3, 'Arkady Fiedler', 'Piękna powieść przygodowa dla młodzieży', 'xZwYnQEACAAJ', 246, 'https://static2.tezeusz.pl/recommended_big/images/7d/cf/2d//72c1d83faaff7a6feb368baa89f17e2bdbf8ea61.jpeg', 6.50, 'Wyspa Robinsona', 1973);
 INSERT INTO public.book (id, author, description, external_id, pages, picture_url, rating, title, year) VALUES (4, 'Ray Bradbury', 'Przerażająco prorocza powieść o przyszłości w świecie bez książek', 'bytUtgEACAAJ', 152, 'https://s.lubimyczytac.pl/upload/books/251000/251265/371262-352x500.jpg', 7.60, '451 stopni Fahrenheita', 2018);
@@ -45,6 +43,8 @@ INSERT INTO public.book (id, author, description, external_id, pages, picture_ur
 insert into reader (creation_date, email, password, nickname, role, enabled) values ('2018-03-28T12:00', 'admin@bm.pl', '$2a$10$vG4nnG2eKe.FRAAOwxjZN.v/7iu9Yz4Y7.Agetvy4fdf0xh9d4s.C', 'admin', 'ADMIN', 'true');
 insert into reader (creation_date, email, password, nickname, role, enabled) values ('2018-03-28T13:00', 'moderator@bm.pl', '$2a$10$C./EkLRzRhvgQkeuZRaK9eKMvRS5NexIwuXXKIcoT1hu2PEXjDqTe', 'moderator', 'MODERATOR', 'true');
 insert into reader (creation_date, email, password, nickname, role, enabled) values ('2018-03-28T13:00', 'user@bm.pl', '$2a$10$47f2yfX21Xn/KGdj.QIDweVr9P6kpYOg4ROlfpA768Qqi0nfDElmm', 'user', 'READER', 'true');
+-- password: testuser
+insert into reader (creation_date, email, password, nickname, role, enabled) values ('2018-03-28T13:00', 'test@test.pl', '$2a$10$5MNDo4bxtOllTOkjwchM0.FWt816Cu393yRTNb5mXp7DoQrdkA236', 'user-test', 'READER', 'true');
 
 INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id,event_type) VALUES ('2023-04-03 16:02:06.010885', 'Wspólne czyatnie książki Gdzie śpiewają raki.', '2023-06-06 14:02:03.336000', 4, 'Wspólne czyatnie', '', 1,  0);
 INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES ('2023-04-03 16:02:30.878221', 'Spotkanie z Andrzejem Sapkowskim', '2023-06-08 14:02:24.656000', 12, 'Spotkanie z autorem', 'sadfasdf', 5,  0);
@@ -53,18 +53,12 @@ INSERT INTO public.event (creation_date_and_time, description, event_date, max_p
 INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id, event_type) VALUES ('2023-04-03 16:11:08.725736', 'Opis', '2023-07-07 14:11:06.820000', 7, 'Wspólne czyatnie', '', 2,  0);
 INSERT INTO public.event (creation_date_and_time, description, event_date, max_participants, title, url, book_id,  event_type) VALUES ('2023-04-03 16:11:19.338741', 'Opis', '2023-04-03 14:11:17.894000', 8, 'Wspólna dyskusja', '', 2,  0);
 
-insert into event_details(participant_type, event_id, user_id)
-values (0,1,2);
-insert into event_details(participant_type, event_id, user_id)
-values (0,2,2);
-insert into event_details(participant_type, event_id, user_id)
-values (0,3,2);
-insert into event_details(participant_type, event_id, user_id)
-values (0,4,2);
-insert into event_details(participant_type, event_id, user_id)
-values (0,5,2);
-insert into event_details(participant_type, event_id, user_id)
-values (0,6,2);
+insert into event_details(participant_type, event_id, user_id) values (0,1,2);
+insert into event_details(participant_type, event_id, user_id) values (0,2,2);
+insert into event_details(participant_type, event_id, user_id) values (0,3,2);
+insert into event_details(participant_type, event_id, user_id) values (0,4,2);
+insert into event_details(participant_type, event_id, user_id) values (0,5,2);
+insert into event_details(participant_type, event_id, user_id) values (0,6,2);
 
 
 insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 1, 1);
@@ -87,31 +81,21 @@ insert into book_details (shelf, user_rating, book_id, user_id) values (1, 8, 8,
 insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 7, 3);
 insert into book_details (shelf, user_rating, book_id, user_id) values (0, 8, 8, 3);
 
-insert into topic (creation_time, message, title, author_id ,book_id, status)
-values ('2023-03-28T12:21', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,1,0);
-insert into topic (creation_time, message, title, author_id ,book_id, status)
-values ('2023-03-28T12:22', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,2,0);
-insert into topic (creation_time, message, title, author_id ,book_id, status)
-values ('2023-03-28T13:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,3,0);
-insert into topic (creation_time, message, title, author_id ,book_id, status)
-values ('2023-03-28T12:30', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4,0);
-insert into topic (creation_time, message, title, author_id ,book_id, status)
-values ('2023-03-28T13:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4,3);
+insert into topic (creation_time, message, title, author_id ,book_id, status) values ('2023-03-28T12:21', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,1,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status) values ('2023-03-28T12:22', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',1,2,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status) values ('2023-03-28T13:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,3,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status) values ('2023-03-28T12:30', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4,0);
+insert into topic (creation_time, message, title, author_id ,book_id, status) values ('2023-03-28T13:00', 'Nie wiem co myśleć', 'Co myślicie o głównej bohaterce ?',3,4,3);
 
 
 insert into comment (creation_time, message, author_id, topic_id, status) values ('2023-03-28T12:00', 'nie wiem', 2, 1, 0);
 insert into comment (creation_time, message, author_id, topic_id, status) values ('2023-03-28T12:10', 'też nie wiem', 3, 1, 0);
 insert into comment (creation_time, message, author_id, topic_id, status) values ('2023-03-28T12:20', 'nie wiem!!!', 3, 1, 3);
 
-insert into abuse_report(item_type, creation_time, item_id, problem_type, reporter_id, review_status)
-values (0, '2023-05-23 14:26:35.654668', 1, 1, 3, 0);
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status) values (0, '2023-05-23 14:26:35.654668', 1, 1, 3, 0);
 update comment set status = 1 where id = 1;
-insert into abuse_report(item_type, creation_time, item_id, problem_type, reporter_id, review_status)
-values (1, '2023-05-23T14:26:39', 1, 4, 2, 0);
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status) values (1, '2023-05-23T14:26:39', 1, 4, 2, 0);
 update topic set status = 1 where id = 1;
-insert into abuse_report(item_type, creation_time, item_id, problem_type, reporter_id, review_status)
-values (1, '2023-05-23T14:26:40', 1, 4, 3, 0);
-insert into abuse_report(item_type, creation_time, item_id, problem_type, reporter_id, review_status, reviewer_id)
-values (1, '2023-05-23T14:27:40', 5, 4, 3, 2, 2);
-insert into abuse_report(item_type, creation_time, item_id, problem_type, reporter_id, review_status, reviewer_id)
-values (0, '2023-05-23T14:27:40', 3, 4, 1, 2, 2);
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status) values (1, '2023-05-23T14:26:40', 1, 4, 3, 0);
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status, reviewer_id) values (1, '2023-05-23T14:27:40', 5, 4, 3, 2, 2);
+insert into abuse_report(content_type, creation_time, element_id, problem_type, reporter_id, review_status, reviewer_id) values (0, '2023-05-23T14:27:40', 3, 4, 1, 2, 2);
