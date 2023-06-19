@@ -1,13 +1,75 @@
 package com.codecool.bookclub;
 
+import com.codecool.bookclub.book.model.Book;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@SpringBootTest
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
 class BookclubApplicationTests {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Test
 	void contextLoads() {
+	}
+
+	@Test
+	void test_booksHomePage() throws Exception {
+		AtomicReference<List<Book>> result = new AtomicReference<>();
+		mockMvc.perform(get("/api/books/homepage"))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andDo(handler -> {
+					String json = handler.getResponse().getContentAsString();
+					result.set(new ObjectMapper().readValue(json, new TypeReference<>() {}));
+				});
+		Assertions.assertEquals(4, result.get().size());
+	}
+
+
+	void test_profilePageUnauthorized() throws Exception {
+		mockMvc.perform(get("/api/users/profile"))
+				.andExpect(status().isForbidden());
+	}
+
+	@Test
+	void test_generatePass() throws Exception {
+		System.out.println("testpass: " + passwordEncoder.encode("testuser"));
+	}
+
+	@Test
+	void test_loginExistingUser() throws Exception {
+		mockMvc.perform(post("/api/authentication/login")
+				.contentType("application/json; charset=utf-8")
+				.content("{\"email\":\"test@test.pl\",\"password\":\"testuser\"}"))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.token").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken").exists());
 	}
 
 }

@@ -108,6 +108,9 @@ public class AuthenticationService {
         if (user.isEmpty()){
             return "Użytkownik o takim adresie email nie istnieje.";
         }
-        return "Email z linkiem do resetowania hasła został wysłany.";
+        ConfirmationToken confirmationToken = new ConfirmationToken(user.get());
+//        confirmationTokenRepository.save(confirmationToken);
+        emailService.sendPasswordRecoverEmail(email, "http://localhost:8080/api/authentication/reset_password?token=" + confirmationToken.getToken());
+        return confirmationToken.getToken();
     }
 }
