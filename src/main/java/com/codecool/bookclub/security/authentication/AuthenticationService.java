@@ -75,7 +75,7 @@ public class AuthenticationService {
     }
 
     public boolean isEmailNotUnique(RegisterRequest request) {
-        return userRepository.existsUserByEmail(request.getEmail());
+        return userRepository.existsUserByEmailIgnoreCase(request.getEmail());
     }
 
     public boolean isUsernameNotUnique(RegisterRequest request) {
@@ -105,7 +105,7 @@ public class AuthenticationService {
 
     public String confirmResetPassword(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()){
+        if (user.isEmpty()){
             return "Użytkownik o takim adresie email nie istnieje.";
         }
         return "Email z linkiem do resetowania hasła został wysłany.";

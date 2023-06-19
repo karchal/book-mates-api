@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/api/books/**", "/api/events/**", "/api/topics/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
                     .requestMatchers("/api/users/profile/**").authenticated()
+                    .requestMatchers(HttpMethod.POST,"/api/abuse-reports/").authenticated()
                     .requestMatchers(HttpMethod.POST, "/api/books/**", "/api/events/**", "/api/topics/**", "/api/comments/**").authenticated()
                     .requestMatchers(HttpMethod.PUT, "/api/events/*/resign").authenticated()
                     .requestMatchers(HttpMethod.DELETE, "/api/events/**", "/api/topics/**", "/api/comments/**").hasAnyRole("MODERATOR", "ADMIN")

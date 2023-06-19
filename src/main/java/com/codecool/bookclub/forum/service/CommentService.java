@@ -50,13 +50,13 @@ public class CommentService {
     public ResponseEntity<String> reportAbuse(long id) {
         Comment comment = commentRepository.findById(id).orElse(null);
         if (comment == null) {
-            return ResponseEntity.status(404).body("Komentarz o podanym id nie istnieje.");
+            return ResponseEntity.status(400).body("Komentarz o podanym id nie istnieje.");
         }
         if (comment.getStatus() == Status.ACCEPTED) {
-            return ResponseEntity.status(404).body("Komentarz został już zweryfikowany i zaakceptowany.");
+            return ResponseEntity.status(400).body("Komentarz został już zweryfikowany i zaakceptowany.");
         }
         if (comment.getStatus() == Status.BLOCKED) {
-            return ResponseEntity.status(404).body("Komentarz został już zablokowany.");
+            return ResponseEntity.status(400).body("Komentarz został już zablokowany.");
         }
         if (comment.getStatus() == Status.NOT_VERIFIED) {
             comment.setStatus(Status.NEEDS_VERIFICATION);
@@ -73,6 +73,7 @@ public class CommentService {
                 .authorId(comment.getAuthor().getId())
                 .topicId(comment.getTopic().getId())
                 .authorName(comment.getAuthor().getNickname())
+                .status(comment.getStatus())
                 .build();
     }
     public void blockComment(Long id) {

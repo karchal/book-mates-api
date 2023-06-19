@@ -16,11 +16,6 @@ public class AbuseReportController {
 
     private final AbuseReportService abuseReportService;
 
-    @GetMapping("/problem-types")
-    public ResponseEntity<ProblemType[]> getProblemTypes(){
-        return ResponseEntity.ok(ProblemType.values());
-    }
-
     @PostMapping("/")
     public ResponseEntity<String> reportAbuse(@RequestBody NewAbuseReportDto newAbuseReportDto, @AuthenticationPrincipal Long userId){
         return abuseReportService.createReport(newAbuseReportDto, userId);

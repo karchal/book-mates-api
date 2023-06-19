@@ -10,6 +10,5 @@ public class NewAbuseReportDto {
     private Long itemId;
     private ItemType itemType;
     private ProblemType problemType;
-    private Long contentAuthorId;
 
 }

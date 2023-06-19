@@ -25,7 +25,7 @@ public class AbuseReportService {
         ItemType itemType = newAbuseReportDto.getItemType();
         Long itemId = newAbuseReportDto.getItemId();
         if (abuseReportRepository.existsByReporterIdAndItemIdAndItemType(userId, itemId, itemType)) {
-            return new ResponseEntity<>("Już zgłaszałeś problem", HttpStatus.OK);
+            return new ResponseEntity<>("Już zgłaszałeś problem związany z tym wpisem.", HttpStatus.OK);
         }
         ResponseEntity<String> responseEntity = updateItemStatusToNeedsVerification(itemType, itemId);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -74,7 +74,6 @@ public class AbuseReportService {
         return switch (itemType) {
             case COMMENT -> commentService.reportAbuse(itemId);
             case TOPIC -> topicService.reportAbuse(itemId);
-            case EVENT -> null;
         };
     }
 
