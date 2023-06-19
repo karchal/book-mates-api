@@ -75,7 +75,7 @@ public class AuthenticationService {
     }
 
     public boolean isEmailNotUnique(RegisterRequest request) {
-        return userRepository.existsUserByEmail(request.getEmail());
+        return userRepository.existsUserByEmailIgnoreCase(request.getEmail());
     }
 
     public boolean isUsernameNotUnique(RegisterRequest request) {
@@ -105,12 +105,21 @@ public class AuthenticationService {
 
     public String confirmResetPassword(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()){
+        if (user.isEmpty()){
             return "Użytkownik o takim adresie email nie istnieje.";
         }
         ConfirmationToken confirmationToken = new ConfirmationToken(user.get());
-//        confirmationTokenRepository.save(confirmationToken);
-        emailService.sendPasswordRecoverEmail(email, "http://localhost:8080/api/authentication/reset_password?token=" + confirmationToken.getToken());
+        confirmationTokenRepository.save(confirmationToken);
+        emailService.sendPasswordRecoverEmail(email, "http://localhost:3000/reset_password?token=" + confirmationToken.getToken());
         return confirmationToken.getToken();
+    }
+
+    public String resetPassword(String token, ResetPasswordRequest password) {
+        ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token).orElseThrow();
+        Long userId = confirmationToken.getUser().getId();
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setPassword(passwordEncoder.encode(password.getNewPassword()));
+        userRepository.save(user);
+        return "Twoje hasło zostało zmienione";
     }
 }

@@ -7,9 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewAbuseReportDto {
-    private Long elementId;
-    private ContentType contentType;
+    private Long itemId;
+    private ItemType itemType;
     private ProblemType problemType;
-    private Long contentAuthorId;
 
 }

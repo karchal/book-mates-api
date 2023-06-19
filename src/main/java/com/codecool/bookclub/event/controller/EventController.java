@@ -29,13 +29,13 @@ public class EventController {
     }
 
     @GetMapping("/event-type/{enum-index}")
-    public ResponseEntity<EventType> getEnum(@PathVariable("enum-index")int enumIndex) {
+    public ResponseEntity<EventType> getEnum(@PathVariable("enum-index") int enumIndex) {
         EventType enumValue = EventType.values()[enumIndex];
         return ResponseEntity.ok(enumValue);
     }
 
     @GetMapping("/events/{event_id}")
-    public ResponseEntity<EventDto> getEventById( @PathVariable("event_id") long eventId) {
+    public ResponseEntity<EventDto> getEventById(@PathVariable("event_id") long eventId) {
         EventDto event = eventService.getEventById(eventId);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
@@ -82,5 +82,4 @@ public class EventController {
     public void resignFromEvent(@PathVariable("event_id") long eventId, @AuthenticationPrincipal Long userId){
         eventService.resignFromEvent(eventId, userId);
     }
-
 }
