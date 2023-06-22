@@ -54,15 +54,16 @@ class BookclubApplicationTests {
 		Assertions.assertEquals(4, result.get().size());
 	}
 
-
-	@Test
-	void test_profilePageUnauthorized() throws Exception {
-		mockMvc.perform(get("/api/users/profile"))
-				.andExpect(status().isForbidden());
-	}
-
 	void test_generatePass() throws Exception {
 		System.out.println("testpass: " + passwordEncoder.encode("testuser"));
+	}
+
+	@Test
+	void test_loginExistingUserIncorrectPassword() throws Exception {
+		mockMvc.perform(post("/api/authentication/login")
+						.contentType("application/json; charset=utf-8")
+						.content("{\"email\":\"test@test.pl\",\"password\":\"testuser1\"}"))
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -77,15 +78,13 @@ class BookclubApplicationTests {
 	}
 
 	@Test
-	void test_loginExistingUserIncorrectPassword() throws Exception {
-		mockMvc.perform(post("/api/authentication/login")
-				.contentType("application/json; charset=utf-8")
-				.content("{\"email\":\"test@test.pl\",\"password\":\"testuser1\"}"))
-				.andExpect(status().isBadRequest());
+	void test_profilePageUnauthorized() throws Exception {
+		mockMvc.perform(get("/api/users/profile"))
+				.andExpect(status().isForbidden());
 	}
 
 	@Test
-	void test_getUserProfile() throws Exception {
+	void test_profilePageAuthorized() throws Exception {
 		String response = mockMvc.perform(post("/api/authentication/login")
 						.contentType("application/json; charset=utf-8")
 						.content("{\"email\":\"test@test.pl\",\"password\":\"testuser\"}"))
@@ -95,8 +94,16 @@ class BookclubApplicationTests {
 		mockMvc.perform(get("/api/users/profile").header(HttpHeaders.AUTHORIZATION, "Bearer " + loginResponse.getToken()))
 				.andExpect(status().is2xxSuccessful())
 				.andExpect(jsonPath("$.id").value(Long.valueOf(4)))
-				.andExpect(jsonPath("$.books").isArray());
+				.andExpect(jsonPath("$.nickname").value("user-test"))
+				.andExpect(jsonPath("$.books").isArray())
+				.andExpect(jsonPath("$.events").isArray())
+				.andExpect(jsonPath("$.topics").isArray());
 	}
+
+//	@Test
+//	void test_searchBooks() throws Exception {
+//		String response = mockMvc.perform(get("api/books/search"))
+//	}
 
 
 }
