@@ -109,8 +109,17 @@ public class AuthenticationService {
             return "Użytkownik o takim adresie email nie istnieje.";
         }
         ConfirmationToken confirmationToken = new ConfirmationToken(user.get());
-//        confirmationTokenRepository.save(confirmationToken);
-        emailService.sendPasswordRecoverEmail(email, "http://localhost:8080/api/authentication/reset_password?token=" + confirmationToken.getToken());
+        confirmationTokenRepository.save(confirmationToken);
+        emailService.sendPasswordRecoverEmail(email, "http://localhost:3000/reset_password?token=" + confirmationToken.getToken());
         return confirmationToken.getToken();
+    }
+
+    public String resetPassword(String token, ResetPasswordRequest password) {
+        ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token).orElseThrow();
+        Long userId = confirmationToken.getUser().getId();
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setPassword(passwordEncoder.encode(password.getNewPassword()));
+        userRepository.save(user);
+        return "Twoje hasło zostało zmienione";
     }
 }
