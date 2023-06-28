@@ -8,6 +8,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
@@ -43,8 +48,9 @@ public class EmailServiceImpl implements EmailService {
         email.setText("Drogi użytkowniku, \n\n" +
                 "Twoje wydarzenie zostało pomyślnie utworzone i jest teraz widoczne dla innych użytkowników. \n\n" +
                 "Nazwa wydarzenia: " + event.getTitle() + "\n" +
-                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Data wydarzenia: " + (LocalDateTime.ofInstant(Instant.ofEpochSecond(event.getEventDate().toEpochSecond()), ZoneId.systemDefault())).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))+ "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
+                "Link do wydarzenia: " + event.getUrl() + "\n\n" +
                 "Jeśli masz jakiekolwiek pytania, " +
                 "potrzebujesz wprowadzić zmiany lub skasować wydarzenie, prosimy o kontakt. \n" +
                 "Nasz zespół jest gotowy do udzielenia Ci wsparcia i odpowiedzi na wszystkie pytania. \n" +
@@ -66,8 +72,9 @@ public class EmailServiceImpl implements EmailService {
                 "Dziękujemy za zapisanie się na nasze nadchodzące wydarzenie. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
                 "Nazwa wydarzenia: " + event.getTitle() + "\n" +
-                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Data wydarzenia: " + (LocalDateTime.ofInstant(Instant.ofEpochSecond(event.getEventDate().toEpochSecond()), ZoneId.systemDefault())).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))+ "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
+                "Link do wydarzenia: " + event.getUrl() + "\n\n" +
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
@@ -87,7 +94,7 @@ public class EmailServiceImpl implements EmailService {
                 "W obecnym momencie znajdujesz się na liście rezerwowych. Jeżeli zwolnią się miejsca na to wydarzenie, zostaniesz o tym poinformowany. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
                 "Nazwa wydarzenia: " + event.getTitle() + "\n" +
-                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Data wydarzenia: " + (LocalDateTime.ofInstant(Instant.ofEpochSecond(event.getEventDate().toEpochSecond()), ZoneId.systemDefault())).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))+ "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "W przypadku rezygnacji z chęci udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
@@ -107,7 +114,7 @@ public class EmailServiceImpl implements EmailService {
                 "Potwierdzamy Twoją rezygnację z udziału w wybranym wydarzeniu. \n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
                 "Nazwa wydarzenia: " + event.getTitle() + "\n" +
-                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Data wydarzenia: " + (LocalDateTime.ofInstant(Instant.ofEpochSecond(event.getEventDate().toEpochSecond()), ZoneId.systemDefault())).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))+ "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
                 "Zapraszamy do przeglądania innych wydarzeń. \n\n" +
                 "Pozdrawiamy,\n " +
@@ -125,8 +132,9 @@ public class EmailServiceImpl implements EmailService {
                 "Z radością informujemy Cię, że masz teraz możliwość uczestniczenia w nadchodzącym wydarzeniu, na które wcześniej byłeś zapisany(a) na liście rezerwowych.\n\n" +
                 "Informacji dotyczących wydarzenia: \n" +
                 "Nazwa wydarzenia: " + event.getTitle() + "\n" +
-                "Data wydarzenia: " + event.getEventDate() + "\n" +
+                "Data wydarzenia: " + (LocalDateTime.ofInstant(Instant.ofEpochSecond(event.getEventDate().toEpochSecond()), ZoneId.systemDefault())).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))+ "\n" +
                 "Opis wydarzenia: " + event.getDescription() + "\n\n" +
+                "Link do wydarzenia: " + event.getUrl() + "\n\n" +
                 "W przypadku rezygnacji z udziału w wydarzeniu, prosimy o naciśnięcie na poniższy link: \n\n" +
                 "http://localhost:3000/events/" + event.getId() + "/resign \n\n" +
                 "Dziękujemy, że jesteś częścią społeczności miłośników książek. \n\n" +
