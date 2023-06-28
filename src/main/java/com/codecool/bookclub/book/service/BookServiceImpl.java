@@ -80,6 +80,10 @@ class BookServiceImpl implements BookService {
         return savedBook;
     }
 
+    @Override
+    public Book findByExternalId(String externalId) {
+        return bookRepository.findBookByExternalId(externalId);
+    }
 
 
 //    public int rateBook(BigDecimal userRating, long bookId) {

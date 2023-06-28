@@ -15,4 +15,5 @@ public interface BookService {
     void saveBookToShelf(Book book, Shelf shelf, Long userId);
     Page<Book> findAllBooks(Pageable paging);
     Book saveBook(Book book);
+    Book findByExternalId(String externalId);
 }

@@ -4,7 +4,6 @@ import com.codecool.bookclub.book.model.Book;
 import com.codecool.bookclub.book.model.Shelf;
 import com.codecool.bookclub.book.service.BookService;
 import com.codecool.bookclub.book.service.GoogleApiBookService;
-import com.codecool.bookclub.event.dto.EventDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -67,6 +66,8 @@ public class BookController {
 
     @GetMapping("/books/search/{id}")
     public Book getBookByExternalId(@PathVariable String id) {
+        Book book = bookService.findByExternalId(id);
+        if (book != null) return book;
         return googleApiBookService.getBookByExternalId(id);
     }
 
