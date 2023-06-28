@@ -35,6 +35,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Async
     public void sendNewEventCreatedEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
@@ -57,6 +58,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Async
     public void sendJoinEventEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
@@ -77,6 +79,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Async
     public void sendSignUpForEventWaitingListEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
@@ -98,6 +101,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Async
     public void sendEventResignationEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
@@ -116,6 +120,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Async
     public void sendMovingFromWaitingListToParticipantEmail(Event event, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
@@ -136,6 +141,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Async
     public void sendPasswordRecoverEmail(String userEmail, String passwordRecoveryLink) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contact.bookmates@gmail.com");
