@@ -83,4 +83,9 @@ public class CommentService {
             commentRepository.save(comment);
         }
     }
+
+    public CommentDto getComment(long id) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        return (comment != null) ? convertToDto(comment) : null;
+    }
 }

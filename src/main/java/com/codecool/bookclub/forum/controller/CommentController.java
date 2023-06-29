@@ -1,7 +1,9 @@
 package com.codecool.bookclub.forum.controller;
 
+import com.codecool.bookclub.forum.dto.CommentDto;
 import com.codecool.bookclub.forum.dto.NewCommentDto;
 import com.codecool.bookclub.forum.service.CommentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +25,14 @@ public class CommentController {
         commentService.createComment(comment, userId);
     }
 
-    @GetMapping("/comments/{id}/report-abuse")
-    public ResponseEntity<String> reportAbuse(@PathVariable("id") long id){
-        return commentService.reportAbuse(id);
+    @GetMapping("/comments/{id}")
+    public ResponseEntity<CommentDto> getComment(@PathVariable long id) {
+        return new ResponseEntity<>(commentService.getComment(id), HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/comments/{comment_id}")
-    public void deleteComment(@PathVariable("comment_id") long commentId){
-        commentService.deleteComment(commentId);
+    @DeleteMapping("/comments/{id}")
+    public void deleteComment(@PathVariable long id){
+        commentService.deleteComment(id);
     }
 
 
