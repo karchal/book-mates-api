@@ -97,7 +97,7 @@ public class EventService{
         event.setEventDate(newEventDto.getEventDate());
         event.setEventType(newEventDto.getEventType());
         event.setMaxParticipants(newEventDto.getMaxParticipants());
-        event.setUrl(newEventDto.getUrl());
+        event.setUrl("https://meet.google.com/yrd-aoqi-acm");
 
         User eventAuthor = userRepository.findById(userId).orElse(null);
 
