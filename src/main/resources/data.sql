@@ -116,4 +116,4 @@ values (1, '2023-05-23T14:27:40', 5, 4, 3, 2, 2);
 insert into abuse_report(item_type, creation_time, item_id, problem_type, reporter_id, review_status, reviewer_id)
 values (0, '2023-05-23T14:27:40', 3, 4, 1, 2, 2);
 
--- dopisać dane z bazy i udostępnić
+-- dopisać dane z bazy i udostępnić dla pozostałych
